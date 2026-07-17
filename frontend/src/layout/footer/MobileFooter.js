@@ -71,74 +71,65 @@ const MobileFooter = () => {
     <>
       {/* Drawer lives off-canvas; keep it mounted without forcing page layout/scroll */}
       <CategoryDrawer />
-      <footer className="lg:hidden fixed z-[60] top-0 glass-header flex items-center justify-between w-full h-16 px-3 sm:px-10">
-        <div className="flex items-center gap-4">
+      <footer className="lg:hidden fixed z-[60] top-0 glass-header flex items-center justify-between w-full h-18 px-4 sm:px-6">
+        {/* Left section: Drawer trigger + Logo */}
+        <div className="flex items-center gap-3">
           <button
             aria-label="Bar"
             onClick={toggleCategoryDrawer}
-            className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none"
+            className="flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors focus:outline-none"
           >
-            <span className={`text-xl text-store-500`}>
-              <FiAlignLeft className="w-6 h-6 drop-shadow-xl" />
-            </span>
+            <FiAlignLeft className="w-6 h-6" />
           </button>
           <Link
             href="/"
-            className="flex items-center shrink-0 group"
+            className="flex items-center shrink-0 group ml-1"
             rel="noreferrer"
             aria-label="kalkimart"
           >
             <Image
               src={kalkimartlogo}
               alt="logo"
-              width={158}
-              height={190}
+              width={120}
+              height={150}
               priority
-              className="object-contain transition-transform duration-300 group-hover:scale-105"
-              style={{ height: "90px", width: "auto" }}
+              className="object-contain ml-2 transition-transform duration-300 group-hover:scale-[1.03]"
+              style={{ height: "80px", width: "auto" }}
             />
           </Link>
-          <Link
-            href="/"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-900 hover:bg-gray-100 hover:text-black shrink-0 ml-6"
-            aria-label="Home"
-            title="Home"
-          >
-            <FiHome className="w-5 h-5" />
-          </Link>
         </div>
-        <div className="flex items-center gap-4">
-          <CustomerNotificationBell />
+
+        {/* Right section: Notification Bell + User Profile / Login */}
+        <div className="flex items-center gap-3">
+          <CustomerNotificationBell className="relative p-2 text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-lg transition-colors" />
+          
           <div className="flex items-center justify-center relative">
             {userInfo?.image ? (
-              <Link href="/user/dashboard" className="relative top-1 w-8 h-8 block">
+              <Link href="/user/dashboard" className="relative w-8 h-8 block">
                 <Image
                   width={32}
                   height={32}
                   src={userInfo.image}
                   alt="user"
-                  className="rounded-full object-cover w-8 h-8 border-2 border-gray-200"
+                  className="rounded-full object-cover w-8 h-8 border-2 border-store-500 shadow-md"
                 />
               </Link>
             ) : userInfo?.name ? (
               <Link
                 href="/user/dashboard"
-                className={`leading-none font-bold font-serif block px-3 py-2 border rounded-full border-store-500 text-store-500`}
+                className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-store-500 text-store-500 bg-store-500/10 font-bold text-sm hover:bg-store-500 hover:text-white transition-all duration-200"
               >
-                {userInfo?.name[0]}
+                {userInfo?.name[0].toUpperCase()}
               </Link>
             ) : (
-              <div className="relative">
-                <Link
-                  href="/auth/login"
-                  className="bg-store-500 text-white px-4 py-2 rounded-full flex items-center gap-2 font-bold text-sm hover:bg-store-600 transition-colors"
-                >
-                  <IoLockClosedOutline className="text-lg" /> Login
-                </Link>
-              </div>
+              <Link
+                href="/auth/login"
+                className="bg-store-500 hover:bg-store-600 text-white px-4 py-1.5 rounded-full flex items-center gap-2 font-bold text-xs shadow-md hover:shadow-lg transition-all duration-200 active:scale-95"
+              >
+                <IoLockClosedOutline className="text-sm" /> Login
+              </Link>
             )}
           </div>
-
         </div>
       </footer>
       {showSearch && (

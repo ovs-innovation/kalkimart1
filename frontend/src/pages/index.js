@@ -161,8 +161,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
               <div className="relative lg:py-24 py-12 overflow-hidden">
                 {/* Background Decorative Blobs - Creates the "Mesh" look */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-                  <div className="absolute -top-24 -left-24 w-[500px] h-[500px] bg-yellow-950/20 rounded-full blur-[120px]" />
-                  <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-yellow-950/20 rounded-full blur-[100px]" />
+                  <div className="absolute -top-24 -left-24 w-[500px] h-[500px] bg-blue-950/20 rounded-full blur-[120px]" />
+                  <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-blue-950/20 rounded-full blur-[100px]" />
                 </div>
 
                 <div className="mx-auto max-w-screen-2xl px-4 sm:px-12 relative z-10">
@@ -170,7 +170,7 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
                       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
-                        <IoSparkles className="animate-pulse text-yellow-400" />
+                        <IoSparkles className="animate-pulse text-blue-400" />
                         <span>Popular Choice</span>
                       </div>
                       <SectionHeader

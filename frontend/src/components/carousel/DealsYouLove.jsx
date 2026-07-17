@@ -72,7 +72,7 @@ const DealsYouLove = ({ products, attributes }) => {
               <IoFlash className="animate-pulse text-amber-500 text-sm" /> Hot Offers
             </div>
             <SectionHeader
-              title="Special Health Offers"
+              title="Special Offers"
               subtitle="Grab these limited-time offers and top-tier value formulations before they're gone!"
               align="left"
             />

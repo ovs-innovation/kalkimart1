@@ -22,7 +22,7 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
   const router = useRouter();
   const isHome = router.pathname === "/";
   const { storeCustomizationSetting, globalSetting } = useGetSetting();
-  const storeColor = "yellow";
+  const storeColor = "blue";
   const palette = getPalette(storeColor);
 
   // Dynamically measure header height so content starts exactly below the fixed header

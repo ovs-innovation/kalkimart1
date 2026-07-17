@@ -42,7 +42,7 @@ const NavbarLogo = () => {
 const NavbarHomeIcon = ({ besideSearch = false }) => (
   <Link
     href="/"
-    className={`flex h-10 w-10 items-center justify-center rounded-lg text-white hover:text-yellow-300 transition-colors shrink-0 ${besideSearch ? "mr-1" : "ml-10 md:ml-14"
+    className={`flex h-10 w-10 items-center justify-center rounded-lg text-white hover:text-blue-300 transition-colors shrink-0 ${besideSearch ? "mr-1" : "ml-10 md:ml-14"
       }`}
     aria-label="Home"
     title="Home"
@@ -156,7 +156,7 @@ const Navbar = () => {
 
             {!showNavbarSearch && isHome && <NavbarHomeIcon />}
 
-            <div className="flex-1 min-w-0 flex items-center justify-center gap-2">
+            <div className="flex-1 min-w-0 flex items-center justify-center gap-2 relative z-50">
               {showNavbarSearch && <NavbarHomeIcon besideSearch />}
 
               {showNavbarSearch ? (
@@ -197,7 +197,7 @@ const Navbar = () => {
                   </div>
                   <button
                     type="submit"
-                    className="shrink-0 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-bold px-5 py-2.5 border-0 outline-none shadow-md hover:shadow-lg transition-all active:scale-[0.97]"
+                    className="shrink-0 rounded-full bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold px-5 py-2.5 border-0 outline-none shadow-md hover:shadow-lg transition-all active:scale-[0.97]"
                   >
                     Search
                   </button>
@@ -212,13 +212,13 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-1 shrink-0">
-              <CustomerNotificationBell className="text-xl hover:text-yellow-700"/>
+              <CustomerNotificationBell className="text-xl hover:text-blue-700"/>
               <Link
                 href="/wishlist"
                 className="relative p-2 text-gray-600 rounded-lg"
                 aria-label="Wishlist"
               >
-                <FiHeart className="text-xl hover:text-yellow-700" />
+                <FiHeart className="text-xl hover:text-blue-700" />
                 {wishlistCount > 0 && (
                   <span className="absolute top-0.5 right-0.5 min-w-[16px] h-4 text-[10px] font-bold text-white rounded-full flex items-center justify-center">
                     {wishlistCount}
@@ -228,12 +228,12 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={toggleCartDrawer}
-                className="relative p-2 text-gray-600 hover:text-yellow-600 rounded-lg"
+                className="relative p-2 text-gray-600 hover:text-blue-600 rounded-lg"
                 aria-label="Cart"
               >
-                <FiShoppingCart className="text-xl hover:text-yellow-700" />
+                <FiShoppingCart className="text-xl hover:text-blue-700" />
                 {totalUniqueItems > 0 && (
-                  <span className="absolute top-0.5 right-0.5 min-w-[16px] h-4 text-[10px] font-bold text-white bg-store-500 rounded-full flex items-center justify-center">
+                  <span className="absolute top-0.5 right-0.5 min-w-[16px] h-4 text-[10px] font-bold text-white bg-blue-500 rounded-full flex items-center justify-center">
                     {totalUniqueItems}
                   </span>
                 )}
@@ -268,7 +268,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => router.push("/auth/login")}
-                  className="text-sm font-bold text-white bg-gradient-to-r from-store-600 to-store-700 hover:from-store-700 hover:to-store-800 px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all"
+                  className="text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-store-700 hover:to-store-800 px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all"
                 >
                   Login
                 </button>

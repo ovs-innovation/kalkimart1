@@ -17,7 +17,7 @@ import { notifyError, notifySuccess } from "@utils/toast";
 
 dayjs.extend(relativeTime);
 
-const CustomerNotificationBell = () => {
+const CustomerNotificationBell = ({ className }) => {
   const { isLoggedIn, userId } = useCustomerAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -59,7 +59,7 @@ const CustomerNotificationBell = () => {
     return (
       <Link
         href="/auth/login"
-        className="relative p-2 text-gray-600 hover:text-store-600 rounded-lg hover:bg-store-50"
+        className={className || "relative p-2 text-gray-600 hover:text-store-600 rounded-lg hover:bg-store-50"}
         aria-label="Login to see notifications"
         title="Login for notifications"
       >
@@ -124,7 +124,7 @@ const CustomerNotificationBell = () => {
       <button
         type="button"
         onClick={handleOpen}
-        className="relative p-2 text-gray-600 hover:text-store-600 rounded-lg hover:bg-store-50"
+        className={className || "relative p-2 text-gray-600 hover:text-store-600 rounded-lg hover:bg-store-50"}
         aria-label="Notifications"
       >
         <FiBell className="text-xl" />

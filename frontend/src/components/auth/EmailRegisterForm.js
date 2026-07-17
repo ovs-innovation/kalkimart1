@@ -206,7 +206,7 @@ const EmailRegisterForm = () => {
         <button
           disabled={loading}
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-4 text-base font-extrabold text-white shadow-[0_10px_25px_rgba(16,185,129,0.25)] transition-all duration-200 hover:bg-emerald-700 hover:shadow-[0_12px_28px_rgba(16,185,129,0.35)] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-55"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-store-600 py-4 text-base font-extrabold text-white shadow-[0_10px_25px_rgba(37,99,235,0.25)] transition-all duration-200 hover:bg-store-700 hover:shadow-[0_12px_28px_rgba(37,99,235,0.35)] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-55"
         >
           {loading ? (
             <>

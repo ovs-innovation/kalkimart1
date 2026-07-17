@@ -385,7 +385,7 @@ const SearchSuggestions = ({ searchText, onSelect, showSuggestions, onClose }) =
                 // Prevent input blur on mousedown but allow click
                 e.preventDefault();
               }}
-              className="w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors text-left cursor-pointer"
+              className="w-full px-4 py-3 flex items-center gap-3 transition-colors text-left cursor-pointer"
             >
               {suggestion.image ? (
                 <span className="flex-shrink-0 w-7 h-7 rounded bg-gray-100 flex items-center justify-center overflow-hidden">
