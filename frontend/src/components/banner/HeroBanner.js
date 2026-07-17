@@ -42,105 +42,95 @@ const HeroBanner = () => {
     }
   };
 
-  const bannerImageUrl = "/images/bgbanner.png";
+  const bannerImageUrl = "/images/martbanner.png";
 
   const badges = [
-    { icon: <MdVerified className="w-4 h-4 text-yellow-400" />, label: "100% Organic & Fresh" },
-    { icon: <RiTruckLine className="w-4 h-4 text-yellow-400" />, label: "Express 15-Min Delivery" },
-    { icon: <HiShieldCheck className="w-4 h-4 text-yellow-400" />, label: "Best Price Guaranteed" },
+    { icon: <MdVerified className="w-4 h-4 text-blue-400" />, label: "100% Verified Quality" },
+    { icon: <RiTruckLine className="w-4 h-4 text-blue-400" />, label: "Express Fast Delivery" },
+    { icon: <HiShieldCheck className="w-4 h-4 text-blue-400" />, label: "Secure Payment Checkout" },
   ];
 
   return (
     <div
       className="w-full relative overflow-hidden"
       style={{
-        minHeight: "480px",
+        minHeight: "520px",
         backgroundImage: `url(${bannerImageUrl})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "center right",
         backgroundRepeat: "no-repeat",
         bottom: "50px"
       }}
     >
-      {/* Premium dark gradient overlay to blend with the dark page and ensure text readability on the left */}
+      {/* SaaS-style crisp radial dark gradient overlay for centered text clarity */}
       <div
-        className="absolute inset-0 z-10 block md:hidden"
+        className="absolute inset-0 z-10"
         style={{
-          background: "rgba(3, 3, 3, 0.88)",
-        }}
-      />
-      <div
-        className="absolute inset-0 z-10 hidden md:block"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(3,3,3,0.98) 0%, rgba(3,3,3,0.90) 35%, rgba(3,3,3,0.5) 55%, rgba(3,3,3,0) 100%)",
+          background: "radial-gradient(circle, rgba(9, 9, 11, 0.85) 0%, rgba(9, 9, 11, 0.75) 50%, rgba(9, 9, 11, 0.3) 85%, rgba(9, 9, 11, 0.1) 100%)",
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-20 flex items-center min-h-[480px] px-6 sm:px-10 md:px-16 lg:px-20 py-12">
-        <div className="w-full max-w-[600px]">
+      {/* Content wrapper */}
+      <div className="relative z-20 flex items-center justify-center min-h-[520px] px-6 sm:px-12 md:px-16 lg:px-24 py-16 text-center">
+        <div className="w-full max-w-[720px] flex flex-col items-center justify-center">
 
-          {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 mb-5 bg-yellow-950/30 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-yellow-800/40 shadow-sm">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500" />
+          {/* Minimal SaaS Cosmic Badging */}
+          <div className="inline-flex items-center gap-1.5 mb-6 px-4 py-1.5 rounded-full cosmic-badge tracking-wide font-sans">
+            <span className="flex h-1.5 w-1.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
             </span>
-            <span
-              className="text-[10px] font-extrabold tracking-[0.18em] uppercase text-yellow-400"
-              style={{ letterSpacing: "0.18em" }}
-            >
-              ⚡ Fast & Fresh Grocery Delivery
-            </span>
+            <span>Premium B2B E-commerce Marketplace ✨</span>
           </div>
 
-          {/* Heading — tighter, more elegant */}
+          {/* SaaS Typography: Ultra bold, tight line height */}
           <h1
-            className="text-[2.2rem] sm:text-[2.8rem] md:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-[-0.02em] mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl font-black cosmic-title leading-[1.12] tracking-tight mb-5 font-sans"
           >
             {storeCustomizationSetting?.home?.hero_title ? (
               storeCustomizationSetting.home.hero_title
             ) : (
               <>
-                Fresh Grocery
+                Elevate Your Sourcing.
                 <br />
-                <span className="text-white">Delivered to Your Door.</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">
+                  Kalki Mart Solutions.
+                </span>
               </>
             )}
           </h1>
 
-          {/* Description */}
-          <p className="text-white text-sm md:text-[15px] leading-[1.7] mb-8 max-w-[420px] font-normal">
+          {/* Description — SaaS standard neutral grey */}
+          <p className="cosmic-desc text-sm leading-relaxed max-w-[540px] mx-auto mb-10 font-normal font-sans">
             {storeCustomizationSetting?.home?.hero_description ||
-              "Shop organic vegetables, fresh fruits, daily essentials, and farm-fresh dairy products at the best prices."}
+              "Your ultimate B2C wholesale marketplace. Discover premium business supplies, customized corporate merchandise, and advertising essentials at direct-from-distributor pricing."}
           </p>
 
-          {/* Search bar — premium pill style */}
-          <div id="hero-search-anchor" className="w-full max-w-[480px] scroll-mt-32">
+          {/* Clean SaaS Input Panel — rounded-xl layout with high focus outline definition */}
+          <div id="hero-search-anchor" className="w-full max-w-[660px] mx-auto scroll-mt-32">
             <form
               onSubmit={handleSubmit}
-              className="flex items-center bg-slate-900/90 backdrop-blur-md rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.4),0_1px_4px_rgba(0,0,0,0.1)] border border-slate-800/80 focus-within:shadow-[0_10px_35px_rgba(234,179,8,0.2)] focus-within:border-yellow-500/50 transition-all duration-300 p-1.5 gap-1"
+              className="flex items-center cosmic-search-container p-1.5 rounded-xl transition-all duration-300 gap-1"
             >
-              {/* Location picker */}
-              <div className="shrink-0 flex items-center pl-1">
+              {/* Location Selector */}
+              <div className="shrink-0 flex items-center pl-1.5">
                 <LocationPickerDropdown
                   hideDivider
-                  className="!px-2 !border-none !bg-transparent !text-slate-300 !text-[13px] !font-semibold"
+                  className="!px-2 !border-none !bg-transparent !text-slate-600 !text-[13px] !font-semibold"
                 />
               </div>
 
-              {/* Thin divider */}
-              <div className="w-px h-5 shrink-0" />
+              {/* Vertical line divider */}
+              <div className="w-px h-5 cosmic-divider shrink-0 mx-1" />
 
-              {/* Input */}
-              <div className="flex-1 flex items-center px-3 relative min-w-0">
-                <IoSearchOutline className="text-slate-400 text-[17px] shrink-0 mr-2" />
+              {/* Search text input */}
+              <div className="flex-1 flex items-center px-2 relative min-w-0">
+                <IoSearchOutline className="text-slate-400 text-lg shrink-0 mr-2" />
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Search fresh vegetables, fruits, grocery items..."
-                  className="w-full py-2 border-none text-slate-100 bg-transparent text-[13px] font-semibold focus:outline-none focus:ring-0 min-w-0"
+                  placeholder="What products or custom items are you looking for?"
+                  className="w-full py-2 cosmic-search-input text-[13px] font-medium focus:outline-none focus:ring-0 min-w-0"
                   value={searchText}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   onFocus={() => {
@@ -165,24 +155,23 @@ const HeroBanner = () => {
                 />
               </div>
 
-              {/* Search button — pill inside pill */}
+              {/* SaaS Accent Action Button */}
               <button
                 type="submit"
-                className="shrink-0 flex items-center gap-2 active:scale-[0.96] border border-yellow-500 bg-yellow-500 hover:bg-yellow-600 hover:border-yellow-600 text-white text-[13px] font-bold px-5 py-2.5 rounded-full transition-all duration-200"
+                className="shrink-0 flex items-center gap-1.5 active:scale-[0.98] cosmic-search-btn text-white text-[13px] font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 shadow-sm"
               >
-                <IoSearchOutline className="text-white text-sm" />
                 <span>Search</span>
               </button>
             </form>
           </div>
 
-          {/* Trust badges */}
-          <div className="flex items-center gap-4 mt-8 flex-wrap">
+          {/* Minimalist SaaS cosmic outline badges (styled like outline buttons) */}
+          <div className="flex items-center justify-center gap-4 mt-12 flex-wrap w-full">
             {badges.map((b, i) => (
               <React.Fragment key={i}>
-                <div className="flex items-center gap-1.5 bg-slate-900/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-slate-800/60 shadow-sm">
+                <div className="flex items-center gap-2 cosmic-badge-pill px-5 py-2 text-xs font-semibold hover:scale-[1.03] transition-all duration-200 cursor-pointer">
                   {b.icon}
-                  <span className="text-slate-300 text-[11px] font-bold tracking-wide">{b.label}</span>
+                  <span className="tracking-wide font-sans">{b.label}</span>
                 </div>
               </React.Fragment>
             ))}

@@ -36,12 +36,57 @@ import TestimonialsSection from "@components/testimonial/TestimonialsSection";
 import DealsYouLove from "@components/carousel/DealsYouLove";
 import Features from "@components/Features/Features";
 
-const Home = ({ popularProducts, discountProducts, bestSellingProducts, attributes, brands, personalCareProducts }) => {
+const fallbackSnacks = [
+  {
+    _id: "snack-1",
+    title: { en: "Lays Potato Chips - Classic Salted", de: "Lays Kartoffelchips - Klassisch Gesalzen" },
+    slug: "lays-classic-salted",
+    image: ["https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&q=80&w=400"],
+    stock: 120,
+    prices: { price: 20, originalPrice: 20, discount: 0 },
+    variants: [],
+    isCombination: false,
+  },
+  {
+    _id: "snack-2",
+    title: { en: "Oreo Vanilla Cream Biscuits", de: "Oreo Vanillecreme Kekse" },
+    slug: "oreo-vanilla-biscuits",
+    image: ["https://images.unsplash.com/photo-1558961317-1f67f1b6d05f?auto=format&fit=crop&q=80&w=400"],
+    stock: 150,
+    prices: { price: 30, originalPrice: 35, discount: 5 },
+    variants: [],
+    isCombination: false,
+  },
+  {
+    _id: "snack-3",
+    title: { en: "Kurkure Masala Munch", de: "Kurkure Masala Munch" },
+    slug: "kurkure-masala-munch",
+    image: ["https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&q=80&w=400"],
+    stock: 80,
+    prices: { price: 10, originalPrice: 10, discount: 0 },
+    variants: [],
+    isCombination: false,
+  },
+  {
+    _id: "snack-4",
+    title: { en: "Coca Cola Soft Drink Can", de: "Coca Cola Dose" },
+    slug: "coca-cola-can",
+    image: ["https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=400"],
+    stock: 200,
+    prices: { price: 40, originalPrice: 40, discount: 0 },
+    variants: [],
+    isCombination: false,
+  }
+];
+
+const Home = ({ popularProducts, discountProducts, bestSellingProducts, attributes, brands, personalCareProducts, snacksProducts }) => {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { state } = useContext(UserContext) || {};
   const isWholesaler = state?.userInfo?.role && state.userInfo.role.toString().toLowerCase() === "wholesaler";
   const { loading, error, storeCustomizationSetting } = useGetSetting();
+
+  const displaySnacks = snacksProducts && snacksProducts.length > 0 ? snacksProducts : fallbackSnacks;
 
   // console.log("storeCustomizationSetting", storeCustomizationSetting);
 
@@ -75,17 +120,14 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <div className="w-full">
                     <OrderOptions />
                   </div>
-                  {/* Slider Carousel */}
-                  <div className="hidden md:block">
-                    <SliderCarousel />
-                  </div>
+
+                  {/* Trusted Brands Section */}
+                  <TrustedBrandsSection brands={brands} />
+
                 </div>
 
               </div>
             </div>
-            {/* Category Cards Section */}
-            <CategoryCards />
-
 
             {/* feature category's */}
             {storeCustomizationSetting?.home?.featured_status && (
@@ -111,7 +153,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <FeatureCategory attributes={attributes} />
                 </div>
               </div>
-            )}
+              )}
+            
 
             {/* best selling products */}
             {bestSellingProducts?.length > 0 && (
@@ -126,8 +169,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   {/* Header Section */}
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-white text-[11px] font-extrabold uppercase tracking-widest">
-                        <IoSparkles className="animate-pulse text-yellow-300" />
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
+                        <IoSparkles className="animate-pulse text-yellow-400" />
                         <span>Popular Choice</span>
                       </div>
                       <SectionHeader
@@ -139,24 +182,25 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
                     <Link
                       href="/search?sort=best-selling"
-                      className="group flex items-center gap-2 text-sm font-bold text-yellow-500 hover:text-yellow-800 transition-all"
+                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
                     >
                       Explore All
-                      <div className="p-2 rounded-full bg-white shadow-sm border border-gray-100 group-hover:bg-yellow-600 group-hover:text-white transition-all">
+                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
                         <IoChevronForward />
                       </div>
                     </Link>
-                  </div>
+                    </div>
+                    
 
                   {/* Slider Area */}
                   <div className="relative group/slider">
                     <div className="relative px-2">
                       {/* Custom Floating Navigation */}
-                      <button className="prev-best-selling absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-emerald-600 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                      <button className="prev-best-selling absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
                         <IoChevronBack className="text-xl text-white" />
                       </button>
 
-                      <button className="next-best-selling absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-emerald-600 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                      <button className="next-best-selling absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
                         <IoChevronForward className="text-xl text-white" />
                       </button>
 
@@ -207,6 +251,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
               </div>
             )}
 
+            {/* Slider Carousel */}
+            <div className="hidden md:block">
+              <SliderCarousel />
+            </div>
 
             {/* Suggested For You Section */}
             <div className="lg:py-12 py-10">
@@ -224,7 +272,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
             {/* Do not render deals section for wholesalers */}
             {!isWholesaler && discountProducts?.length > 0 && (
               <DealsYouLove products={discountProducts} />
-            )}
+              )}
+              
+              {/* Category Cards Section */}
+              <CategoryCards />
 
             {/* Personal Care Section */}
             {personalCareProducts && personalCareProducts.length > 0 && (
@@ -234,8 +285,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   {/* Header Section */}
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-700/80 to-amber-600/70 text-white text-[11px] font-extrabold uppercase tracking-widest">
-                        <IoSparkles className="animate-pulse text-yellow-300" />
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
+                        <IoSparkles className="animate-pulse text-amber-500" />
                         <span>Kitchen Needs</span>
                       </div>
                       <SectionHeader
@@ -247,10 +298,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
                     <Link
                       href="/search?category=Personal-Care"
-                      className="group flex items-center gap-2 text-sm font-bold text-yellow-600 hover:text-yellow-800 transition-all"
+                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
                     >
                       Explore All
-                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-yellow-700 group-hover:text-white transition-all text-white">
+                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
                         <IoChevronForward />
                       </div>
                     </Link>
@@ -260,11 +311,11 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <div className="relative group/slider">
                     <div className="relative px-2">
                       {/* Navigation buttons */}
-                      <button className="prev-personal-care absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-amber-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                      <button className="prev-personal-care absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
                         <IoChevronBack className="text-xl text-white" />
                       </button>
 
-                      <button className="next-personal-care absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-amber-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                      <button className="next-personal-care absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
                         <IoChevronForward className="text-xl text-white" />
                       </button>
 
@@ -300,6 +351,93 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                               <SwiperSlide key={product._id}>
                                 <div className="h-full transform hover:-translate-y-2 transition-transform duration-500">
                                   <PersonalCareProductCard
+                                    product={product}
+                                    attributes={attributes}
+                                  />
+                                </div>
+                              </SwiperSlide>
+                            ))}
+                        </Swiper>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Snacks & Drinks Section */}
+            {displaySnacks && displaySnacks.length > 0 && (
+              <div className="relative lg:py-20 py-10 overflow-hidden bg-transparent">
+                <div className="mx-auto max-w-screen-2xl px-4 sm:px-12 relative z-10">
+                  {/* Header Section */}
+                  <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                    <div className="space-y-3">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
+                        <IoSparkles className="animate-pulse text-teal-400" />
+                        <span>Snack Corner</span>
+                      </div>
+                      <SectionHeader
+                        title="Delicious Snacks & Drinks"
+                        subtitle="Satisfy your cravings with our collection of chips, cookies, sodas, and sweet treats."
+                        align="left"
+                      />
+                    </div>
+
+                    <Link
+                      href="/search?category=Snacks"
+                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
+                    >
+                      Explore All
+                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
+                        <IoChevronForward />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Slider Area */}
+                  <div className="relative group/slider">
+                    <div className="relative px-2">
+                      {/* Navigation buttons */}
+                      <button className="prev-snacks absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                        <IoChevronBack className="text-xl text-white" />
+                      </button>
+
+                      <button className="next-snacks absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
+                        <IoChevronForward className="text-xl text-white" />
+                      </button>
+
+                      <div className="rounded-[2.5rem] p-2 bg-slate-900/40 backdrop-blur-md border border-slate-800/40 shadow-sm">
+                        <Swiper
+                          modules={[Navigation, Autoplay]}
+                          spaceBetween={15}
+                          slidesPerView={2}
+                          loop={displaySnacks.length >= 5}
+                          navigation={{
+                            prevEl: ".prev-snacks",
+                            nextEl: ".next-snacks",
+                          }}
+                          autoplay={{
+                            delay: 5000,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: true
+                          }}
+                          breakpoints={{
+                            640: { slidesPerView: 2, spaceBetween: 15 },
+                            768: { slidesPerView: 3, spaceBetween: 20 },
+                            1024: { slidesPerView: 4, spaceBetween: 25 },
+                            1280: { slidesPerView: 5, spaceBetween: 25 },
+                          }}
+                          className="mySwiper !pb-10 !pt-4"
+                        >
+                          {(isWholesaler
+                            ? displaySnacks.filter(p => (p.wholePrice && Number(p.wholePrice) > 0) || p.isWholesaler)
+                            : displaySnacks
+                          )
+                            ?.slice(0, 10)
+                            .map((product) => (
+                              <SwiperSlide key={product._id}>
+                                <div className="h-full transform hover:-translate-y-2 transition-transform duration-500">
+                                  <ProductCard
                                     product={product}
                                     attributes={attributes}
                                   />
@@ -533,8 +671,6 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   </div>
                 </div>
               )}
-            {/* Trusted Brands Section */}
-            <TrustedBrandsSection brands={brands} />
 
             <Features />
 
@@ -551,7 +687,7 @@ export const getServerSideProps = async (context) => {
   const { cookies } = context.req;
   const { query, _id } = context.query;
 
-  const [dataResult, attributesResult, brandsResult, personalCareResult] = await Promise.allSettled([
+  const [dataResult, attributesResult, brandsResult, personalCareResult, snacksResult] = await Promise.allSettled([
     ProductServices.getShowingStoreProducts({
       category: _id ? _id : "",
       title: query ? query : "",
@@ -561,6 +697,9 @@ export const getServerSideProps = async (context) => {
     ProductServices.getShowingStoreProducts({
       category: "Personal Care",
     }),
+    ProductServices.getShowingStoreProducts({
+      category: "Snacks",
+    }),
   ]);
 
   const data = dataResult.status === "fulfilled" ? dataResult.value : null;
@@ -569,6 +708,9 @@ export const getServerSideProps = async (context) => {
   const brands = brandsResult.status === "fulfilled" ? brandsResult.value : [];
   const personalCareData = personalCareResult.status === "fulfilled" ? personalCareResult.value : null;
   const personalCareProducts = personalCareData?.products || [];
+
+  const snacksData = snacksResult.status === "fulfilled" ? snacksResult.value : null;
+  const snacksProducts = snacksData?.products || [];
 
   if (dataResult.status === "rejected") {
     console.warn(
@@ -586,6 +728,7 @@ export const getServerSideProps = async (context) => {
       bestSellingProducts: data?.bestSellingProducts || [],
       brands: brands || [],
       personalCareProducts: personalCareProducts,
+      snacksProducts: snacksProducts,
     },
   };
 };

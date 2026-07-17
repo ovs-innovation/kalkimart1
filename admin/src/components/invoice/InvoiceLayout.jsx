@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React from "react";
-import KalkiBazar from "../../../public/logo/kalkiBazar.png";
+import KalkiBazar from "../../../public/logo/kalkimartlogo.png";
 
 // internal import
 import InvoiceOrderTable from "@/components/invoice/InvoiceOrderTable";

@@ -19,14 +19,14 @@ import CategoryServices from "@services/CategoryServices";
 import SearchSuggestions from "@components/search/SearchSuggestions";
 import LowerCategoryNavbar from "./LowerCategoryNavbar";
 import CustomerNotificationBell from "@components/notification/CustomerNotificationBell";
-import { pickBrandLogo } from "@utils/brandAssets";
-import KalkiBazar from "../../../public/logo/kalkiBazar.png";
+//import { pickBrandLogo } from "@utils/brandAssets";
+import kalkimartlogo from "../../../public/logo/kalkimartlogo.png";
 
 const NavbarLogo = () => {
   return (
-    <Link href="/" className="flex items-center shrink-0 group" aria-label="kalkiBazar">
+    <Link href="/" className="flex items-center shrink-0 group" aria-label="kalkimart">
       <Image
-        src={KalkiBazar}
+        src={kalkimartlogo}
         alt="logo"
         width={158}
         height={170}

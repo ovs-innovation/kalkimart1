@@ -93,7 +93,7 @@ const FilterSidebar = ({
   const discounts = [50, 40, 30, 20, 10];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden backdrop-blur-sm">
+    <div className="filter-sidebar-wrapper bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden backdrop-blur-sm">
       {/* Header Section */}
       <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
         <div className="flex items-center gap-2">
@@ -129,7 +129,7 @@ const FilterSidebar = ({
                   {showingTranslateValue(brand.name)}
                   <button
                     onClick={() => handleBrandChange(brandId)}
-                    className="p-0.5 rounded-full text-gray-400 group-hover:text-red-500 hover:bg-red-50 transition-colors"
+                    className="p-0.5 rounded-full text-gray-400 transition-colors"
                   >
                     <IoClose className="w-3.5 h-3.5" />
                   </button>
@@ -185,7 +185,7 @@ const FilterSidebar = ({
                         handleCategoryChange(t.id);
                       }
                     }}
-                    className="p-0.5 rounded-full text-gray-400 group-hover:text-red-500 hover:bg-red-50 transition-colors"
+                    className="p-0.5 rounded-full text-gray-400 group-hover:text-red-500 hover:bg-red-500 transition-colors"
                   >
                     <IoClose className="w-3.5 h-3.5" />
                   </button>
@@ -247,7 +247,7 @@ const FilterSidebar = ({
           className="w-full p-4 flex justify-between items-center text-sm font-semibold text-gray-800 hover:bg-gray-50/70 transition-colors"
         >
           <span>Categories</span>
-          <span className="text-gray-400 p-1 rounded-lg bg-gray-50 group-hover:bg-gray-100 transition-colors">
+          <span className="text-gray-400 p-1 rounded-lg group-hover:bg-gray-100 transition-colors">
             {openSections.category ? <FiChevronUp className="w-4 h-4" /> : <FiChevronDown className="w-4 h-4" />}
           </span>
         </button>

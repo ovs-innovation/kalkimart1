@@ -72,7 +72,7 @@ const CategoryCards = () => {
             Our Categories
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-            Shop by Health Concern
+            Shop by Category
           </h2>
           <div className="w-12 h-[3px] bg-yellow-500 rounded-full mt-3"></div>
         </div>

@@ -492,17 +492,17 @@ const Search = ({ products, attributes }) => {
                   </h2>
                 </div>
               ) : (
-                <div className="hidden lg:flex justify-between my-3 bg-orange-100 border border-gray-100 rounded p-3">
-                  <h6 className="text-sm font-serif">
+                <div className="hidden lg:flex justify-between items-center my-3 bg-slate-900 border border-slate-800 rounded-xl p-3">
+                  <h6 className="text-sm font-sans text-slate-300">
                     {t("totalI")}{" "}
-                    <span className="font-bold">{filteredProductData?.length}</span>{" "}
+                    <span className="font-bold text-white">{filteredProductData?.length}</span>{" "}
                     {t("itemsFound")}
                   </h6>
-                  <span className="text-sm font-serif">
+                  <span className="text-sm font-sans">
                     <select
                       onChange={(e) => handleSortChange(e.target.value)}
                       value={sortedField}
-                      className="py-0 text-sm font-serif font-medium block w-full rounded border-0 bg-white pr-10 cursor-pointer focus:ring-0"
+                      className="py-1 px-3 text-sm font-medium block w-full rounded-lg border border-slate-750 bg-slate-800 text-slate-200 pr-10 cursor-pointer focus:ring-0 focus:border-slate-700"
                     >
                       <option className="px-3" value="All" defaultValue hidden>
                         {t("sortByPrice")}

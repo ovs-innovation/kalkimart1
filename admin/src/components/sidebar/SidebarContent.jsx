@@ -74,9 +74,9 @@ const SidebarContent = () => {
   return (
     <div className="py-4 text-neutral-500 dark:text-[#9fb1b1]">
       <div>
-        <Link to="/" className="flex items-center ml-8 shrink-0 group" aria-label="KalkiBazar">
+        <Link to="/" className="flex items-center ml-8 shrink-0 group" aria-label="KalkiMart">
           <img
-            src="/logo/kalkiBazar.png"
+            src="/logo/kalkimartlogo.png"
             alt="logo"
             className="object-contain transition-transform duration-300 group-hover:scale-105"
             style={{ height: "120px", width: "auto" }}

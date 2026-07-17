@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import { useRef, useEffect, useState } from "react";
 
@@ -18,6 +19,8 @@ import FloatingWhatsApp from "@components/common/FloatingWhatsApp";
 import { pickBrandLogo } from "@utils/brandAssets";
 
 const Layout = ({ title, description, children, hideMobileHeader }) => {
+  const router = useRouter();
+  const isHome = router.pathname === "/";
   const { storeCustomizationSetting, globalSetting } = useGetSetting();
   const storeColor = "yellow";
   const palette = getPalette(storeColor);
@@ -25,8 +28,18 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
   // Dynamically measure header height so content starts exactly below the fixed header
   const headerRef = useRef(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 15) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    
     const el = headerRef.current;
     if (!el) return;
     setHeaderHeight(el.offsetHeight);
@@ -34,14 +47,17 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
       if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
     });
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   // Sync prescription medicines to cart
   useCartSync();
 
   // Get dynamic title and favicon from settings
-  const siteTitle = "KalkiBazar";
+  const siteTitle = "Kalki Mart";
   const favicon = pickBrandLogo(
     storeCustomizationSetting?.seo?.favicon,
     globalSetting?.logo,
@@ -92,9 +108,9 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
             {title ? `${siteTitle} | ${title}` : siteTitle}
           </title>
           <meta name="description" content={description || defaultDescription} />
-          <link rel="icon" href="/favicon.png?v=2" />
-          <link rel="shortcut icon" href="/favicon.png?v=2" />
-          <link rel="apple-touch-icon" href="/favicon.png?v=2" />
+          <link rel="icon" href="/favicon.png?v=3" />
+          <link rel="shortcut icon" href="/favicon.png?v=3" />
+          <link rel="apple-touch-icon" href="/favicon.png?v=3" />
         </Head>
 
         {/* Mobile header (fixed top, hidden on desktop) */}
@@ -104,14 +120,16 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
         {/* Desktop header — inline styles force position:fixed at viewport top, bypassing any CSS specificity issues */}
         <div
           ref={headerRef}
-          className="hidden lg:block"
+          className="hidden lg:block transition-all duration-300"
           style={{
             position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             zIndex: 9999,
-            backgroundColor: "#020617",
+            backgroundColor: isScrolled ? "rgba(26, 26, 26, 0.8)" : (isHome ? "transparent" : "#1A1A1A"),
+            backdropFilter: isScrolled ? "blur(16px)" : "none",
+            borderBottom: isScrolled ? "1px solid #2A2A2A" : (isHome ? "none" : "1px solid #2A2A2A"),
           }}
         >
           <NavBarTop />

@@ -1327,43 +1327,43 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
 
                         {/* Trust Features Section */}
-                        <div className="mt-8 bg-blue-50 border border-blue-100 rounded-2xl p-4 sm:p-6 shadow-sm">
+                        <div className="mt-8 bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm">
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
 
                             {/* Feature 1 */}
-                            <div className="flex items-center justify-center gap-3 sm:border-r border-blue-200 pr-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-sm border border-blue-100">
-                                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <div className="flex items-center justify-center gap-3 sm:border-r border-slate-800 pr-4">
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
+                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
                                 </svg>
                               </div>
-                              <p className="text-sm sm:text-base font-medium text-gray-700 text-left">
+                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
                                 100% genuine <br /> medicines
                               </p>
                             </div>
 
                             {/* Feature 2 */}
-                            <div className="flex items-center justify-center gap-3 sm:border-r border-blue-200 pr-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-sm border border-blue-100">
-                                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <div className="flex items-center justify-center gap-3 sm:border-r border-slate-800 pr-4">
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
+                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                   <rect x="2" y="7" width="20" height="14" rx="2" />
                                   <path d="M16 3v4M8 3v4" />
                                 </svg>
                               </div>
-                              <p className="text-sm sm:text-base font-medium text-gray-700 text-left">
+                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
                                 Safe & secure <br /> payments
                               </p>
                             </div>
 
                             {/* Feature 3 */}
                             <div className="flex items-center justify-center gap-3">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-sm border border-blue-100">
-                                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
+                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v6h6M20 20v-6h-6" />
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M20 10A8 8 0 104 14" />
                                 </svg>
                               </div>
-                              <p className="text-sm sm:text-base font-medium text-gray-700 text-left">
+                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
                                 15 days Easy <br /> returns
                               </p>
                             </div>
@@ -1820,40 +1820,40 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                           </div>
 
                           {/* Product Description Section */}
-                          {product?.productDescription?.enabled !== false && product?.productDescription?.description && (
-                            <div id="product-description" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                          {product?.productDescription?.enabled !== false && (product?.productDescription?.description || showingTranslateValue(product?.description)) && (
+                            <div id="product-description" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               <div className="flex items-center gap-3 mb-4">
-                                {product.productDescription.icon && (
+                                {product.productDescription?.icon && (
                                   <img src={product.productDescription.icon} alt="" className="w-10 h-10" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
-                                  {product.productDescription.title || "Product Description"} of {dynamicTitle || showingTranslateValue(product?.title)}
+                                <h2 className="text-xl font-semibold text-slate-200">
+                                  {product.productDescription?.title || "Product Description"} of {dynamicTitle || showingTranslateValue(product?.title)}
                                 </h2>
                               </div>
-                              <p className="text-sm text-gray-600 leading-relaxed text-justify">
-                                {product.productDescription.description}
+                              <p className="text-sm text-slate-300 leading-relaxed text-justify">
+                                {product.productDescription?.description || showingTranslateValue(product?.description)}
                               </p>
                             </div>
                           )}
 
                           {/* Specification Section */}
                           {product?.dynamicSections?.some(s => s?.name?.toLowerCase().includes("specification")) && (
-                            <div id="specification" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div id="specification" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               {product.dynamicSections
                                 .filter(s => s?.name?.toLowerCase().includes("specification"))
                                 .map((section, idx) => (
                                   <div key={idx} className="mb-6">
                                     <div className="flex items-center gap-3 mb-4">
-                                      <h2 className="text-xl font-semibold text-gray-800">
+                                      <h2 className="text-xl font-semibold text-slate-200">
                                         {section.name} of {dynamicTitle || showingTranslateValue(product?.title)}
                                       </h2>
                                     </div>
-                                    <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 text-justify">
+                                    <ul className="list-disc list-inside space-y-2 text-sm text-slate-300 text-justify">
                                       {section.subsections
                                         ?.filter(sub => sub?.type !== "paragraph" && (sub?.key || sub?.value))
                                         .map((sub, subIdx) => (
                                           <li key={subIdx}>
-                                            <strong>{sub.key || sub.title}:</strong> {sub.value || sub.content}
+                                            <strong className="text-white">{sub.key || sub.title}:</strong> {sub.value || sub.content}
                                           </li>
                                         ))}
                                     </ul>
@@ -1864,19 +1864,19 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Key Uses Section */}
                           {product?.keyUses?.enabled !== false && product?.keyUses?.items?.length > 0 && (
-                            <div id="key-uses" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div id="key-uses" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               <div className="flex items-center gap-3 mb-4">
                                 {product.keyUses.icon && (
                                   <img src={product.keyUses.icon} alt="" className="w-10 h-10" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
+                                <h2 className="text-xl font-semibold text-slate-200">
                                   {product.keyUses.title || "Key Uses"} of {dynamicTitle || showingTranslateValue(product?.title)}
                                 </h2>
                               </div>
-                              <ul className="list-disc list-inside space-y-4 text-sm text-gray-600 text-justify">
+                              <ul className="list-disc list-inside space-y-4 text-sm text-slate-300 text-justify">
                                 {product.keyUses.items.map((item, idx) => (
                                   <li key={idx} className="leading-relaxed">
-                                    <strong className="text-gray-900">{item.key || item.value}:</strong>{" "}
+                                    <strong className="text-white">{item.key || item.value}:</strong>{" "}
                                     {item.value && item.key ? item.value : ""}
                                   </li>
                                 ))}
@@ -1886,16 +1886,16 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* How To Use Section */}
                           {product?.howToUse?.enabled !== false && product?.howToUse?.items?.length > 0 && (
-                            <div id="how-to-use" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div id="how-to-use" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               <div className="flex items-center gap-3 mb-4">
                                 {product.howToUse.icon && (
                                   <img src={product.howToUse.icon} alt="" className="w-10 h-10" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
+                                <h2 className="text-xl font-semibold text-slate-200">
                                   {product.howToUse.title || "How To Use"}
                                 </h2>
                               </div>
-                              <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 text-justify">
+                              <ul className="list-disc list-inside space-y-2 text-sm text-slate-300 text-justify">
                                 {product.howToUse.items.map((item, idx) => (
                                   <li key={idx} className="leading-relaxed">
                                     {item}
@@ -1907,16 +1907,16 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Safety Information Section */}
                           {product?.safetyInformation?.enabled !== false && product?.safetyInformation?.items?.length > 0 && (
-                            <div id="safety-information" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div id="safety-information" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               <div className="flex items-center gap-3 mb-4">
                                 {product.safetyInformation.icon && (
                                   <img src={product.safetyInformation.icon} alt="" className="w-10 h-10" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
+                                <h2 className="text-xl font-semibold text-slate-200">
                                   {product.safetyInformation.title || "Safety Information"}
                                 </h2>
                               </div>
-                              <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 text-justify">
+                              <ul className="list-disc list-inside space-y-2 text-sm text-slate-300 text-justify">
                                 {product.safetyInformation.items.map((item, idx) => (
                                   <li key={idx} className="leading-relaxed">
                                     {item}
@@ -1928,22 +1928,22 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Additional Information Section */}
                           {product?.additionalInformation?.enabled !== false && product?.additionalInformation?.subsections?.length > 0 && (
-                            <div id="additional-information" className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div id="additional-information" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
                               <div className="flex items-center gap-3 mb-4">
                                 {product.additionalInformation.icon && (
                                   <img src={product.additionalInformation.icon} alt="" className="w-10 h-10" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
+                                <h2 className="text-xl font-semibold text-slate-200">
                                   {product.additionalInformation.title || "Additional Information"}
                                 </h2>
                               </div>
                               <div className="space-y-6">
                                 {product.additionalInformation.subsections.map((subsection, idx) => (
-                                  <div key={idx} className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                    <h3 className="inline-block px-3 py-1 mb-3 text-sm font-semibold text-store-600 bg-store-50 rounded-full">
+                                  <div key={idx} className="bg-slate-900 border border-slate-850 rounded-lg p-4">
+                                    <h3 className="inline-block px-3 py-1 mb-3 text-sm font-semibold text-teal-300 bg-teal-500/10 border border-teal-500/20 rounded-full">
                                       {subsection.label}
                                     </h3>
-                                    <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 text-justify">
+                                    <ul className="list-disc list-inside space-y-2 text-sm text-slate-300 text-justify">
                                       {subsection.items.map((item, itemIdx) => (
                                         <li key={itemIdx} className="leading-relaxed">
                                           {item}
@@ -1967,8 +1967,8 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Modern FAQ Section */}
                           {productFaqs.length > 0 && (
-                            <div id="faq" className="mt-12 border border-gray-100 rounded-[2rem] p-8 bg-white shadow-sm">
-                              <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+                            <div id="faq" className="mt-12 border border-slate-850 rounded-[2rem] p-8 bg-slate-900/40 backdrop-blur-md shadow-sm">
+                              <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                                 <span className="w-2 h-8 bg-store-500 rounded-full" />
                                 {product?.faqs?.title || (product?.faqTitle && product.faqTitle.trim().length
                                   ? product.faqTitle

@@ -48,9 +48,9 @@ const FeatureCard = () => {
       {featurePromo.map((promo) => (
         <div
           key={promo.id}
-          className="group flex items-center gap-3 px-4 py-3 border-r border-store-100 last:border-r-0 hover:bg-store-50 transition-colors duration-200 cursor-default"
+          className="saas-promo-feature group flex items-center gap-3 px-4 py-3 border-r last:border-r-0 transition-colors duration-200 cursor-default"
         >
-          <div className="flex-shrink-0 h-9 w-9 flex items-center justify-center rounded-full bg-store-100 group-hover:bg-store-200 transition-colors duration-200">
+          <div className="flex-shrink-0 h-9 w-9 flex items-center justify-center rounded-full bg-white group-hover:bg-store-200 transition-colors duration-200">
             <promo.icon
               className="h-4 w-4 text-store-600"
               aria-hidden="true"

@@ -148,7 +148,7 @@ const NavBarTop = () => {
               {userInfo?.token ? (
                 <button
                   onClick={handleLogOut}
-                  className="flex items-center gap-1 text-slate-300 hover:text-emerald-400 transition-colors"
+                  className="flex items-center gap-1 text-slate-300 hover:text-red-600 transition-colors"
                 >
                   <IoLockOpenOutline className="text-xs" />
                   <span>{showingTranslateValue(storeCustomizationSetting?.navbar?.logout) || "Logout"}</span>
@@ -156,7 +156,7 @@ const NavBarTop = () => {
               ) : (
                 <Link
                   href="/auth/login"
-                  className="flex items-center gap-1 text-slate-300 hover:text-emerald-400 transition-colors"
+                  className="flex items-center gap-1 text-slate-300 hover:text-red-500 transition-colors"
                 >
                   <FiUser className="text-xs" />
                   <span>{showingTranslateValue(storeCustomizationSetting?.navbar?.login) || "Login"}</span>

@@ -234,14 +234,14 @@ const PersonalCareProductCard = ({
         <div className="flex flex-col pt-3 pb-2 text-left bg-transparent flex-grow">
           
           {/* Sophisticated natural tag */}
-          <div className="text-[10px] font-black tracking-widest text-[#B28E68] mb-1 uppercase">
+          <div className="text-[10px] font-bold tracking-wider text-slate-400 mb-1 uppercase">
             {product.brandName || "PERSONAL CARE & WELLNESS"}
           </div>
 
           {/* Product Title Wrapper with Fixed Height for Vertical Alignment */}
           <div className="h-11 flex items-center mb-1.5">
             <h2
-              className="text-sm md:text-base font-bold text-[#3E3A30] line-clamp-2 leading-snug hover:text-amber-800 transition-colors cursor-pointer w-full"
+              className="text-sm md:text-base font-bold text-slate-200 line-clamp-2 leading-snug hover:text-store-500 transition-colors cursor-pointer w-full"
               onClick={() => router.push(`/product/${product.slug}`)}
               title={showingTranslateValue(product?.title)}
             >
@@ -254,7 +254,7 @@ const PersonalCareProductCard = ({
             {[...Array(5)].map((_, i) => (
               <IoStar key={i} size={11} className="fill-current" />
             ))}
-            <span className="text-[10px] font-bold text-[#8C8673] mt-0.5 ml-1">
+            <span className="text-[10px] font-bold text-slate-400 mt-0.5 ml-1">
               {product?.rating || "4.9"}
             </span>
           </div>
@@ -277,16 +277,16 @@ const PersonalCareProductCard = ({
 
                   return (
                     <>
-                      <p className={`text-base md:text-lg font-extrabold ${hasDiscount ? 'text-rose-600' : 'text-[#2E2C25]'}`}>
+                      <p className={`text-base md:text-lg font-extrabold ${hasDiscount ? 'text-rose-600' : 'text-white'}`}>
                         {currency}{getNumberTwo(Math.max(0, currentPrice))}
                       </p>
                       {hasDiscount && (
-                        <p className="text-xs text-[#A8A18C] line-through font-medium mt-0.5">
+                        <p className="text-xs text-slate-500 line-through font-medium mt-0.5">
                           {currency}{getNumberTwo(originalPriceValue)}
                         </p>
                       )}
                       {isWholesaler && wholesalePrice && (
-                        <p className="text-xs text-[#7A7463] w-full mt-0.5">
+                        <p className="text-xs text-slate-400 w-full mt-0.5">
                           Wholesale: <span className="font-semibold">{currency}{getNumberTwo(wholesalePrice)}</span>
                           {product.minQuantity ? ` (Min ${product.minQuantity})` : ""}
                         </p>
@@ -306,7 +306,7 @@ const PersonalCareProductCard = ({
                   const item = getItem(product._id);
                   return (
                     item && (
-                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-[#E0DCCA] text-[#3E3A30] bg-white rounded-full font-bold transition-all shadow-sm mt-2">
+                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-slate-800 text-slate-200 bg-slate-900 rounded-full font-bold transition-all shadow-sm mt-2">
                         <button
                           onClick={() => {
                             const minQty = isWholesaler && product?.minQuantity ? Number(product.minQuantity) : 1;
@@ -317,15 +317,15 @@ const PersonalCareProductCard = ({
                             updateItemQuantity(item.id, item.quantity - 1);
                           }}
                           disabled={isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity)}
-                          className={`p-1 hover:text-amber-800 transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          className={`p-1 hover:text-store-400 transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
                         >
                           <IoRemove className="w-3.5 h-3.5" />
                         </button>
-                        <p className="text-xs font-bold text-[#2E2C25] px-1">
+                        <p className="text-xs font-bold text-white px-1">
                           {item.quantity}
                         </p>
                         <button
-                          className="p-1 hover:text-amber-800 transition-colors"
+                          className="p-1 hover:text-store-400 transition-colors"
                           onClick={() =>
                             item?.variants?.length > 0
                               ? handleAddItem(item)
@@ -344,10 +344,10 @@ const PersonalCareProductCard = ({
                   title="Add to cart"
                   className="flex items-center gap-2 mt-2 group/btn cursor-pointer select-none"
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#3E3A30] flex items-center justify-center text-white shadow-[0_2px_6px_rgba(62,58,48,0.15)] group-hover/btn:bg-[#25221B] group-hover/btn:scale-105 group-hover/btn:rotate-12 transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white shadow-sm group-hover/btn:bg-slate-700 group-hover/btn:scale-105 group-hover/btn:rotate-12 transition-all duration-300">
                     <IoCartOutline className="w-4 h-4" />
                   </div>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-700 tracking-wider uppercase group-hover/btn:text-[#3E3A30] transition-colors duration-300">
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 tracking-wider uppercase group-hover/btn:text-white transition-colors duration-300">
                     ADD TO CART
                   </span>
                 </button>

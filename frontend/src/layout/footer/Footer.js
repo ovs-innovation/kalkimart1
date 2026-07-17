@@ -28,7 +28,8 @@ import {
   FiSettings,
   FiMessageSquare,
 } from "react-icons/fi";
-import KalkiBazar from "../../../public/logo/kalkiBazar.png";
+import kalkimartlogo from "../../../public/logo/kalkimartlogo.png";
+
 
 //internal import
 import { getUserSession } from "@lib/auth";
@@ -115,9 +116,9 @@ const Footer = () => {
           {/* Brand & Contact Column (Takes 4/12 width on large screens) */}
           <div className="lg:col-span-4 space-y-6">
             {/* Logo Section */}
-            <Link href="/" className="flex items-center gap-2.5 shrink-0 group" aria-label="kalkiBazar">
+            <Link href="/" className="flex items-center gap-2.5 shrink-0 group" aria-label="kalkimart">
               <Image
-                src={KalkiBazar}
+                src={kalkimartlogo}
                 alt="logo"
                 width={158}
                 height={190}

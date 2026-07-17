@@ -17,7 +17,7 @@ import useWishlist from "@hooks/useWishlist";
 import LocationButton from "@components/location/LocationButton";
 import SearchSuggestions from "@components/search/SearchSuggestions";
 import CustomerNotificationBell from "@components/notification/CustomerNotificationBell";
-import KalkiBazar from "../../../public/logo/kalkiBazar.png";
+import kalkimartlogo from "../../../public/logo/kalkimartlogo.png";
 
 const MobileFooter = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -86,10 +86,10 @@ const MobileFooter = () => {
             href="/"
             className="flex items-center shrink-0 group"
             rel="noreferrer"
-            aria-label="kalkiBazar"
+            aria-label="kalkimart"
           >
             <Image
-              src={KalkiBazar}
+              src={kalkimartlogo}
               alt="logo"
               width={158}
               height={190}
