@@ -2839,28 +2839,57 @@ img[src*="kalkiBazar"] {
   color: #60a5fa !important; /* Electric blue icon */
 }
 
-/* Force search suggestions container to be clean white with dark grey list entries */
-#hero-search-anchor .search-suggestions-container {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+/* Force search suggestions container to be premium dark glassmorphism */
+.search-suggestions-container {
+  background-color: rgba(15, 23, 42, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 14px !important;
+  overflow: hidden;
 }
 
-#hero-search-anchor .search-suggestions-container button {
-  background-color: #ffffff !important;
+.search-suggestions-container button {
+  background-color: transparent !important;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.03) !important;
+  transition: background-color 0.2s ease !important;
 }
 
-#hero-search-anchor .search-suggestions-container button:hover {
-  background-color: #f1f5f9 !important;
+.search-suggestions-container button:last-child {
+  border-bottom: none !important;
 }
 
-#hero-search-anchor .search-suggestions-container button div,
-#hero-search-anchor .search-suggestions-container button span,
-#hero-search-anchor .search-suggestions-container button svg {
-  color: #1e293b !important;
+.search-suggestions-container button:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-#hero-search-anchor .search-suggestions-container button div.text-xs {
-  color: #64748b !important;
+.search-suggestions-container button div,
+.search-suggestions-container button span {
+  color: #f1f5f9 !important; /* Off-white for high contrast and readability */
+}
+
+.search-suggestions-container button svg {
+  color: #60a5fa !important; /* Electric blue icon accent */
+}
+
+.search-suggestions-container button div.text-xs {
+  color: #94a3b8 !important; /* Muted cool grey for metadata labels (type, etc.) */
+}
+
+.search-suggestions-container button span.rounded {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Make search suggestions container wider and centered on mobile viewports */
+@media (max-width: 767px) {
+  .search-suggestions-container {
+    width: calc(100vw - 2.5rem) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: 450px !important;
+  }
 }
 
 

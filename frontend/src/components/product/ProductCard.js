@@ -129,7 +129,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
           attributes={attributes}
         />
       )}
-      <div className="group relative flex flex-col w-full h-full max-w-[360px] xl:max-w-[370px] mx-auto select-none bg-transparent">
+      <div className="group relative flex flex-col w-full h-full max-w-[360px] xl:max-w-[370px] mx-auto select-none bg-neutral-900/30 border border-neutral-800/60 rounded-3xl p-3.5 backdrop-blur-sm transition-all duration-300 hover:border-store-500/40 hover:bg-neutral-900/50 hover:shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
         
         {/* Product Image Container Box */}
         <div
@@ -137,7 +137,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             router.push(`/product/${product.slug}`);
             handleLogEvent("product", `Mapped to ${showingTranslateValue(product?.title)} product page`);
           }}
-          className="relative w-full h-[180px] sm:h-[220px] rounded-2xl border border-slate-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-[0_12px_30px_rgba(0,0,0,0.06)] hover:border-slate-300/80 group/img flex-shrink-0"
+          className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden transition-all duration-300 group/img flex-shrink-0"
           style={{ backgroundColor: "#ffffff" }}
         >
           {/* Discount Badge */}
@@ -216,17 +216,17 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
         </div>
 
         {/* Info Content Section */}
-        <div className="flex flex-col pt-3 pb-2 text-left bg-transparent flex-grow">
+        <div className="flex flex-col pt-4 pb-1 text-left bg-transparent flex-grow">
 
           {/* Brand/Category Tag */}
-          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+          <div className="text-[10px] font-bold uppercase tracking-wider text-store-400 mb-1">
             {product.brandName || "PHARMACY ESSENTIALS"}
           </div>
 
           {/* Product Title Wrapper with Fixed Height for Vertical Alignment */}
           <div className="h-11 flex items-center mb-1.5">
             <h2
-              className="text-sm md:text-base font-bold text-slate-800 line-clamp-2 leading-snug hover:text-store-500 transition-colors cursor-pointer w-full"
+              className="text-sm md:text-base font-bold text-neutral-100 line-clamp-2 leading-snug hover:text-store-400 transition-colors cursor-pointer w-full"
               onClick={() => router.push(`/product/${product.slug}`)}
               title={showingTranslateValue(product?.title)}
             >
@@ -239,7 +239,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             {[...Array(5)].map((_, i) => (
               <IoStar key={i} size={12} className="fill-current" />
             ))}
-            <span className="text-[10px] font-bold text-gray-400 mt-0.5 ml-1">
+            <span className="text-[10px] font-bold text-neutral-400 mt-0.5 ml-1">
               {product?.rating || "4.8"}
             </span>
           </div>
@@ -262,16 +262,16 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
 
                   return (
                     <>
-                      <p className={`text-base md:text-lg font-extrabold ${hasDiscount ? 'text-rose-600' : 'text-slate-900'}`}>
+                      <p className={`text-base md:text-lg font-extrabold ${hasDiscount ? 'text-rose-500' : 'text-neutral-100'}`}>
                         {currency}{getNumberTwo(Math.max(0, currentPrice))}
                       </p>
                       {hasDiscount && (
-                        <p className="text-xs text-gray-400 line-through font-medium mt-0.5">
+                        <p className="text-xs text-neutral-400 line-through font-medium mt-0.5">
                           {currency}{getNumberTwo(originalPriceValue)}
                         </p>
                       )}
                       {isWholesaler && wholesalePrice && (
-                        <p className="text-xs text-gray-500 w-full mt-0.5">
+                        <p className="text-xs text-neutral-400 w-full mt-0.5">
                           Wholesale: <span className="font-semibold">{currency}{getNumberTwo(wholesalePrice)}</span>
                           {product.minQuantity ? ` (Min ${product.minQuantity})` : ""}
                         </p>
@@ -285,13 +285,13 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
 
           {/* Action Button Section */}
           {!hidePriceAndAdd && (
-            <div className="flex justify-start w-full mt-auto">
+            <div className="flex justify-start w-full mt-auto pt-2">
               {inCart(product._id) ? (
                 (() => {
                   const item = getItem(product._id);
                   return (
                     item && (
-                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-slate-200 text-slate-700 bg-white rounded-full font-bold transition-all shadow-sm mt-2">
+                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-neutral-800 text-neutral-200 bg-neutral-900 rounded-full font-bold transition-all shadow-sm mt-1">
                         <button
                           onClick={() => {
                             const minQty = isWholesaler && product?.minQuantity ? Number(product.minQuantity) : 1;
@@ -302,15 +302,15 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                             updateItemQuantity(item.id, item.quantity - 1);
                           }}
                           disabled={isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity)}
-                          className={`p-1 hover:text-store-500 transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          className={`p-1 hover:text-store-400 transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
                         >
                           <IoRemove className="w-3.5 h-3.5" />
                         </button>
-                        <p className="text-xs font-bold text-slate-800 px-1">
+                        <p className="text-xs font-bold text-neutral-200 px-1">
                           {item.quantity}
                         </p>
                         <button
-                          className="p-1 hover:text-store-500 transition-colors"
+                          className="p-1 hover:text-store-400 transition-colors"
                           onClick={() =>
                             item?.variants?.length > 0
                               ? handleAddItem(item)
@@ -327,12 +327,12 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                 <button
                   onClick={() => handleAddItem(product)}
                   title="Add to cart"
-                  className="flex items-center gap-2 mt-2 group/btn cursor-pointer select-none"
+                  className="flex items-center gap-2 mt-1 group/btn cursor-pointer select-none"
                 >
                   <div className="w-8 h-8 rounded-full bg-store-500 flex items-center justify-center text-white shadow-[0_2px_10px_rgba(var(--store-color-rgb,0,0,0),0.2)] group-hover/btn:bg-store-600 group-hover/btn:scale-110 group-hover/btn:rotate-12 transition-all duration-300">
                     <IoCartOutline className="w-4 h-4" />
                   </div>
-                  <span className="text-[10px] md:text-xs font-black text-slate-700 tracking-wider uppercase group-hover/btn:text-store-500 transition-colors duration-300">
+                  <span className="text-[10px] md:text-xs font-black text-neutral-300 tracking-wider uppercase group-hover/btn:text-store-400 transition-colors duration-300">
                     ADD TO CART
                   </span>
                 </button>

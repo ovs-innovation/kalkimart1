@@ -7,7 +7,7 @@ import { FiHeart, FiShoppingCart, FiUser, FiFilter, FiList } from "react-icons/f
 import { useCart } from "react-use-cart";
 import LocationButton from "@components/location/LocationButton";
 import SearchSuggestions from "@components/search/SearchSuggestions";
-
+import Link from "next/link";
 //internal import
 import Layout from "@layout/Layout";
 import useFilter from "@hooks/useFilter";
@@ -86,10 +86,10 @@ const Search = ({ products, attributes }) => {
   // Sync sort state from URL when route is ready or query changes
   useEffect(() => {
     if (!router.isReady) return;
-    
+
     const sortFromUrl = router.query.sort;
     const currentSort = sortedField || "All";
-    
+
     // Only sync if URL value differs from current state (prevents loops)
     if (sortFromUrl && sortFromUrl !== currentSort) {
       setSortedField(sortFromUrl);
@@ -107,7 +107,7 @@ const Search = ({ products, attributes }) => {
     // Update state immediately for instant UI feedback
     // This triggers useFilter to recalculate productData
     setSortedField(value);
-    
+
     // Build query object preserving all existing params (id, brand, query, etc.)
     const newQuery = { ...router.query };
     if (value === "All" || value === "") {
@@ -115,7 +115,7 @@ const Search = ({ products, attributes }) => {
     } else {
       newQuery.sort = value;
     }
-    
+
     router.push(
       {
         pathname: "/search",
@@ -137,14 +137,14 @@ const Search = ({ products, attributes }) => {
         const brand = router.query.brand;
 
         const response = await ProductServices.getShowingStoreProducts({
-          category: id ? id : categorySlug ? categorySlug : "", 
+          category: id ? id : categorySlug ? categorySlug : "",
           title: q ? encodeURIComponent(q) : "",
           brand: brand ? brand : "",
         });
 
         if (response?.products) {
           setInitialProducts(response.products);
-          
+
           // Sync selection with URL if not a sidebar action
           if (id && !isSidebarAction.current) {
             const findAndSelect = (cats, targetId) => {
@@ -158,7 +158,7 @@ const Search = ({ products, attributes }) => {
               }
               return false;
             };
-            
+
             if (!findAndSelect(categories, id)) {
               setSelectedCategories([id]);
             }
@@ -185,19 +185,19 @@ const Search = ({ products, attributes }) => {
   const clearSearchQuery = () => {
     // Check if any filtering params exist in URL that limit the initial data fetch
     if (
-      router.query.query || 
-      router.query._id || 
-      router.query.category || 
+      router.query.query ||
+      router.query._id ||
+      router.query.category ||
       router.query.brand
     ) {
       const newQuery = { ...router.query };
-      
+
       // Remove params that restrict the server-side product list
       delete newQuery.query;
       delete newQuery._id;
       delete newQuery.category;
       delete newQuery.brand;
-      
+
       router.push(
         {
           pathname: "/search",
@@ -222,7 +222,7 @@ const Search = ({ products, attributes }) => {
 
   const handleCategoryChange = (catIdOrIds) => {
     isSidebarAction.current = true;
-    
+
     // Clear URL params but keep it shallow to maintain state stability
     clearSearchQuery();
 
@@ -239,7 +239,7 @@ const Search = ({ products, attributes }) => {
       });
     } else {
       const catId = catIdOrIds;
-      setSelectedCategories((prev) => 
+      setSelectedCategories((prev) =>
         prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId]
       );
     }
@@ -298,11 +298,11 @@ const Search = ({ products, attributes }) => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const trimmedSearchText = searchText.trim();
     setShowSuggestions(false);
     searchInputRef.current?.blur();
-    
+
     if (trimmedSearchText) {
       router.push(
         {
@@ -325,22 +325,22 @@ const Search = ({ products, attributes }) => {
   return (
     <Layout title="Search" description="This is search page" hideMobileHeader={true}>
       {/* Mobile Header */}
-      <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-3">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 px-4 py-3">
         {isSearchOpen ? (
           <form onSubmit={handleSearchSubmit} className="relative flex items-center bg-white border-2 border-gray-200 rounded-full shadow-sm overflow-visible">
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => {
                 setIsSearchOpen(false);
                 setShowSuggestions(false);
-              }} 
+              }}
               className="text-gray-700 px-3"
             >
               <IoArrowBack size={24} />
             </button>
             {/* Location Button */}
             <LocationButton className="h-full" />
-            
+
             {/* Search Input */}
             <div className="flex-1 relative">
               <input
@@ -349,13 +349,13 @@ const Search = ({ products, attributes }) => {
                 type="text"
                 value={searchText}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Search for medicine or store..."
+                placeholder="Search for products.."
                 className="w-full py-2.5 pl-4 pr-12 rounded-full bg-white focus:outline-none outline-none focus:ring-0 focus:border-transparent focus:shadow-none text-gray-700 text-sm"
                 onFocus={() => searchText.length > 0 && setShowSuggestions(true)}
                 onBlur={(e) => {
                   const relatedTarget = e.relatedTarget;
                   const suggestionsContainer = document.querySelector('.search-suggestions-container');
-                  
+
                   if (!relatedTarget || (suggestionsContainer && !suggestionsContainer.contains(relatedTarget))) {
                     setTimeout(() => {
                       const activeElement = document.activeElement;
@@ -366,8 +366,8 @@ const Search = ({ products, attributes }) => {
                   }
                 }}
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-store-600 transition-colors"
               >
                 <IoSearchOutline className="text-lg" />
@@ -391,18 +391,20 @@ const Search = ({ products, attributes }) => {
                 <IoArrowBack size={24} />
               </button>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 relative">
-                  <Image
-                    src="/logo/logo.png"
-                    alt="logo"
-                    fill
-                    className="object-contain"
-                    sizes="32px"
-                  />
+                <div className="w-16 h-16 relative">
+                  <Link href="/">
+                    <Image
+                       src="/logo/kalkimartlogo.png"
+                       alt="logo"
+                       fill
+                       className="object-contain"
+                       sizes="32px"
+                     />
+                  </Link>
                 </div>
-                <h1 className="text-lg font-semibold text-gray-800 capitalize truncate max-w-[120px]">
+                {/* <h1 className="text-lg font-semibold text-gray-800 capitalize truncate max-w-[120px]">
                   {query || "Search"}
-                </h1>
+                </h1> */}
               </div>
             </div>
             <div className="flex items-center gap-4 text-gray-700">
@@ -433,225 +435,221 @@ const Search = ({ products, attributes }) => {
         )}
       </div>
 
-      {/* Mobile Sort/Filter Bar */}
-      <div className="lg:hidden sticky top-[57px] z-40 bg-white border-b border-gray-100 flex divide-x divide-gray-100">
-        <button
-          onClick={() => setIsSortModalOpen(true)}
-          className="flex-1 py-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-700"
-        >
-          <FiList size={18} />
-          Sort
-        </button>
-        <button
-          onClick={toggleFilterDrawer}
-          className="flex-1 py-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-700"
-        >
-          <FiFilter size={18} />
-          Filter
-        </button>
-      </div>
+      <div className="pt-[32px] lg:pt-0">
+        {/* Mobile Sort/Filter Bar */}
+        <div className="lg:hidden sticky top-[57px] z-40 bg-white border-b border-gray-100 flex divide-x divide-gray-100">
+          <button
+            onClick={() => setIsSortModalOpen(true)}
+            className="flex-1 py-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-700"
+          >
+            <FiList size={18} />
+            Sort
+          </button>
+          <button
+            onClick={toggleFilterDrawer}
+            className="flex-1 py-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-700"
+          >
+            <FiFilter size={18} />
+            Filter
+          </button>
+        </div>
 
-      <div className="mx-auto max-w-screen-2xl px-3 md:px-0">
-        <div className="flex gap-6">
-          {/* Sidebar for Desktop */}
-          <div className="hidden lg:block w-1/5 shrink-0">
-            <FilterSidebar
-              selectedBrands={selectedBrands}
-              setSelectedBrands={handleBrandChange}
-              priceRange={priceRange}
-              setPriceRange={handlePriceRangeChange}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={handleCategoryChange}
-              selectedRating={selectedRating}
-              setSelectedRating={handleRatingChange}
-              selectedDiscount={selectedDiscount}
-              setSelectedDiscount={handleDiscountChange}
-              onClearAll={handleClearAll}
-            />
-          </div>
+        <div className="mx-auto max-w-screen-2xl px-3 md:px-0">
+          <div className="flex gap-6">
+            {/* Sidebar for Desktop */}
+            <div className="hidden lg:block w-1/5 shrink-0">
+              <FilterSidebar
+                selectedBrands={selectedBrands}
+                setSelectedBrands={handleBrandChange}
+                priceRange={priceRange}
+                setPriceRange={handlePriceRangeChange}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={handleCategoryChange}
+                selectedRating={selectedRating}
+                setSelectedRating={handleRatingChange}
+                selectedDiscount={selectedDiscount}
+                setSelectedDiscount={handleDiscountChange}
+                onClearAll={handleClearAll}
+              />
+            </div>
 
-          <div className="w-full lg:w-3/4">
-            <div className="w-full">
-              <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6">
-                {/* <Card /> */}
-              </div>
-              {/* <div className="relative block">
+            <div className="w-full lg:w-3/4">
+              <div className="w-full mt-2">
+                {/* <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:gap-6">
+                <Card />
+              </div> */}
+                {/* <div className="relative block">
                 <CategoryCarousel />
               </div> */}
-              {filteredProductData?.length === 0 ? (
-                <div className="mx-auto p-5 my-5">
-                  <Image
-                    className="my-4 mx-auto"
-                    src="/no-result.svg"
-                    alt="no-result"
-                    width={400}
-                    height={380}
-                  />
-                  <h2 className="text-lg md:text-xl lg:text-2xl xl:text-2xl text-center mt-2 font-medium font-serif text-gray-600">
-                    {t("sorryText")} 😞
-                  </h2>
-                </div>
-              ) : (
-                <div className="hidden lg:flex justify-between items-center my-3 bg-slate-900 border border-slate-800 rounded-xl p-3">
-                  <h6 className="text-sm font-sans text-slate-300">
-                    {t("totalI")}{" "}
-                    <span className="font-bold text-white">{filteredProductData?.length}</span>{" "}
-                    {t("itemsFound")}
-                  </h6>
-                  <span className="text-sm font-sans">
-                    <select
-                      onChange={(e) => handleSortChange(e.target.value)}
-                      value={sortedField}
-                      className="py-1 px-3 text-sm font-medium block w-full rounded-lg border border-slate-750 bg-slate-800 text-slate-200 pr-10 cursor-pointer focus:ring-0 focus:border-slate-700"
-                    >
-                      <option className="px-3" value="All" defaultValue hidden>
-                        {t("sortByPrice")}
-                      </option>
-                      <option className="px-3" value="Low">
-                        {t("lowToHigh")}
-                      </option>
-                      <option className="px-3" value="High">
-                        {t("highToLow")}
-                      </option>
-                      <option className="px-3" value="newest">
-                        Latest
-                      </option>
-                      <option className="px-3" value="best-selling">
-                        Best Selling
-                      </option>
-                      <option className="px-3" value="most-discounted">
-                        Most Discounted
-                      </option>
-                    </select>
-                  </span>
-                </div>
-              )}
-
-              {isLoading ? (
-                <Loading loading={isLoading} />
-              ) : (
-                <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-3">
-                    {filteredProductData?.slice(0, visibleProduct).map((product, i) => (
-                      <ProductCard
-                        key={i + 1}
-                        product={product}
-                        attributes={attributes}
-                      />
-                    ))}
+                {filteredProductData?.length === 0 ? (
+                  <div className="mx-auto p-5 my-5">
+                    <Image
+                      className="my-4 mx-auto"
+                      src="/no-result.svg"
+                      alt="no-result"
+                      width={400}
+                      height={380}
+                    />
+                    <h2 className="text-lg md:text-xl lg:text-2xl xl:text-2xl text-center mt-2 font-medium font-serif text-gray-600">
+                      {t("sorryText")} 😞
+                    </h2>
                   </div>
+                ) : (
+                  <div className="hidden lg:flex justify-between items-center my-3 bg-slate-900 border border-slate-800 rounded-xl p-3">
+                    <h6 className="text-sm font-sans text-slate-300">
+                      {t("totalI")}{" "}
+                      <span className="font-bold text-white">{filteredProductData?.length}</span>{" "}
+                      {t("itemsFound")}
+                    </h6>
+                    <span className="text-sm font-sans">
+                      <select
+                        onChange={(e) => handleSortChange(e.target.value)}
+                        value={sortedField}
+                        className="py-1 px-3 text-sm font-medium block w-full rounded-lg border border-slate-750 bg-slate-800 text-slate-200 pr-10 cursor-pointer focus:ring-0 focus:border-slate-700"
+                      >
+                        <option className="px-3" value="All" defaultValue hidden>
+                          {t("sortByPrice")}
+                        </option>
+                        <option className="px-3" value="Low">
+                          {t("lowToHigh")}
+                        </option>
+                        <option className="px-3" value="High">
+                          {t("highToLow")}
+                        </option>
+                        <option className="px-3" value="newest">
+                          Latest
+                        </option>
+                        <option className="px-3" value="best-selling">
+                          Best Selling
+                        </option>
+                        <option className="px-3" value="most-discounted">
+                          Most Discounted
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+                )}
 
-                  {filteredProductData?.length > visibleProduct && (
-                    <button
-                      onClick={() => setVisibleProduct((pre) => pre + 10)}
-                      className={`w-auto mx-auto md:text-sm leading-5 flex items-center transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none bg-indigo-100 text-gray-700 px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-store-600 h-12 mt-6 text-sm lg:text-sm`}
-                    >
-                      {t("loadMoreBtn")}
-                    </button>
-                  )}
-                </>
-              )}
+                {isLoading ? (
+                  <Loading loading={isLoading} />
+                ) : (
+                  <>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-3">
+                      {filteredProductData?.slice(0, visibleProduct).map((product, i) => (
+                        <ProductCard
+                          key={i + 1}
+                          product={product}
+                          attributes={attributes}
+                        />
+                      ))}
+                    </div>
+
+                    {filteredProductData?.length > visibleProduct && (
+                      <button
+                        onClick={() => setVisibleProduct((pre) => pre + 10)}
+                        className={`w-auto mx-auto md:text-sm leading-5 flex items-center transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none bg-indigo-100 text-gray-700 px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-store-600 h-12 mt-6 text-sm lg:text-sm`}
+                      >
+                        {t("loadMoreBtn")}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Filter Drawer for Mobile */}
+        <FilterDrawer
+          selectedBrands={selectedBrands}
+          setSelectedBrands={handleBrandChange}
+          priceRange={priceRange}
+          setPriceRange={handlePriceRangeChange}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={handleCategoryChange}
+          selectedRating={selectedRating}
+          setSelectedRating={handleRatingChange}
+          selectedDiscount={selectedDiscount}
+          setSelectedDiscount={handleDiscountChange}
+          onClearAll={handleClearAll}
+        />
+
+        {/* Sort Modal for Mobile */}
+        {isSortModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50 lg:hidden">
+            <div className="bg-white w-full rounded-t-2xl p-6 animate-slide-up">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Sort By</h3>
+                <button className="p-2 border border-store-400 rounded-lg" onClick={() => setIsSortModalOpen(false)}>
+                  <IoClose size={24} />
+                </button>
+              </div>
+              <div className="space-y-4">
+                <button
+                  onClick={() => {
+                    handleSortChange("Low");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "Low" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Price: Low to High
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortChange("High");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "High" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Price: High to Low
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortChange("newest");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "newest" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Latest
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortChange("best-selling");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "best-selling" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Best Selling
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortChange("most-discounted");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "most-discounted" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Most Discounted
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortChange("All");
+                    setIsSortModalOpen(false);
+                  }}
+                  className={`w-full text-left py-2 px-4 rounded-lg ${sortedField === "All" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
+                    }`}
+                >
+                  Default
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Filter Drawer for Mobile */}
-      <FilterDrawer
-        selectedBrands={selectedBrands}
-        setSelectedBrands={handleBrandChange}
-        priceRange={priceRange}
-        setPriceRange={handlePriceRangeChange}
-        selectedCategories={selectedCategories}
-        setSelectedCategories={handleCategoryChange}
-        selectedRating={selectedRating}
-        setSelectedRating={handleRatingChange}
-        selectedDiscount={selectedDiscount}
-        setSelectedDiscount={handleDiscountChange}
-        onClearAll={handleClearAll}
-      />
-
-      {/* Sort Modal for Mobile */}
-      {isSortModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50 lg:hidden">
-          <div className="bg-white w-full rounded-t-2xl p-6 animate-slide-up">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Sort By</h3>
-              <button className="p-2 border border-store-400 rounded-lg" onClick={() => setIsSortModalOpen(false)}>
-                <IoClose size={24} />
-              </button>
-            </div>
-            <div className="space-y-4">
-              <button
-                onClick={() => {
-                  handleSortChange("Low");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "Low" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Price: Low to High
-              </button>
-              <button
-                onClick={() => {
-                  handleSortChange("High");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "High" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Price: High to Low
-              </button>
-              <button
-                onClick={() => {
-                  handleSortChange("newest");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "newest" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Latest
-              </button>
-              <button
-                onClick={() => {
-                  handleSortChange("best-selling");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "best-selling" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Best Selling
-              </button>
-              <button
-                onClick={() => {
-                  handleSortChange("most-discounted");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "most-discounted" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Most Discounted
-              </button>
-              <button
-                onClick={() => {
-                  handleSortChange("All");
-                  setIsSortModalOpen(false);
-                }}
-                className={`w-full text-left py-2 px-4 rounded-lg ${
-                  sortedField === "All" ? "bg-store-100 text-store-600 font-semibold" : "text-gray-700"
-                }`}
-              >
-                Default
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 };

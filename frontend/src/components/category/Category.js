@@ -92,7 +92,7 @@ const Category = () => {
               <Image
                 width={100}
                 height={38}
-                src="/logo/logo.png"
+                src="/logo/kalkimartlogo.png"
                 alt="logo"
               />
             </Link>

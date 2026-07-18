@@ -80,7 +80,7 @@ const HeroBanner = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
             </span>
-            <span>Premium B2B E-commerce Marketplace ✨</span>
+            <span>Premium B2C E-commerce Marketplace ✨</span>
           </div>
 
           {/* SaaS Typography: Ultra bold, tight line height */}
@@ -166,14 +166,17 @@ const HeroBanner = () => {
           </div>
 
           {/* Minimalist SaaS cosmic outline badges (styled like outline buttons) */}
-          <div className="flex items-center justify-center gap-4 mt-12 flex-wrap w-full">
+          <div className="grid grid-cols-2 md:flex items-center justify-center gap-3 md:gap-4 mt-12 w-full max-w-xl md:max-w-none mx-auto px-1 sm:px-0">
             {badges.map((b, i) => (
-              <React.Fragment key={i}>
-                <div className="flex items-center gap-2 cosmic-badge-pill px-5 py-2 text-xs font-semibold hover:scale-[1.03] transition-all duration-200 cursor-pointer">
-                  {b.icon}
-                  <span className="tracking-wide font-sans">{b.label}</span>
-                </div>
-              </React.Fragment>
+              <div
+                key={i}
+                className={`flex items-center justify-center gap-2 cosmic-badge-pill px-4 py-2 text-[11px] sm:text-xs font-semibold hover:scale-[1.03] transition-all duration-200 cursor-pointer ${
+                  i === 2 ? "col-span-2 mx-auto md:mx-0 w-auto" : "w-full md:w-auto"
+                }`}
+              >
+                {b.icon}
+                <span className="tracking-wide font-sans whitespace-nowrap">{b.label}</span>
+              </div>
             ))}
           </div>
 

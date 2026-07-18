@@ -68,13 +68,13 @@ const CategoryCards = () => {
 
         {/* Centered Header Block matching the screenshot UI */}
         <div className="flex flex-col items-center justify-center mb-10 text-center">
-          <span className="text-xs md:text-sm font-bold text-yellow-500 tracking-widest uppercase mb-1">
+          <span className="text-xs md:text-sm font-bold text-blue-500 tracking-widest uppercase mb-1">
             Our Categories
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             Shop by Category
           </h2>
-          <div className="w-12 h-[3px] bg-yellow-500 rounded-full mt-3"></div>
+          <div className="w-12 h-[3px] bg-blue-500 rounded-full mt-3"></div>
         </div>
 
         {/* Carousel Window */}
@@ -119,7 +119,7 @@ const CategoryCards = () => {
                   </div>
 
                   {/* Clean Category Label Title directly below box container */}
-                  <h3 className="mt-4 text-sm md:text-base font-bold text-slate-300 text-center tracking-tight px-1 line-clamp-1 group-hover:text-yellow-500 transition-colors duration-300">
+                  <h3 className="mt-4 text-sm md:text-base font-bold text-slate-300 text-center tracking-tight px-1 line-clamp-1 group-hover:text-blue-500 transition-colors duration-300">
                     {category.title}
                   </h3>
                 </div>
@@ -140,7 +140,7 @@ const CategoryCards = () => {
         <div className="flex justify-center mt-10">
           <button
             onClick={() => router.push("/search")}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all hover:border-slate-300 shadow-sm"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-slate-200 text-sm font-semibold text-black hover:bg-blue-500 transition-all hover:border-slate-300 shadow-sm"
           >
             View All Categories
             <span className="text-base font-normal">→</span>

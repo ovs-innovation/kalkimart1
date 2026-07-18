@@ -136,10 +136,14 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
           <Navbar />
         </div>
 
-        {/* Page content — paddingTop dynamically equals the actual fixed header height */}
+        {/* Page content — paddingTop dynamically equals the actual fixed header height on desktop only */}
         <div
           className={`${hideMobileHeader ? "pt-0" : "pt-16"} pb-16 lg:pb-0`}
-          style={headerHeight > 0 ? { paddingTop: `${headerHeight}px` } : {}}
+          style={
+            headerHeight > 0 && typeof window !== "undefined" && window.innerWidth >= 1024
+              ? { paddingTop: `${headerHeight}px` }
+              : {}
+          }
         >
           {children}
         </div>
