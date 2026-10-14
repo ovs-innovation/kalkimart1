@@ -264,30 +264,39 @@ const colors = {
     800: "#9f1239",
     900: "#881337",
   },
+  gold: {
+    50: "#fffbeb",
+    100: "#fef3c7",
+    200: "#fed7aa",
+    300: "#f9d39d",
+    400: "#f3c47a",
+    500: "#d4a359",
+    600: "#b88738",
+    700: "#946823",
+    800: "#754f19",
+    900: "#452d0a",
+  },
 };
 
-export const DEFAULT_STORE_COLOR = "teal";
+export const DEFAULT_STORE_COLOR = "gold";
 
 export const getPalette = (tokenOrHex) => {
-  if (!tokenOrHex) return colors.violet;
+  if (!tokenOrHex || tokenOrHex === "blue" || tokenOrHex === "teal") return colors.gold;
 
   if (tokenOrHex.startsWith("#") || tokenOrHex.startsWith("linear-gradient")) {
-    // Simple hex to palette generation
-    // For now, we'll just use the same color for all shades
-    // or we could use a simple lighten/darken logic
     return {
-      50: tokenOrHex.startsWith("#") ? tokenOrHex + "10" : tokenOrHex, // 10% opacity
+      50: tokenOrHex.startsWith("#") ? tokenOrHex + "10" : tokenOrHex,
       100: tokenOrHex.startsWith("#") ? tokenOrHex + "20" : tokenOrHex,
       200: tokenOrHex.startsWith("#") ? tokenOrHex + "40" : tokenOrHex,
       300: tokenOrHex.startsWith("#") ? tokenOrHex + "60" : tokenOrHex,
       400: tokenOrHex.startsWith("#") ? tokenOrHex + "90" : tokenOrHex,
       500: tokenOrHex,
-      600: tokenOrHex, // Could darken here
+      600: tokenOrHex,
       700: tokenOrHex,
       800: tokenOrHex,
       900: tokenOrHex,
     };
   }
 
-  return colors[tokenOrHex] || colors.violet;
+  return colors[tokenOrHex] || colors.gold;
 };

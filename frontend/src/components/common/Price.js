@@ -55,8 +55,8 @@ const Price = ({
           <span
             className={
               card
-                ? "inline-block text-lg font-semibold text-gray-800"
-                : "inline-block text-2xl"
+                ? "inline-block text-lg font-semibold text-white"
+                : "inline-block text-3xl font-extrabold text-white tracking-tight"
             }
           >
             {currency}
@@ -67,8 +67,8 @@ const Price = ({
               <del
                 className={
                   card
-                    ? "sm:text-sm font-normal text-base text-gray-400 ml-1"
-                    : "text-lg font-normal text-gray-400 ml-1"
+                    ? "sm:text-sm font-normal text-base text-neutral-500 ml-1.5"
+                    : "text-lg font-normal text-neutral-500 ml-2 line-through"
                 }
               >
                 {currency}
@@ -77,8 +77,8 @@ const Price = ({
               <span
                 className={
                   card
-                    ? "block text-store-600 text-xs font-bold"
-                    : "inline-block text-store-600 text-sm font-bold ml-2"
+                    ? "block text-[#FED7AA] text-xs font-bold"
+                    : "inline-block text-[#FED7AA] text-sm font-bold ml-2 bg-[#1A1A20] border border-[#D4A359]/30 px-2 py-0.5 rounded-full"
                 }
               >
                 {Math.round(discountPercentage)}% Off
@@ -91,8 +91,8 @@ const Price = ({
           <span
             className={
               card
-                ? "inline-block text-lg font-semibold text-gray-800"
-                : "inline-block text-2xl"
+                ? "inline-block text-lg font-semibold text-white"
+                : "inline-block text-3xl font-extrabold text-white tracking-tight"
             }
           >
             {currency}
@@ -103,8 +103,8 @@ const Price = ({
               <del
                 className={
                   card
-                    ? "sm:text-sm font-normal text-base text-gray-400 ml-1"
-                    : "text-lg font-normal text-gray-400 ml-1"
+                    ? "sm:text-sm font-normal text-base text-neutral-500 ml-1.5"
+                    : "text-lg font-normal text-neutral-500 ml-2 line-through"
                 }
               >
                 {currency}
@@ -113,8 +113,8 @@ const Price = ({
               <span
                 className={
                   card
-                    ? "block text-store-600 text-xs font-bold"
-                    : "inline-block text-store-600 text-sm font-bold ml-2"
+                    ? "block text-[#FED7AA] text-xs font-bold"
+                    : "inline-block text-[#FED7AA] text-sm font-bold ml-2 bg-[#1A1A20] border border-[#D4A359]/30 px-2 py-0.5 rounded-full"
                 }
               >
                 {Math.round(discountPercentage)}% Off
@@ -124,15 +124,15 @@ const Price = ({
         </>
       )}
       {hasTaxInfo && (
-        <p className="text-[11px] sm:text-xs font-medium mt-1">
+        <p className="text-[11px] sm:text-xs font-medium mt-1.5">
           {product?.isPriceInclusive ? (
-            <span className="inline-block text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-semibold">
+            <span className="inline-block text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded text-[11px] font-semibold">
               (Incl. of GST)
             </span>
           ) : (
-            <span className="text-gray-500">
+            <span className="text-neutral-400">
               + GST Extra 
-              <span className="ml-1 inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600">
+              <span className="ml-1.5 inline-flex items-center rounded bg-neutral-800 border border-neutral-700 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-neutral-200">
                 {taxRateValue}%
               </span>
             </span>

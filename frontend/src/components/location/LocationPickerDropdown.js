@@ -6,7 +6,7 @@ import { notifyError, notifySuccess } from "@utils/toast";
 import { useGeolocated } from "react-geolocated";
 import LocationServices from "@services/LocationServices";
 
-const LocationPickerDropdown = ({ className = "", hideDivider = false }) => {
+const LocationPickerDropdown = ({ className = "", hideDivider = false, dark = false, defaultPlaceholder = "" }) => {
   const [location, setLocation] = useState(null);
   const [shouldGetLocation, setShouldGetLocation] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -181,7 +181,7 @@ const LocationPickerDropdown = ({ className = "", hideDivider = false }) => {
     if (shouldGetLocation) return "Getting location...";
     if (location?.address) return location.address;
     if (location?.pinCode) return `PIN: ${location.pinCode}`;
-    return "Set location";
+    return defaultPlaceholder || "Set location";
   };
   
   // Truncate display text if it's too long
@@ -193,11 +193,15 @@ const LocationPickerDropdown = ({ className = "", hideDivider = false }) => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center gap-1 md:gap-2 h-full px-3 md:px-3 text-sm font-sans text-gray-700 hover:bg-gray-50 transition-colors ${hideDivider ? "" : "border-r border-gray-200"} ${className}`}
+        className={`flex items-center justify-center gap-1 md:gap-2 h-full px-3 md:px-3 text-sm font-sans transition-colors ${
+          dark
+            ? "text-neutral-200 hover:text-white"
+            : "text-gray-700 hover:bg-gray-50"
+        } ${hideDivider ? "" : "border-r border-gray-200"} ${className}`}
       >
-        <FiMapPin className="text-store-500 flex-shrink-0" size={18} />
-        <span className="truncate max-w-[150px] font-medium hidden md:block">{truncatedText}</span>
-        <FiChevronDown size={14} className={`text-gray-400 transition-transform duration-200 hidden md:block ${isOpen ? "rotate-180" : ""}`} />
+        <FiMapPin className={`${dark ? "text-neutral-300" : "text-store-500"} flex-shrink-0`} size={18} />
+        <span className={`truncate max-w-[150px] font-medium hidden md:block ${dark ? "text-neutral-200" : ""}`}>{truncatedText}</span>
+        <FiChevronDown size={14} className={`${dark ? "text-neutral-400" : "text-gray-400"} transition-transform duration-200 hidden md:block ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (

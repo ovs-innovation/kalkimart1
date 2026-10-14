@@ -63,18 +63,18 @@ const CategoryCards = () => {
   ];
 
   return (
-    <div className="w-full bg-white py-12 md:py-16 relative overflow-hidden">
+    <div className="w-full bg-transparent py-12 md:py-16 relative overflow-hidden">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* Centered Header Block matching the screenshot UI */}
+        {/* Centered Header Block matching the hero UI */}
         <div className="flex flex-col items-center justify-center mb-10 text-center">
-          <span className="text-xs md:text-sm font-bold text-blue-500 tracking-widest uppercase mb-1">
+          <span className="text-xs md:text-sm font-bold text-[#F3C47A] tracking-widest uppercase mb-1">
             Our Categories
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             Shop by Category
           </h2>
-          <div className="w-12 h-[3px] bg-blue-500 rounded-full mt-3"></div>
+          <div className="w-12 h-[3px] bg-[#D4A359] rounded-full mt-3"></div>
         </div>
 
         {/* Carousel Window */}

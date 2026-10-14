@@ -832,11 +832,33 @@ const getShowingStoreProducts = async (req, res) => {
         .populate({ path: "brand", select: "_id name slug logo" })
         .sort({ createdAt: -1 })
         .limit(500);
-      relatedProducts = await Product.find({
-        category: products[0]?.category,
-      })
-        .populate({ path: "category", select: "_id name" })
-        .populate({ path: "brand", select: "_id name slug logo" });
+      const currentProduct = products[0];
+      const currentCatId = currentProduct?.category?._id || currentProduct?.category;
+
+      if (currentCatId) {
+        relatedProducts = await Product.find({
+          _id: { $ne: currentProduct?._id },
+          category: currentCatId,
+          status: "show",
+        })
+          .populate({ path: "category", select: "_id name" })
+          .populate({ path: "brand", select: "_id name slug logo" })
+          .limit(12);
+      }
+
+      // Fallback: If fewer than 4 items in same category, fill with other active products
+      if (!relatedProducts || relatedProducts.length < 4) {
+        const excludeIds = [currentProduct?._id, ...(relatedProducts?.map((p) => p._id) || [])].filter(Boolean);
+        const fallbackProducts = await Product.find({
+          _id: { $nin: excludeIds },
+          status: "show",
+        })
+          .populate({ path: "category", select: "_id name" })
+          .populate({ path: "brand", select: "_id name slug logo" })
+          .limit(12 - (relatedProducts?.length || 0));
+
+        relatedProducts = [...(relatedProducts || []), ...fallbackProducts];
+      }
     } else if (title || category || brand) {
       products = await Product.find(queryObject)
         .populate({ path: "category", select: "name _id" })

@@ -156,6 +156,58 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
   const [activeTab, setActiveTab] = useState("product-description");
   const [showStickyBottomBar, setShowStickyBottomBar] = useState(false);
   const [expectedDeliveryTime, setExpectedDeliveryTime] = useState(null);
+  const [clientRelatedProducts, setClientRelatedProducts] = useState(relatedProducts || []);
+
+  useEffect(() => {
+    if (relatedProducts && relatedProducts.length > 0) {
+      setClientRelatedProducts(relatedProducts);
+    } else if (product?._id || router.query?.slug) {
+      ProductServices.getShowingStoreProducts({
+        category: "",
+        slug: product?.slug || router.query?.slug || "",
+      })
+        .then((res) => {
+          if (res?.relatedProducts && res.relatedProducts.length > 0) {
+            setClientRelatedProducts(res.relatedProducts);
+          } else if (res?.products && res.products.length > 0) {
+            setClientRelatedProducts(res.products);
+          }
+        })
+        .catch((err) => console.error("Error fetching related products", err));
+    }
+  }, [relatedProducts, product?.slug, product?._id, router.query?.slug]);
+
+  const relatedList = useMemo(() => {
+    const source =
+      clientRelatedProducts && clientRelatedProducts.length > 0
+        ? clientRelatedProducts
+        : relatedProducts || [];
+
+    const baseList = isWholesaler
+      ? source.filter(
+          (p) => (p?.wholePrice && Number(p.wholePrice) > 0) || p?.isWholesaler
+        )
+      : source;
+
+    const currentIdStr = product?._id ? String(product._id) : "";
+    const currentSlug = product?.slug || router.query?.slug || "";
+
+    return baseList
+      .filter((p) => {
+        if (!p) return false;
+        const pIdStr = p?._id ? String(p._id) : "";
+        if (currentIdStr && pIdStr && pIdStr === currentIdStr) return false;
+        if (currentSlug && p?.slug && p.slug === currentSlug) return false;
+        return true;
+      })
+      .slice(0, 12);
+  }, [
+    clientRelatedProducts,
+    relatedProducts,
+    isWholesaler,
+    product,
+    router.query?.slug,
+  ]);
 
   // Fetch shipping address if user is logged in
   const { data: shippingAddressData } = useQuery({
@@ -1236,24 +1288,24 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
           <div className="lg:px-8 py-4">
             <div className="mx-auto px-4 lg:px-12 max-w-screen-2xl">
               <div className="flex items-center pb-6 justify-between gap-4">
-                <nav className="flex items-center space-x-2 text-sm text-gray-500 font-medium">
-                  <Link href="/" className="hover:text-store-600 transition-colors flex items-center">
+                <nav className="flex items-center space-x-2 text-sm text-neutral-400 font-medium">
+                  <Link href="/" className="hover:text-[#FED7AA] transition-colors flex items-center">
                     Home
                   </Link>
-                  <FiChevronRight className="w-4 h-4 text-gray-400" />
+                  <FiChevronRight className="w-4 h-4 text-neutral-600" />
                   <Link
                     href={`/search?category=${category_name}&_id=${product?.category?._id}`}
-                    className="hover:text-store-600 transition-colors bg-gray-50 px-3 py-1 rounded-full border border-gray-100"
+                    className="hover:text-[#FED7AA] transition-colors bg-[#141418] text-neutral-300 px-3 py-1 rounded-full border border-neutral-800 text-xs font-medium"
                   >
                     {category_name}
                   </Link>
-                  <FiChevronRight className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-900 font-semibold truncate max-w-[150px] sm:max-w-xs">
+                  <FiChevronRight className="w-4 h-4 text-neutral-600" />
+                  <span className="text-[#FED7AA] font-semibold truncate max-w-[150px] sm:max-w-xs">
                     {dynamicTitle || showingTranslateValue(product?.title)}
                   </span>
                 </nav>
               </div>
-              <div className="w-full rounded-lg  bg-white">
+              <div className="w-full">
                 <div className="flex flex-col lg:flex-row gap-10">
                   <div className="flex-shrink-0 w-full mx-auto md:w-5/12 lg:w-5/12 xl:w-5/12">
                     <div className="mt-1 lg:mt-2 lg:sticky lg:top-28 lg:space-y-4">
@@ -1266,45 +1318,27 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                           dynamicTitle || showingTranslateValue(product?.title)
                         }
                         buttons={
-                          <div className="absolute left-4 top-4 z-20 flex flex-col items-center gap-2">
+                          <div className="absolute left-3.5 top-3.5 z-20 flex flex-col items-start gap-2">
                             <button
                               type="button"
                               onClick={() => handleAddToWishlist(product)}
-                              className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-600 hover:text-red-600 border border-gray-200 hover:border-red-500 rounded-full px-3 py-1 bg-white shadow-sm transition-colors"
+                              className="flex items-center gap-1.5 text-xs font-medium text-neutral-200 hover:text-[#FED7AA] border border-neutral-700/80 hover:border-[#D4A359]/70 rounded-full px-3 py-1.5 bg-[#121216]/85 backdrop-blur-md shadow-md transition-all"
                               aria-label="Add to wishlist"
                             >
-                              <FiHeart className="w-4 h-4" />
+                              <FiHeart className="w-3.5 h-3.5 text-[#FED7AA]" />
                               <span className="hidden sm:inline">Wishlist</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleAddToCompare(product)}
-                              className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-600 hover:text-purple-600 border border-gray-200 hover:border-purple-500 rounded-full px-3 py-1 bg-white shadow-sm transition-colors"
-                              aria-label="Add to compare"
-                            >
-                              <FiShuffle className="w-4 h-4" />
-                              <span className="hidden sm:inline">Compare</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={handleShareCurrentVariant}
-                              className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-600 hover:text-store-600 border border-gray-200 hover:border-store-500 rounded-full px-3 py-1 bg-white shadow-sm transition-colors"
-                              aria-label="Share this product"
-                            >
-                              <FiShare2 className="w-4 h-4" />
-                              <span className="hidden sm:inline">Share</span>
                             </button>
                           </div>
                         }
                       />
 
                       {/* Add to Cart & Buy Now under gallery (Premium Style) */}
-                      <div className="mt-8">
-                        <div className="flex gap-4">
+                      <div className="mt-6">
+                        <div className="flex gap-3 sm:gap-4">
                           <button
                             onClick={() => handleAddToCart(product)}
                             type="button"
-                            className="add-to-cart-btn flex-1 h-14 rounded-xl text-base font-bold flex items-center justify-center border-2 border-store-500 text-store-700 hover:bg-store-500 hover:text-white transform hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-sm"
+                            className="add-to-cart-btn flex-1 h-13 sm:h-14 rounded-xl text-base font-bold flex items-center justify-center bg-[#FED7AA] text-[#111827] border-2 border-[#FED7AA] hover:bg-[#FDBA74] hover:border-[#D4A359] transform hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-md"
                           >
                             {t("AddToCart")}
                           </button>
@@ -1315,61 +1349,17 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                               handleBuyNow(product);
                             }}
                             type="button"
-                            className="flex-1 h-14 rounded-xl text-base font-bold flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transform hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg lg:animate-pulse-subtle"
+                            className="flex-1 h-13 sm:h-14 rounded-xl text-base font-extrabold flex items-center justify-center bg-gradient-to-r from-[#D4A359] via-[#E5B56E] to-[#D4A359] text-[#111827] hover:brightness-110 transform hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-lg hover:shadow-amber-500/20"
                           >
                             Buy Now
                           </button>
                         </div>
-                        <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-3 font-medium flex items-center justify-center gap-1">
-                          <span className="w-1 h-1 rounded-full bg-green-400" />
-                          Secure & Verified Transaction
+                        <p className="text-center text-[11px] sm:text-xs text-neutral-400 mt-3 font-medium flex items-center justify-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                          Secure &amp; Verified Transaction
                         </p>
 
 
-                        {/* Trust Features Section */}
-                        <div className="mt-8 bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm">
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
-
-                            {/* Feature 1 */}
-                            <div className="flex items-center justify-center gap-3 sm:border-r border-slate-800 pr-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
-                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
-                                </svg>
-                              </div>
-                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
-                                100% genuine <br /> medicines
-                              </p>
-                            </div>
-
-                            {/* Feature 2 */}
-                            <div className="flex items-center justify-center gap-3 sm:border-r border-slate-800 pr-4">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
-                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                  <rect x="2" y="7" width="20" height="14" rx="2" />
-                                  <path d="M16 3v4M8 3v4" />
-                                </svg>
-                              </div>
-                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
-                                Safe & secure <br /> payments
-                              </p>
-                            </div>
-
-                            {/* Feature 3 */}
-                            <div className="flex items-center justify-center gap-3">
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-950 shadow-sm border border-slate-800">
-                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v6h6M20 20v-6h-6" />
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M20 10A8 8 0 104 14" />
-                                </svg>
-                              </div>
-                              <p className="text-sm sm:text-base font-medium text-slate-300 text-left">
-                                15 days Easy <br /> returns
-                              </p>
-                            </div>
-
-                          </div>
-                        </div>
 
                       </div>
                     </div>
@@ -1381,43 +1371,11 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                     <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
                       <div className="xl:pr-6 md:pr-6 w-full">
                         <div className="mb-6">
-                          <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold font-serif text-gray-800">
+                          <h1 className="leading-tight text-xl md:text-2xl lg:text-3xl mb-3 font-bold font-serif text-white tracking-tight">
                             {dynamicTitle || showingTranslateValue(product?.title)}
                           </h1>
 
-                          {/* Top summary rating row (like Flipkart) */}
-                          {ratingSummary && (
-                            <div className="flex items-center flex-wrap gap-2 mb-2">
-                              <div className="inline-flex items-center px-2 py-0.5 rounded-md text-white text-xs font-semibold" style={{ backgroundColor: '#006E44' }}>
-                                <span className="mr-1">
-                                  {ratingSummary.averageRating?.toFixed
-                                    ? ratingSummary.averageRating.toFixed(1)
-                                    : "0.0"}
-                                </span>
-                                <AiFillStar className="w-3.5 h-3.5" />
-                              </div>
-                              <span className="text-xs sm:text-sm text-gray-600">
-                                {ratingSummary.totalRatings || 0} Ratings &amp;{" "}
-                                {ratingSummary.totalReviews || 0} Reviews
-                              </span>
-                            </div>
-                          )}
-
-                          {/* <p className="uppercase font-serif font-medium text-gray-500 text-sm">
-                            SKU :{" "}
-                            <span className="font-bold text-gray-600">
-                              {product.sku}
-                            </span>
-                          </p>
-                          {product?.hsnCode && (
-                            <p className="uppercase font-serif font-medium text-gray-500 text-sm mt-1">
-                              HSN :{" "}
-                              <span className="font-bold text-gray-600">
-                                {product.hsnCode}
-                              </span>
-                            </p>
-                          )} */}
-                          <div className="text-sm leading-6 text-gray-500 md:leading-7">
+                          <div className="text-sm leading-6 text-neutral-300 md:leading-7 mb-4">
                             {(() => {
                               const descriptionText = dynamicDescription || showingTranslateValue(product?.description);
                               const displayText = isReadMore
@@ -1433,7 +1391,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                       <br />
                                       <span
                                         onClick={() => setIsReadMore(!isReadMore)}
-                                        className="read-or-hide cursor-pointer text-store-600 hover:text-store-700"
+                                        className="read-or-hide cursor-pointer text-[#FED7AA] hover:text-[#F3C47A] font-semibold ml-1"
                                       >
                                         {isReadMore
                                           ? t("moreInfo")
@@ -1446,13 +1404,12 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                             })()}
                           </div>
 
-                          <div className="relative">
+                          <div className="relative mb-3">
                             <Stock stock={stock} />
                           </div>
 
-
                         </div>
-                        <div className="bg-gray-50/50 rounded-2xl p-6 mb-8 border border-gray-100">
+                        <div className="bg-[#101014] rounded-2xl p-5 sm:p-6 mb-6 border border-neutral-800/90 shadow-md">
                           <Price
                             // If wholesaler and product has wholesale price, show that price
                             price={
@@ -1529,58 +1486,51 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                             </div>
                           ))}
                         </div>
-                        <div>
-
-                          <div className="flex flex-col mt-4">
-                            <span className="font-serif font-semibold py-1 text-sm d-block">
-                              <span className="text-gray-800">
-                                {t("category")}:
-                              </span>{" "}
-                              <Link
-                                href={`/search?category=${category_name}&_id=${product?.category?._id}`}
-                              >
-                                <button
-                                  type="button"
-                                  className="text-gray-600 font-serif font-medium underline ml-2 hover:text-teal-600"
-                                  onClick={() => setIsLoading(!isLoading)}
-                                >
-                                  {category_name}
-                                </button>
-                              </Link>
+                        <div>                          <div className="flex items-center gap-2 mt-4">
+                            <span className="text-neutral-400 font-medium text-sm">
+                              {t("category")}:
                             </span>
+                            <Link
+                              href={`/search?category=${category_name}&_id=${product?.category?._id}`}
+                            >
+                              <button
+                                type="button"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#161412] text-[#FED7AA] border border-[#D4A359]/40 hover:border-[#D4A359] hover:bg-[#201c18] transition-all"
+                                onClick={() => setIsLoading(!isLoading)}
+                              >
+                                {category_name}
+                              </button>
+                            </Link>
                             <Tags product={product} />
                           </div>
 
-
-
-                          <div className="mt-8">
-                            <p className="text-xs sm:text-sm text-gray-700 font-medium">
-                              Call Us To Order By Mobile Number :{" "}
+                          <div className="mt-6 space-y-3 pt-4 border-t border-neutral-800/80">
+                            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
+                              <span className="text-neutral-400">Call Us To Order:</span>
                               <a
                                 href={`tel:${(storeCustomizationSetting?.navbar?.phone || storeCustomizationSetting?.footer?.bottom_contact || globalSetting?.contact || "+0044235234").replace(/\s+/g, '')}`}
-                                className="text-store-500 font-semibold hover:text-store-600 hover:underline"
+                                className="text-[#FED7AA] font-semibold hover:underline flex items-center gap-1.5"
                               >
                                 {storeCustomizationSetting?.navbar?.phone || storeCustomizationSetting?.footer?.bottom_contact || globalSetting?.contact || "+0044235234"}
                               </a>
-                            </p>
-                          </div>
-                          {/* Expected Delivery Time */}
-                          {expectedDeliveryTime ? (
-                            <div className="mt-4    rounded-md    flex items-center gap-3 text-sm">
-                              <FiTruck className="w-5 h-5 text-store-600 flex-shrink-0" />
-                              <div className="flex flex-col">
-                                <span className="text-gray-600 text-xs">Expected Delivery</span>
-                                <span className="text-store-700 font-bold text-base">
+                            </div>
+
+                            {/* Expected Delivery Time */}
+                            {expectedDeliveryTime ? (
+                              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
+                                <FiTruck className="w-4 h-4 text-[#FED7AA] flex-shrink-0" />
+                                <span className="text-neutral-400">Expected Delivery:</span>
+                                <span className="text-white font-bold text-sm">
                                   {expectedDeliveryTime}
                                 </span>
                               </div>
-                            </div>
-                          ) : (
-                            <div className="mt-4 flex gap-4 items-center">
-                              <div className="text-sm text-gray-500 mb-1.5 font-medium">Check delivery time &amp; availability:</div>
-                              <LocationPickerDropdown className="w-30 !border !border-gray-300 rounded-md py-2 px-3 bg-gray-50 hover:bg-white hover:!border-store-500 transition-all justify-between !h-auto !border-r" />
-                            </div>
-                          )}
+                            ) : (
+                              <div className="mt-2 flex gap-3 items-center">
+                                <div className="text-xs sm:text-sm text-neutral-400 font-medium">Check delivery time &amp; availability:</div>
+                                <LocationPickerDropdown className="w-30 !border !border-neutral-700 rounded-md py-1.5 px-3 bg-[#161412] text-neutral-200 hover:bg-[#201c18] hover:!border-[#D4A359] transition-all justify-between !h-auto" />
+                              </div>
+                            )}
+                          </div>
                           {/* social share
                           <div className="mt-2">
                               <h3 className="text-base font-semibold mb-1 font-serif">
@@ -1664,13 +1614,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Composition Section */}
                           {product?.composition?.enabled !== false && product?.composition?.description && (
-                            <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
-                              <div className="flex items-center gap-3 mb-4">
-                                <h2 className="text-xl font-semibold text-gray-800">
+                            <div className="mt-6 border border-neutral-800/90 rounded-2xl p-5 sm:p-6 bg-[#101014] shadow-sm">
+                              <div className="flex items-center gap-2.5 mb-3">
+                                <span className="w-1.5 h-4 rounded-full bg-[#D4A359]" />
+                                <h2 className="text-lg font-bold text-white tracking-tight">
                                   {product.composition.title || "Composition"}
                                 </h2>
                               </div>
-                              <p className="text-sm text-gray-600 leading-relaxed text-justify">
+                              <p className="text-sm text-neutral-300 leading-relaxed text-justify font-sans">
                                 {product.composition.description}
                               </p>
                             </div>
@@ -1678,16 +1629,16 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Product Highlights Section */}
                           {product?.productHighlights?.enabled !== false && product?.productHighlights?.items?.length > 0 && (
-                            <div className="mt-8 border border-gray-200 rounded-lg p-6 bg-white">
+                            <div className="mt-6 border border-neutral-800/90 rounded-2xl p-5 sm:p-6 bg-[#101014] shadow-sm">
                               <div className="flex items-center gap-3 mb-4">
                                 {product.productHighlights.icon && (
-                                  <img src={product.productHighlights.icon} alt="" className="w-10 h-10" />
+                                  <img src={product.productHighlights.icon} alt="" className="w-8 h-8 object-contain" />
                                 )}
-                                <h2 className="text-xl font-semibold text-gray-800">
+                                <h2 className="text-lg font-bold text-white tracking-tight">
                                   {product.productHighlights.title || "Product Highlights"}
                                 </h2>
                               </div>
-                              <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 text-justify">
+                              <ul className="list-disc list-inside space-y-2 text-sm text-neutral-300 text-justify">
                                 {product.productHighlights.items.map((item, idx) => (
                                   <li key={idx} className="leading-relaxed">
                                     {item}
@@ -1698,7 +1649,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                           )}
 
                           {/* Premium Tab Navigation */}
-                          <div className="sticky top-16 lg:top-[80px] z-40 bg-white/80 backdrop-blur-md mt-12 mb-8 py-1 border-b border-gray-100 shadow-[0_4px_12px_-4px_rgba(0,0,0,0.05)]">
+                          <div className="sticky top-16 lg:top-[80px] z-40 bg-[#070709]/95 backdrop-blur-md mt-10 mb-6 py-1 border-b border-neutral-800/90">
                             <style jsx global>{`
                               .tab-navigation-container {
                                 scrollbar-width: none !important;
@@ -1729,14 +1680,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="product-description"
                                     onClick={() => handleTabClick("product-description")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "product-description"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "product-description"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     Description
                                     {activeTab === "product-description" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1744,14 +1695,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="specification"
                                     onClick={() => handleTabClick("specification")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "specification"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "specification"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     Specification
                                     {activeTab === "specification" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1759,14 +1710,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="key-uses"
                                     onClick={() => handleTabClick("key-uses")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "key-uses"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "key-uses"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     Key Uses
                                     {activeTab === "key-uses" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1774,14 +1725,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="how-to-use"
                                     onClick={() => handleTabClick("how-to-use")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "how-to-use"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "how-to-use"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     Usage Guide
                                     {activeTab === "how-to-use" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1789,14 +1740,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="safety-information"
                                     onClick={() => handleTabClick("safety-information")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "safety-information"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "safety-information"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     Safety
                                     {activeTab === "safety-information" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1804,14 +1755,14 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     data-tab="faq"
                                     onClick={() => handleTabClick("faq")}
-                                    className={`relative py-4 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "faq"
-                                        ? "text-store-600"
-                                        : "text-gray-400 hover:text-gray-600"
+                                    className={`relative py-3 text-sm font-bold transition-all whitespace-nowrap ${activeTab === "faq"
+                                        ? "text-[#FED7AA]"
+                                        : "text-neutral-400 hover:text-white"
                                       }`}
                                   >
                                     FAQs
                                     {activeTab === "faq" && (
-                                      <span className="absolute bottom-0 left-0 w-full h-1 bg-store-500 rounded-full" />
+                                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FED7AA] rounded-full" />
                                     )}
                                   </button>
                                 )}
@@ -1821,16 +1772,16 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Product Description Section */}
                           {product?.productDescription?.enabled !== false && (product?.productDescription?.description || showingTranslateValue(product?.description)) && (
-                            <div id="product-description" className="mt-8 border border-slate-800 rounded-lg p-6 bg-slate-900/50">
-                              <div className="flex items-center gap-3 mb-4">
+                            <div id="product-description" className="mt-6 border border-neutral-800/90 rounded-2xl p-5 sm:p-6 bg-[#101014]">
+                              <div className="flex items-center gap-2.5 mb-3">
                                 {product.productDescription?.icon && (
-                                  <img src={product.productDescription.icon} alt="" className="w-10 h-10" />
+                                  <img src={product.productDescription.icon} alt="" className="w-8 h-8 object-contain" />
                                 )}
-                                <h2 className="text-xl font-semibold text-slate-200">
+                                <h2 className="text-lg font-bold text-white tracking-tight">
                                   {product.productDescription?.title || "Product Description"} of {dynamicTitle || showingTranslateValue(product?.title)}
                                 </h2>
                               </div>
-                              <p className="text-sm text-slate-300 leading-relaxed text-justify">
+                              <p className="text-sm text-neutral-300 leading-relaxed text-justify">
                                 {product.productDescription?.description || showingTranslateValue(product?.description)}
                               </p>
                             </div>
@@ -2011,11 +1962,11 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Manufacturer Details Section */}
                           {product?.manufacturerDetails?.enabled !== false && product?.manufacturerDetails?.items?.length > 0 && (
-                            <div className="mt-8 p-6 bg-white">
-                              <h3 className="text-lg font-bold text-gray-900 mb-4">
+                            <div className="mt-6 border border-neutral-800/90 rounded-2xl p-5 sm:p-6 bg-[#101014]">
+                              <h3 className="text-lg font-bold text-white mb-3">
                                 {product?.manufacturerDetails?.title || "Manufacturer details"}
                               </h3>
-                              <div className="space-y-2 text-sm text-gray-600 text-justify">
+                              <div className="space-y-2 text-sm text-neutral-300 text-justify">
                                 {product.manufacturerDetails.items.map((item, idx) => (
                                   <p key={idx} className="leading-relaxed">
                                     {item}
@@ -2027,11 +1978,11 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Disclaimer Section */}
                           {product?.disclaimer?.enabled !== false && product?.disclaimer?.description && (
-                            <div className="mt-2 p-6 bg-white">
-                              <h3 className="text-lg font-bold text-gray-900 mb-4">
+                            <div className="mt-6 border border-neutral-800/90 rounded-2xl p-5 sm:p-6 bg-[#101014]">
+                              <h3 className="text-lg font-bold text-white mb-3">
                                 {product?.disclaimer?.title || "Disclaimer"}
                               </h3>
-                              <div className="text-sm text-gray-600 leading-relaxed text-justify">
+                              <div className="text-sm text-neutral-300 leading-relaxed text-justify">
                                 <p className="leading-relaxed">
                                   {typeof product.disclaimer.description === 'object' && product.disclaimer.description !== null
                                     ? showingTranslateValue(product.disclaimer.description)
@@ -2097,15 +2048,15 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
                           {/* Enhanced Sticky Bottom Bar (Mobile only) */}
                           {showStickyBottomBar && (
-                            <div className="fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-8px_20px_rgba(0,0,0,0.05)] lg:hidden transition-all duration-300 slide-up">
-                              <div className="max-w-screen-2xl mx-auto px-5 py-4">
-                                <div className="flex items-center justify-between gap-6">
+                            <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#070709]/95 backdrop-blur-md border-t border-neutral-800 shadow-2xl lg:hidden transition-all duration-300 slide-up">
+                              <div className="max-w-screen-2xl mx-auto px-5 py-3.5">
+                                <div className="flex items-center justify-between gap-4">
                                   <div className="flex-1 min-w-0">
-                                    <h3 className="text-xs font-bold text-gray-500 truncate mb-1.5 uppercase tracking-wider">
+                                    <h3 className="text-xs font-semibold text-neutral-400 truncate mb-1">
                                       {dynamicTitle || showingTranslateValue(product?.title)}
                                     </h3>
                                     <div className="flex items-baseline gap-2">
-                                      <span className="text-xl font-black text-gray-900 tracking-tight">
+                                      <span className="text-xl font-extrabold text-white tracking-tight">
                                         {currency}
                                         {getNumberTwo(
                                           (isWholesaler && product?.wholePrice && Number(product.wholePrice) > 0)
@@ -2114,7 +2065,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                         )}
                                       </span>
                                       {discount > 0 && (
-                                        <span className="text-xs font-bold text-green-600">
+                                        <span className="text-xs font-bold text-emerald-400">
                                           ({discount}% OFF)
                                         </span>
                                       )}
@@ -2123,7 +2074,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                                   <button
                                     onClick={() => handleAddToCart(product)}
                                     type="button"
-                                    className="add-to-cart-btn flex-shrink-0 h-14 px-8 rounded-2xl text-sm font-black uppercase tracking-widest flex items-center justify-center bg-store-600 text-white active:scale-95 transition-all shadow-lg shadow-store-100"
+                                    className="add-to-cart-btn flex-shrink-0 h-12 px-6 rounded-xl text-sm font-bold flex items-center justify-center bg-[#FED7AA] text-[#111827] active:scale-95 transition-all shadow-md"
                                   >
                                     Add To Cart
                                   </button>
@@ -2132,33 +2083,7 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
                             </div>
                           )}
 
-                          {/* Ratings & Reviews Section - right side only */}
-                          <div id="ratings-section" className="mt-8 lg:mt-10 space-y-4">
-                            <RatingSummary summary={ratingSummary} />
-                            <WriteReviewForm
-                              productId={product?._id}
-                              existingReview={reviews.find(
-                                (r) => r.user?._id === userInfo?._id
-                              )}
-                              onSubmitReview={handleSubmitReview}
-                              isSubmitting={reviewSubmitting}
-                            />
-                            <ReviewFilters
-                              sort={reviewsSort}
-                              ratingFilter={reviewsRatingFilter}
-                              onSortChange={setReviewsSort}
-                              onRatingFilterChange={setReviewsRatingFilter}
-                            />
-                            <ReviewList
-                              reviews={reviews}
-                              loading={reviewsLoading}
-                              onLoadMore={handleLoadMoreReviews}
-                              canLoadMore={reviewsHasMore}
-                              onMarkHelpful={handleMarkHelpful}
-                              onDeleteReview={handleDeleteReview}
-                              currentUser={userInfo}
-                            />
-                          </div>
+
 
 
 
@@ -2218,26 +2143,50 @@ const ProductScreen = ({ product, attributes, relatedProducts }) => {
 
 
 
-              {/* related products */}
-              {relatedProducts?.length >= 2 && (
-                <div className="pt-10 lg:pt-20 lg:pb-10">
-                  <h3 className="leading-7 text-lg lg:text-xl mb-3 font-semibold font-serif hover:text-gray-600">
-                    {t("Related Products")}
-                  </h3>
-                  <div className="flex">
-                    <div className="w-full">
-                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                        {(isWholesaler ? relatedProducts?.filter(p => (p.wholePrice && Number(p.wholePrice) > 0) || p.isWholesaler) : relatedProducts)?.slice(1, 13).map((product, i) => (
-                          <ProductCard
-                            key={product._id}
-                            product={product}
-                            attributes={attributes}
-                          />
-                        ))}
+              {/* Related Products */}
+              {relatedList?.length > 0 && (
+                <section
+                  aria-labelledby="related-products-heading"
+                  className="pt-10 lg:pt-14 pb-12 mt-12 border-t border-neutral-800/80"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-8">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4A359]/10 border border-[#D4A359]/20 text-[#FED7AA] text-xs font-semibold uppercase tracking-wider mb-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#D4A359] animate-pulse" />
+                        Recommendations
                       </div>
+                      <h3
+                        id="related-products-heading"
+                        className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-serif"
+                      >
+                        {t("common:relatedProducts") || "Related Products"}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-400 mt-1">
+                        Explore more curated items you might like from our store
+                      </p>
+                    </div>
+
+                    <div className="text-xs sm:text-sm text-neutral-400 font-medium">
+                      Showing{" "}
+                      <span className="text-[#FED7AA] font-bold">
+                        {relatedList.length}
+                      </span>{" "}
+                      items
                     </div>
                   </div>
-                </div>
+
+                  <div className="w-full">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5">
+                      {relatedList.map((relProduct) => (
+                        <ProductCard
+                          key={relProduct._id}
+                          product={relProduct}
+                          attributes={attributes}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </section>
               )}
             </div>
           </div>
@@ -2267,11 +2216,29 @@ export const getServerSideProps = async (context) => {
     product = data?.products?.find((p) => p.slug === slug);
   }
 
+  let related = (data?.relatedProducts || []).filter(
+    (p) => String(p?._id) !== String(product?._id) && p?.slug !== slug
+  );
+
+  if (!related || related.length === 0) {
+    try {
+      const allStore = await ProductServices.getShowingStoreProducts({
+        category: "",
+        slug: "",
+      });
+      related = (allStore?.products || []).filter(
+        (p) => String(p?._id) !== String(product?._id) && p?.slug !== slug
+      );
+    } catch (e) {
+      // fallback
+    }
+  }
+
   return {
     props: {
       product: product || null,
       attributes: attributesResponse?.attributes || [],
-      relatedProducts: data?.relatedProducts || [],
+      relatedProducts: related || [],
     },
   };
 };

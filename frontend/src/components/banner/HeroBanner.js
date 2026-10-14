@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { IoSearchOutline } from "react-icons/io5";
-import { HiShieldCheck } from "react-icons/hi";
+import { HiShieldCheck, HiLockClosed } from "react-icons/hi";
 import { RiTruckLine } from "react-icons/ri";
-import { MdVerified } from "react-icons/md";
 import useTranslation from "next-translate/useTranslation";
-import LocationPickerDropdown from "@components/location/LocationPickerDropdown";
 import SearchSuggestions from "@components/search/SearchSuggestions";
 import useGetSetting from "@hooks/useGetSetting";
 
@@ -36,101 +34,93 @@ const HeroBanner = () => {
           { shallow: false }
         )
         .then(() => setSearchText(""))
-        .catch((err) => {
+        .catch(() => {
           window.location.href = `/search?query=${encodeURIComponent(trimmedSearchText)}`;
         });
     }
   };
 
-  const bannerImageUrl = "/images/martbanner.png";
-
   const badges = [
-    { icon: <MdVerified className="w-4 h-4 text-blue-400" />, label: "100% Verified Quality" },
-    { icon: <RiTruckLine className="w-4 h-4 text-blue-400" />, label: "Express Fast Delivery" },
-    { icon: <HiShieldCheck className="w-4 h-4 text-blue-400" />, label: "Secure Payment Checkout" },
+    {
+      icon: <HiShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#F3C47A]" />,
+      label: "100% Verified Quality",
+    },
+    {
+      icon: <RiTruckLine className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#F3C47A]" />,
+      label: "Express Fast Delivery",
+    },
+    {
+      icon: <HiLockClosed className="w-4 h-4 text-[#F3C47A]" />,
+      label: "Secure Payment Checkout",
+    },
   ];
 
   return (
     <div
-      className="w-full relative overflow-hidden"
+      className="w-full relative overflow-hidden bg-[#070709]"
       style={{
-        minHeight: "520px",
-        backgroundImage: `url(${bannerImageUrl})`,
+        backgroundImage: "url('/images/kalki-hero-banner-bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center right",
         backgroundRepeat: "no-repeat",
-        bottom: "50px"
       }}
     >
-      {/* SaaS-style crisp radial dark gradient overlay for centered text clarity */}
+      {/* Dark gradient overlay on the left to ensure high readability of hero text */}
       <div
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(9, 9, 11, 0.85) 0%, rgba(9, 9, 11, 0.75) 50%, rgba(9, 9, 11, 0.3) 85%, rgba(9, 9, 11, 0.1) 100%)",
+          background:
+            "linear-gradient(to right, rgba(7, 7, 9, 0.96) 0%, rgba(7, 7, 9, 0.90) 36%, rgba(7, 7, 9, 0.45) 65%, rgba(7, 7, 9, 0.05) 90%, transparent 100%)",
         }}
       />
 
-      {/* Content wrapper */}
-      <div className="relative z-20 flex items-center justify-center min-h-[520px] px-6 sm:px-12 md:px-16 lg:px-24 py-16 text-center">
-        <div className="w-full max-w-[720px] flex flex-col items-center justify-center">
+      {/* Additional subtle dark scrim for smaller mobile screens */}
+      <div className="absolute inset-0 pointer-events-none bg-black/45 lg:hidden" />
 
-          {/* Minimal SaaS Cosmic Badging */}
-          <div className="inline-flex items-center gap-1.5 mb-6 px-4 py-1.5 rounded-full cosmic-badge tracking-wide font-sans">
-            <span className="flex h-1.5 w-1.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
+      {/* Hero Content Container — generous left/right padding and proper max-width */}
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16 py-14 sm:py-20 lg:py-28 min-h-[560px] lg:min-h-[640px] flex items-center">
+        <div className="w-full max-w-xl md:max-w-2xl lg:max-w-[700px] xl:max-w-[740px] flex flex-col items-start text-left">
+
+          {/* Top Gold Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 backdrop-blur-sm text-xs sm:text-sm font-medium text-neutral-200 mb-6 sm:mb-8 transition-all hover:border-[#D4A359]/60 shadow-[0_0_20px_rgba(212,163,89,0.15)]">
+            <svg className="w-3.5 h-3.5 text-[#F3C47A] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" />
+            </svg>
+            <span className="tracking-wide">
+              {storeCustomizationSetting?.home?.hero_badge || "Premium B2C E-Commerce Marketplace"}
             </span>
-            <span>Premium B2C E-commerce Marketplace ✨</span>
           </div>
 
-          {/* SaaS Typography: Ultra bold, tight line height */}
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-black cosmic-title leading-[1.12] tracking-tight mb-5 font-sans"
-          >
-            {storeCustomizationSetting?.home?.hero_title ? (
-              storeCustomizationSetting.home.hero_title
-            ) : (
-              <>
-                Elevate Your Sourcing.
-                <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">
-                  Kalki Mart Solutions.
-                </span>
-              </>
-            )}
+          {/* Big Bold Headline — clean 2-line layout without awkward line breaks */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-extrabold tracking-tight leading-[1.14] mb-5 font-sans">
+            <span className="block text-white">
+              {storeCustomizationSetting?.home?.hero_title_1 || "Elevate Your Sourcing."}
+            </span>
+            <span className="block text-[#F9D39D] mt-1.5 sm:mt-2">
+              {storeCustomizationSetting?.home?.hero_title_2 || "Kalki Mart Solutions."}
+            </span>
           </h1>
 
-          {/* Description — SaaS standard neutral grey */}
-          <p className="cosmic-desc text-sm leading-relaxed max-w-[540px] mx-auto mb-10 font-normal font-sans">
+          {/* Subtitle */}
+          <p className="text-neutral-300 text-sm sm:text-base lg:text-lg font-normal max-w-xl mb-9 leading-relaxed">
             {storeCustomizationSetting?.home?.hero_description ||
-              "Your ultimate B2C wholesale marketplace. Discover premium business supplies, customized corporate merchandise, and advertising essentials at direct-from-distributor pricing."}
+              "Premium wholesale essentials for smart, reliable business buying."}
           </p>
 
-          {/* Clean SaaS Input Panel — rounded-xl layout with high focus outline definition */}
-          <div id="hero-search-anchor" className="w-full max-w-[660px] mx-auto scroll-mt-32">
+          {/* Sleek Dark Search Container — Wide, Spacious & Clean */}
+          <div id="hero-search-anchor" className="w-full max-w-xl md:max-w-2xl lg:max-w-[700px] xl:max-w-[740px] scroll-mt-32 mb-9 sm:mb-11">
             <form
               onSubmit={handleSubmit}
-              className="flex items-center cosmic-search-container p-1.5 rounded-xl transition-all duration-300 gap-1"
+              className="flex items-center bg-[#131417]/95 backdrop-blur-md border border-neutral-700/80 hover:border-neutral-600 focus-within:border-[#FED7AA]/70 rounded-2xl p-1.5 sm:p-2 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)]"
             >
-              {/* Location Selector */}
-              <div className="shrink-0 flex items-center pl-1.5">
-                <LocationPickerDropdown
-                  hideDivider
-                  className="!px-2 !border-none !bg-transparent !text-slate-600 !text-[13px] !font-semibold"
-                />
-              </div>
-
-              {/* Vertical line divider */}
-              <div className="w-px h-5 cosmic-divider shrink-0 mx-1" />
-
               {/* Search text input */}
-              <div className="flex-1 flex items-center px-2 relative min-w-0">
-                <IoSearchOutline className="text-slate-400 text-lg shrink-0 mr-2" />
+              <div className="flex-1 flex items-center px-3 sm:px-4 relative min-w-0">
+                <IoSearchOutline className="text-neutral-400 text-xl shrink-0 mr-3" />
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="What products or custom items are you looking for?"
-                  className="w-full py-2 cosmic-search-input text-[13px] font-medium focus:outline-none focus:ring-0 min-w-0"
+                  placeholder="Search for what you need"
+                  className="w-full py-2.5 sm:py-3 bg-transparent text-white placeholder-neutral-400 text-sm sm:text-base font-normal focus:outline-none min-w-0"
                   value={searchText}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   onFocus={() => {
@@ -150,33 +140,41 @@ const HeroBanner = () => {
                 <SearchSuggestions
                   searchText={searchText}
                   showSuggestions={showSuggestions}
-                  onSelect={() => { setSearchText(""); setShowSuggestions(false); }}
+                  onSelect={() => {
+                    setSearchText("");
+                    setShowSuggestions(false);
+                  }}
                   onClose={() => setShowSuggestions(false)}
                 />
               </div>
 
-              {/* SaaS Accent Action Button */}
+              {/* Warm Gold Pill Search Button */}
               <button
                 type="submit"
-                className="shrink-0 flex items-center gap-1.5 active:scale-[0.98] cosmic-search-btn text-white text-[13px] font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 shadow-sm"
+                className="shrink-0 flex items-center gap-2 bg-[#FED7AA] hover:bg-[#f6c888] active:scale-[0.98] text-[#111827] text-sm sm:text-base font-bold px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl transition-all duration-200 shadow-md cursor-pointer"
               >
+                <IoSearchOutline className="text-lg text-[#111827]" />
                 <span>Search</span>
               </button>
             </form>
           </div>
 
-          {/* Minimalist SaaS cosmic outline badges (styled like outline buttons) */}
-          <div className="grid grid-cols-2 md:flex items-center justify-center gap-3 md:gap-4 mt-12 w-full max-w-xl md:max-w-none mx-auto px-1 sm:px-0">
-            {badges.map((b, i) => (
-              <div
-                key={i}
-                className={`flex items-center justify-center gap-2 cosmic-badge-pill px-4 py-2 text-[11px] sm:text-xs font-semibold hover:scale-[1.03] transition-all duration-200 cursor-pointer ${
-                  i === 2 ? "col-span-2 mx-auto md:mx-0 w-auto" : "w-full md:w-auto"
-                }`}
-              >
-                {b.icon}
-                <span className="tracking-wide font-sans whitespace-nowrap">{b.label}</span>
-              </div>
+          {/* Trust Badges Row — Single clean horizontal row that never wraps awkwardly */}
+          <div className="flex flex-row items-center gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-neutral-300 w-full overflow-x-auto no-scrollbar py-1">
+            {badges.map((badge, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && (
+                  <div className="w-px h-5 bg-neutral-700/60 shrink-0 hidden sm:block" />
+                )}
+                <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border border-[#D4A359]/70 bg-[#161412]/60 flex items-center justify-center shrink-0">
+                    {badge.icon}
+                  </div>
+                  <span className="text-neutral-200 text-xs sm:text-sm font-medium tracking-wide whitespace-nowrap">
+                    {badge.label}
+                  </span>
+                </div>
+              </React.Fragment>
             ))}
           </div>
 

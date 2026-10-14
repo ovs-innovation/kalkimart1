@@ -2248,9 +2248,9 @@ footer,
 button[aria-label="Add to cart"],
 button[aria-label="Add to bag"],
 .add-to-cart-btn {
-  background: #166534 !important;
-  color: #ffffff !important;
-  border: 1.5px solid #166534 !important;
+  background: #FED7AA !important;
+  color: #111827 !important;
+  border: 1.5px solid #FED7AA !important;
   font-weight: 700;
   letter-spacing: 0.01em;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
@@ -2259,24 +2259,30 @@ button[aria-label="Add to bag"],
 button[aria-label="Add to cart"]:hover,
 button[aria-label="Add to bag"]:hover,
 .add-to-cart-btn:hover {
-  background: #14532d !important;
-  color: #ffffff !important;
-  transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(22, 101, 52, 0.2) !important;
+  background: #FDBA74 !important;
+  color: #000000 !important;
+  border-color: #D4A359 !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(212, 163, 89, 0.35) !important;
 }
 
 /* ---- Wishlist / compare icon buttons ---- */
 button[aria-label="Add to wishlist"],
 button[aria-label="Add to compare"] {
-  backdrop-filter: blur(4px);
-  background: rgba(255, 255, 255, 0.9) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-  transition: transform 0.18s, background 0.18s, box-shadow 0.18s !important;
+  backdrop-filter: blur(8px);
+  background: rgba(18, 18, 22, 0.8) !important;
+  color: #e4e4e7 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  transition: transform 0.18s, background 0.18s, box-shadow 0.18s, border-color 0.18s !important;
 }
 
 button[aria-label="Add to wishlist"]:hover,
 button[aria-label="Add to compare"]:hover {
-  transform: scale(1.15);
+  background: rgba(28, 28, 34, 0.95) !important;
+  color: #FED7AA !important;
+  border-color: rgba(212, 163, 89, 0.6) !important;
+  transform: scale(1.06);
 }
 
 /* ---- Pharmacy pulse icon (logo fallback) ---- */
@@ -2378,21 +2384,21 @@ footer,
 
 /* Google Sign In button — teal */
 .nsm7Bb-HzV7m-LgbsSe:hover {
-  background: #0d9488 !important;
+  background: #D4A359 !important;
 }
 
 /* Page header backgrounds */
 body {
-  --kalki-purple-50: #f0fdfa;
-  --kalki-purple-100: #ccfbf1;
-  --kalki-purple-500: #14b8a6;
-  --kalki-purple-600: #0d9488;
-  --kalki-purple-700: #0f766e;
+  --kalki-purple-50: #fffbeb;
+  --kalki-purple-100: #fef3c7;
+  --kalki-purple-500: #d4a359;
+  --kalki-purple-600: #b88738;
+  --kalki-purple-700: #946823;
 }
 
-/* Section heading accent line — teal gradient */
+/* Section heading accent line — luxury gold gradient matching hero banner */
 .kalki-section-title::after {
-  background: linear-gradient(90deg, #0d9488, #99f6e4) !important;
+  background: linear-gradient(90deg, #D4A359, #FED7AA) !important;
 }
 
 /* Top announcement bar styling */
@@ -2444,19 +2450,19 @@ button.bg-store-600:hover,
 a.bg-store-600:hover {
   filter: brightness(1.08);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3) !important;
+  box-shadow: 0 6px 20px rgba(212, 163, 89, 0.3) !important;
 }
 
-/* Input focus — teal ring */
+/* Input focus — gold ring */
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--store-color-400) !important;
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important;
+  border-color: #D4A359 !important;
+  box-shadow: 0 0 0 3px rgba(212, 163, 89, 0.2) !important;
 }
 
-/* Section cards — soft teal tint on hover */
+/* Section cards — soft gold tint on hover */
 .bg-white.rounded-lg,
 .bg-white.rounded-xl,
 .bg-white.rounded-2xl {
@@ -2466,31 +2472,33 @@ select:focus {
 .bg-white.rounded-lg:hover,
 .bg-white.rounded-xl:hover,
 .bg-white.rounded-2xl:hover {
-  box-shadow: 0 4px 20px rgba(13, 148, 136, 0.08);
+  box-shadow: 0 4px 20px rgba(212, 163, 89, 0.1);
 }
 
-/* Carousel dots — teal active state */
+/* Carousel dots — gold active state */
 .react-multi-carousel-dot button {
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .react-multi-carousel-dot--active button {
   transform: scale(1.15);
-  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.35);
+  box-shadow: 0 2px 8px rgba(212, 163, 89, 0.35);
 }
 
-/* Pagination — teal active */
+/* Pagination — gold active */
 .pagination-active,
 li.active button {
-  background: linear-gradient(135deg, #14b8a6, #0d9488) !important;
-  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+  background: linear-gradient(135deg, #FED7AA, #D4A359) !important;
+  color: #111827 !important;
+  box-shadow: 0 2px 8px rgba(212, 163, 89, 0.3);
 }
 
-/* Discount / badge pills — teal gradient */
+/* Discount / badge pills — gold gradient */
 span.bg-store-500,
 span.bg-store-600,
 .badge-store {
-  background: linear-gradient(135deg, var(--store-color-500), var(--store-color-700)) !important;
+  background: linear-gradient(135deg, #FED7AA, #D4A359) !important;
+  color: #111827 !important;
 }
 
 /* Smooth page transitions for interactive elements */
@@ -2499,10 +2507,10 @@ button {
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Footer links — teal hover accent */
+/* Footer links — gold hover accent */
 footer a:hover,
 .footer-root a:hover {
-  color: #0d9488 !important;
+  color: #FED7AA !important;
 }
 
 /* Scrollbar — subtle teal tint */
@@ -2521,7 +2529,7 @@ footer a:hover,
 
 /* 0. Global Body and Page background */
 body {
-  background-color: #0F0F0F !important;
+  background-color: #070709 !important;
 }
 
 /* 1. Global Container/Card Surface Overrides */
@@ -2637,11 +2645,11 @@ textarea:focus {
 
 /* 6. Section and Card Containers */
 .section-surface {
-  background: rgba(26, 26, 26, 0.6) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid #2A2A2A !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .card-modern {
@@ -2730,113 +2738,32 @@ img[src*="kalkiBazar"] {
 }
 
 /* ==========================================
-   ZEN.AI PREMIUM COSMIC UI HERO OVERRIDES
+   KALKI MART LUXURY DARK HERO SECTION
    ========================================== */
-.saas-cosmic-banner {
-  background-color: #0F0F0F !important;
+.hero-luxury-banner {
+  background-color: #070709 !important;
 }
 
-.cosmic-badge {
-  background-color: rgba(15, 23, 42, 0.6) !important;
-  border: 1px solid rgba(148, 163, 184, 0.2) !important;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15) !important;
-  color: #f1f5f9 !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-}
-
-.cosmic-title {
-  color: #ffffff !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em !important;
-  line-height: 1.15 !important;
-}
-
-.cosmic-desc {
-  color: rgba(226, 232, 240, 0.75) !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  line-height: 1.6 !important;
-}
-
-/* Glassmorphic Cosmic Search Bar */
-#hero-search-anchor .cosmic-search-container {
-  background-color: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
-}
-
-#hero-search-anchor input.cosmic-search-input {
+/* Remove background from navbar category texts */
+.category-nav-link-btn,
+.category-nav-link-btn:hover,
+.category-nav-link-btn:focus,
+.glass-header nav button,
+.glass-header nav button:hover,
+.glass-header nav button:focus {
+  background: transparent !important;
   background-color: transparent !important;
-  color: #ffffff !important;
-  border: none !important;
   box-shadow: none !important;
+  border: none !important;
   outline: none !important;
 }
 
-#hero-search-anchor input.cosmic-search-input::placeholder {
-  color: rgba(255, 255, 255, 0.4) !important;
+#hero-search-anchor input::placeholder {
+  color: #71717a !important;
 }
 
-/* Force location dropdown and other nested elements inside cosmic search bar to be white/semi-transparent */
-#hero-search-anchor .cosmic-search-container button,
-#hero-search-anchor .cosmic-search-container span,
-#hero-search-anchor .cosmic-search-container select,
-#hero-search-anchor .cosmic-search-container div {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-#hero-search-anchor .cosmic-search-container svg {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Vertical divider inside search bar */
-#hero-search-anchor .cosmic-divider {
-  background-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Search button with electric gradient blue-cyan background, slate-950 text */
-#hero-search-anchor button.cosmic-search-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%) !important;
-  color: #020617 !important;
-  font-weight: 700 !important;
-  border: none !important;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4) !important;
-  transition: all 0.3s ease !important;
-}
-
-#hero-search-anchor button.cosmic-search-btn:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 0 25px rgba(6, 182, 212, 0.6) !important;
-}
-
-#hero-search-anchor button.cosmic-search-btn span {
-  color: #020617 !important;
-}
-
-/* Cosmic Outline Badges at the bottom (styled like Zen.Ai outline button) */
-.cosmic-badge-pill {
-  background-color: transparent !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #ffffff !important;
-  border-radius: 9999px !important; /* Rounded pill */
-  transition: all 0.3s ease !important;
-}
-
-.cosmic-badge-pill:hover {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  transform: translateY(-2px) !important;
-}
-
-.cosmic-badge-pill span {
-  color: #ffffff !important;
-}
-
-.cosmic-badge-pill svg {
-  color: #60a5fa !important; /* Electric blue icon */
+#hero-search-anchor button span {
+  color: inherit !important;
 }
 
 /* Force search suggestions container to be premium dark glassmorphism */
@@ -2870,7 +2797,7 @@ img[src*="kalkiBazar"] {
 }
 
 .search-suggestions-container button svg {
-  color: #60a5fa !important; /* Electric blue icon accent */
+  color: #FED7AA !important; /* Warm gold icon accent */
 }
 
 .search-suggestions-container button div.text-xs {
@@ -2903,23 +2830,23 @@ img[src*="kalkiBazar"] {
    SAAS PROMOTIONAL BANNER & FEATURES OVERRIDES
    ========================================== */
 .saas-promo-banner {
-  background: linear-gradient(135deg, #1A1A1A 0%, #111111 50%, #0F0F0F 100%) !important;
-  border: 1px solid rgba(6, 182, 212, 0.25) !important;
-  box-shadow: 0 20px 45px -12px rgba(6, 182, 212, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+  background: linear-gradient(135deg, #141416 0%, #101012 50%, #070709 100%) !important;
+  border: 1px solid rgba(212, 163, 89, 0.25) !important;
+  box-shadow: 0 20px 45px -12px rgba(212, 163, 89, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
 }
 
 .saas-feature-card {
-  background-color: #1A1A1A !important;
-  border: 1px solid #2A2A2A !important;
+  background-color: #141416 !important;
+  border: 1px solid #232328 !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .saas-feature-card:hover {
-  border-color: rgba(6, 182, 212, 0.3) !important;
-  background-color: #2A2A2A !important;
+  border-color: rgba(212, 163, 89, 0.4) !important;
+  background-color: #1a1a1d !important;
   transform: translateY(-4px) !important;
-  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.08) !important;
+  box-shadow: 0 12px 30px rgba(212, 163, 89, 0.08) !important;
 }
 
 .saas-feature-card h4 {
@@ -2931,12 +2858,12 @@ img[src*="kalkiBazar"] {
 }
 
 .saas-feature-icon-wrapper {
-  background-color: rgba(6, 182, 212, 0.08) !important;
-  border: 1px solid rgba(6, 182, 212, 0.15) !important;
+  background-color: rgba(212, 163, 89, 0.1) !important;
+  border: 1px solid rgba(212, 163, 89, 0.2) !important;
 }
 
 .saas-feature-icon-wrapper svg {
-  color: #22d3ee !important;
+  color: #F3C47A !important;
 }
 
 /* ==========================================
@@ -2966,16 +2893,16 @@ img[src*="kalkiBazar"] {
 }
 
 .saas-promo-feature .bg-store-100 {
-  background-color: rgba(20, 184, 166, 0.1) !important;
-  border: 1px solid rgba(20, 184, 166, 0.2) !important;
+  background-color: rgba(212, 163, 89, 0.1) !important;
+  border: 1px solid rgba(212, 163, 89, 0.2) !important;
 }
 
 .saas-promo-feature:hover .bg-store-100 {
-  background-color: rgba(20, 184, 166, 0.2) !important;
+  background-color: rgba(212, 163, 89, 0.2) !important;
 }
 
 .saas-promo-feature svg {
-  color: #2dd4bf !important;
+  color: #F3C47A !important;
 }
 
 

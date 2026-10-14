@@ -106,11 +106,11 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
         <Layout>
           <div className="min-h-screen">
             {/* Hero Banner — full bleed, outside max-width container */}
-            <div className="w-full bg-white">
+            <div className="w-full bg-[#070709]">
               <HeroBanner />
             </div>
 
-            <div className="bg-white">
+            <div className="bg-transparent">
               <div className="mx-auto max-w-screen-2xl">
                 <div className="flex w-full flex-col">
                   {/* Slider Carousel */}
@@ -158,19 +158,19 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
             {/* best selling products */}
             {bestSellingProducts?.length > 0 && (
-              <div className="relative lg:py-24 py-12 overflow-hidden">
-                {/* Background Decorative Blobs - Creates the "Mesh" look */}
+              <div className="relative lg:py-20 py-12 overflow-hidden bg-transparent">
+                {/* Background Subtle Warm Ambient Glow */}
                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-                  <div className="absolute -top-24 -left-24 w-[500px] h-[500px] bg-blue-950/20 rounded-full blur-[120px]" />
-                  <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-blue-950/20 rounded-full blur-[100px]" />
+                  <div className="absolute -top-24 -left-24 w-[500px] h-[500px] bg-[#D4A359]/[0.03] rounded-full blur-[140px]" />
+                  <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-[#FED7AA]/[0.02] rounded-full blur-[120px]" />
                 </div>
 
                 <div className="mx-auto max-w-screen-2xl px-4 sm:px-12 relative z-10">
                   {/* Header Section */}
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
-                        <IoSparkles className="animate-pulse text-blue-400" />
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 text-[#F9D39D] text-[10px] font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(212,163,89,0.1)]">
+                        <IoSparkles className="animate-pulse text-[#F3C47A]" />
                         <span>Popular Choice</span>
                       </div>
                       <SectionHeader
@@ -182,30 +182,29 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
                     <Link
                       href="/search?sort=best-selling"
-                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
+                      className="group flex items-center gap-2 text-sm font-bold text-neutral-300 hover:text-[#FED7AA] transition-all"
                     >
                       Explore All
-                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
+                      <div className="p-2 rounded-full bg-[#161412] shadow-sm border border-neutral-800 group-hover:border-[#D4A359]/50 group-hover:bg-neutral-800 transition-all text-neutral-300 group-hover:text-[#FED7AA]">
                         <IoChevronForward />
                       </div>
                     </Link>
-                    </div>
-                    
+                  </div>
 
                   {/* Slider Area */}
                   <div className="relative group/slider">
                     <div className="relative px-2">
                       {/* Custom Floating Navigation */}
-                      <button className="prev-best-selling absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronBack className="text-xl text-white" />
+                      <button className="prev-best-selling absolute top-1/2 -left-4 lg:-left-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronBack className="text-xl" />
                       </button>
 
-                      <button className="next-best-selling absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronForward className="text-xl text-white" />
+                      <button className="next-best-selling absolute top-1/2 -right-4 lg:-right-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronForward className="text-xl" />
                       </button>
 
-                      {/* Slider with subtle Glassmorphism container */}
-                      <div className="rounded-[2rem] p-2 bg-slate-900/40 backdrop-blur-md border border-slate-800/40 shadow-sm">
+                      {/* Slider without outer container background */}
+                      <div className="w-full">
                         <Swiper
                           modules={[Navigation, Autoplay]}
                           spaceBetween={15}
@@ -279,14 +278,14 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
             {/* Personal Care Section */}
             {personalCareProducts && personalCareProducts.length > 0 && (
-              <div className="relative lg:py-24 py-12 overflow-hidden bg-transparent">
+              <div className="relative lg:py-20 py-12 overflow-hidden bg-transparent">
                 {/* Background Decorative Blobs */}
                 <div className="mx-auto max-w-screen-2xl px-4 sm:px-12 relative z-10">
                   {/* Header Section */}
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
-                        <IoSparkles className="animate-pulse text-amber-500" />
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 text-[#F9D39D] text-[10px] font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(212,163,89,0.1)]">
+                        <IoSparkles className="animate-pulse text-[#F3C47A]" />
                         <span>Kitchen Needs</span>
                       </div>
                       <SectionHeader
@@ -298,10 +297,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
                     <Link
                       href="/search?category=Personal-Care"
-                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
+                      className="group flex items-center gap-2 text-sm font-bold text-neutral-300 hover:text-[#FED7AA] transition-all"
                     >
                       Explore All
-                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
+                      <div className="p-2 rounded-full bg-[#161412] shadow-sm border border-neutral-800 group-hover:border-[#D4A359]/50 group-hover:bg-neutral-800 transition-all text-neutral-300 group-hover:text-[#FED7AA]">
                         <IoChevronForward />
                       </div>
                     </Link>
@@ -311,15 +310,15 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <div className="relative group/slider">
                     <div className="relative px-2">
                       {/* Navigation buttons */}
-                      <button className="prev-personal-care absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronBack className="text-xl text-white" />
+                      <button className="prev-personal-care absolute top-1/2 -left-4 lg:-left-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronBack className="text-xl" />
                       </button>
 
-                      <button className="next-personal-care absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronForward className="text-xl text-white" />
+                      <button className="next-personal-care absolute top-1/2 -right-4 lg:-right-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronForward className="text-xl" />
                       </button>
 
-                      <div className="rounded-[2.5rem] p-2 bg-slate-900/40 backdrop-blur-md border border-slate-800/40 shadow-sm">
+                      <div className="w-full">
                         <Swiper
                           modules={[Navigation, Autoplay]}
                           spaceBetween={15}
@@ -372,8 +371,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   {/* Header Section */}
                   <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                     <div className="space-y-3">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800/80 text-slate-300 text-[10px] font-bold uppercase tracking-wider">
-                        <IoSparkles className="animate-pulse text-teal-400" />
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 text-[#F9D39D] text-[10px] font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(212,163,89,0.1)]">
+                        <IoSparkles className="animate-pulse text-[#F3C47A]" />
                         <span>Snack Corner</span>
                       </div>
                       <SectionHeader
@@ -385,10 +384,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
 
                     <Link
                       href="/search?category=Snacks"
-                      className="group flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-all"
+                      className="group flex items-center gap-2 text-sm font-bold text-neutral-300 hover:text-[#FED7AA] transition-all"
                     >
                       Explore All
-                      <div className="p-2 rounded-full bg-slate-900 shadow-sm border border-slate-800 group-hover:bg-slate-800 transition-all text-slate-300">
+                      <div className="p-2 rounded-full bg-[#161412] shadow-sm border border-neutral-800 group-hover:border-[#D4A359]/50 group-hover:bg-neutral-800 transition-all text-neutral-300 group-hover:text-[#FED7AA]">
                         <IoChevronForward />
                       </div>
                     </Link>
@@ -398,15 +397,15 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <div className="relative group/slider">
                     <div className="relative px-2">
                       {/* Navigation buttons */}
-                      <button className="prev-snacks absolute top-1/2 -left-4 lg:-left-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronBack className="text-xl text-white" />
+                      <button className="prev-snacks absolute top-1/2 -left-4 lg:-left-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronBack className="text-xl" />
                       </button>
 
-                      <button className="next-snacks absolute top-1/2 -right-4 lg:-right-12 z-30 bg-slate-900/90 backdrop-blur-md shadow-xl border border-slate-800 rounded-2xl p-4 hover:bg-slate-800 hover:text-white transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center">
-                        <IoChevronForward className="text-xl text-white" />
+                      <button className="next-snacks absolute top-1/2 -right-4 lg:-right-12 z-30 bg-[#131417]/95 backdrop-blur-md shadow-xl border border-neutral-800 rounded-2xl p-4 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-y-1/2 opacity-0 group-hover/slider:opacity-100 -translate-x-4 group-hover/slider:translate-x-0 hidden md:flex items-center justify-center text-white">
+                        <IoChevronForward className="text-xl" />
                       </button>
 
-                      <div className="rounded-[2.5rem] p-2 bg-slate-900/40 backdrop-blur-md border border-slate-800/40 shadow-sm">
+                      <div className="w-full">
                         <Swiper
                           modules={[Navigation, Autoplay]}
                           spaceBetween={15}

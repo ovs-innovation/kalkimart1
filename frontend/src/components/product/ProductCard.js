@@ -150,9 +150,8 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             }
             const discountPercentage = originalPrice > basePrice ? Math.round(((originalPrice - basePrice) / originalPrice) * 100) : 0;
             const finalDiscount = product?.discount || discountPercentage;
-
             return finalDiscount > 1 ? (
-              <span className="absolute top-3 left-3 z-10 bg-emerald-500 text-white text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm whitespace-nowrap uppercase tracking-wider">
+              <span className="absolute top-3 left-3 z-10 bg-[#FED7AA] text-[#111827] text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm whitespace-nowrap uppercase tracking-wider">
                 -{finalDiscount}% OFF
               </span>
             ) : null;
@@ -165,7 +164,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             </div>
           )}
 
-          {/* Wishlist and Compare - Top Right */}
+          {/* Wishlist - Top Right */}
           {!hideWishlistCompare && (
             <div className="absolute top-3 right-3 z-30 flex flex-col gap-1.5 opacity-0 translate-x-2 group-hover/img:opacity-100 group-hover/img:translate-x-0 transition-all duration-300">
               <button
@@ -174,13 +173,6 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                 aria-label="Add to wishlist"
               >
                 <FiHeart className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={handleAddToCompare}
-                className="p-1.5 bg-white text-slate-600 hover:text-store-500 rounded-full shadow-sm hover:shadow border border-slate-100 hover:scale-110 active:scale-95 transition-all duration-300 hidden lg:flex"
-                aria-label="Add to compare"
-              >
-                <FiShuffle className="w-3.5 h-3.5" />
               </button>
             </div>
           )}
@@ -219,14 +211,22 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
         <div className="flex flex-col pt-4 pb-1 text-left bg-transparent flex-grow">
 
           {/* Brand/Category Tag */}
-          <div className="text-[10px] font-bold uppercase tracking-wider text-store-400 mb-1">
-            {product.brandName || "PHARMACY ESSENTIALS"}
-          </div>
+          {(() => {
+            const brandOrCategory =
+              (product?.brand?.name ? showingTranslateValue(product.brand.name) : null) ||
+              product?.brandName ||
+              (product?.category?.name ? showingTranslateValue(product.category.name) : "");
+            return brandOrCategory ? (
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[#D4A359] mb-1 truncate">
+                {brandOrCategory}
+              </div>
+            ) : null;
+          })()}
 
           {/* Product Title Wrapper with Fixed Height for Vertical Alignment */}
           <div className="h-11 flex items-center mb-1.5">
             <h2
-              className="text-sm md:text-base font-bold text-neutral-100 line-clamp-2 leading-snug hover:text-store-400 transition-colors cursor-pointer w-full"
+              className="text-sm md:text-base font-bold text-neutral-100 line-clamp-2 leading-snug hover:text-[#FED7AA] transition-colors cursor-pointer w-full"
               onClick={() => router.push(`/product/${product.slug}`)}
               title={showingTranslateValue(product?.title)}
             >
@@ -234,15 +234,6 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             </h2>
           </div>
 
-          {/* Star Rating Metrics Row with Fixed Height */}
-          <div className="flex items-center gap-0.5 text-amber-400 mb-1.5 h-4">
-            {[...Array(5)].map((_, i) => (
-              <IoStar key={i} size={12} className="fill-current" />
-            ))}
-            <span className="text-[10px] font-bold text-neutral-400 mt-0.5 ml-1">
-              {product?.rating || "4.8"}
-            </span>
-          </div>
 
           {/* Price Section with Fixed Height for Vertical Alignment */}
           {!hidePriceAndAdd && (
@@ -258,6 +249,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                   if (!originalPriceValue && discount) {
                     originalPriceValue = (basePrice || 0) + (discount || 0);
                   }
+
                   const hasDiscount = !isWholesaler && originalPriceValue > currentPrice;
 
                   return (
@@ -291,7 +283,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                   const item = getItem(product._id);
                   return (
                     item && (
-                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-neutral-800 text-neutral-200 bg-neutral-900 rounded-full font-bold transition-all shadow-sm mt-1">
+                      <div key={item.id} className="h-8 w-28 flex items-center justify-between px-2.5 border border-[#D4A359]/30 text-neutral-200 bg-[#161412] rounded-full font-bold transition-all shadow-sm mt-1">
                         <button
                           onClick={() => {
                             const minQty = isWholesaler && product?.minQuantity ? Number(product.minQuantity) : 1;
@@ -302,7 +294,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                             updateItemQuantity(item.id, item.quantity - 1);
                           }}
                           disabled={isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity)}
-                          className={`p-1 hover:text-store-400 transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          className={`p-1 hover:text-[#FED7AA] transition-colors ${isWholesaler && product?.minQuantity && item.quantity <= Number(product.minQuantity) ? 'opacity-30 cursor-not-allowed' : ''}`}
                         >
                           <IoRemove className="w-3.5 h-3.5" />
                         </button>
@@ -310,7 +302,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                           {item.quantity}
                         </p>
                         <button
-                          className="p-1 hover:text-store-400 transition-colors"
+                          className="p-1 hover:text-[#FED7AA] transition-colors"
                           onClick={() =>
                             item?.variants?.length > 0
                               ? handleAddItem(item)
@@ -329,16 +321,17 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
                   title="Add to cart"
                   className="flex items-center gap-2 mt-1 group/btn cursor-pointer select-none"
                 >
-                  <div className="w-8 h-8 rounded-full bg-store-500 flex items-center justify-center text-white shadow-[0_2px_10px_rgba(var(--store-color-rgb,0,0,0),0.2)] group-hover/btn:bg-store-600 group-hover/btn:scale-110 group-hover/btn:rotate-12 transition-all duration-300">
-                    <IoCartOutline className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-full bg-[#FED7AA] flex items-center justify-center text-[#111827] shadow-[0_2px_12px_rgba(212,163,89,0.3)] group-hover/btn:bg-[#f6c888] group-hover/btn:scale-110 group-hover/btn:rotate-12 transition-all duration-300">
+                    <IoCartOutline className="w-4 h-4 text-[#111827]" />
                   </div>
-                  <span className="text-[10px] md:text-xs font-black text-neutral-300 tracking-wider uppercase group-hover/btn:text-store-400 transition-colors duration-300">
+                  <span className="text-[10px] md:text-xs font-black text-neutral-300 tracking-wider uppercase group-hover/btn:text-[#FED7AA] transition-colors duration-300">
                     ADD TO CART
                   </span>
                 </button>
               )}
             </div>
           )}
+
 
         </div>
       </div>

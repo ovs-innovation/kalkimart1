@@ -6,29 +6,29 @@ const Stock = ({ stock, card }) => {
   return (
     <>
       {stock <= 0 ? (
-        <span className="bg-red-100 absolute z-10 text-red-700 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-medium font-serif">
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-950/70 text-red-400 border border-red-500/30 ${card ? "absolute z-10" : ""}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
           {t("stockOut")}
         </span>
       ) : (
-        <>
-          <span
-            className={`${
-              card
-                ? "bg-gray-100 absolute z-10 text-store-500 rounded-full text-xs px-2 py-0 font-medium"
-                : "bg-store-100 text-store-500 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-semibold font-serif"
-            }`}
-          >
-            {t("stock")} :
-            <span className={`pl-1 font-bold ${stock <= 10 ? "text-red-500" : "text-orange-700"}`}>
-              {Math.max(0, stock)}{" "}
-            </span>
-            {stock <= 10 && (
-              <span className="text-[10px] text-red-600 ml-1 font-bold animate-pulse">
-                (Low Stock)
-              </span>
-            )}
+        <span
+          className={`${
+            card
+              ? "absolute z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-950/80 text-emerald-300 border border-emerald-500/30"
+              : "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-300 border border-emerald-500/30"
+          }`}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span>{t("stock")} :</span>
+          <span className={`font-bold ${stock <= 10 ? "text-amber-400" : "text-emerald-300"}`}>
+            {Math.max(0, stock)}
           </span>
-        </>
+          {stock <= 10 && (
+            <span className="text-[10px] text-amber-300 ml-1 font-semibold animate-pulse">
+              (Low Stock)
+            </span>
+          )}
+        </span>
       )}
     </>
   );

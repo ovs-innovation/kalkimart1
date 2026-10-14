@@ -94,19 +94,12 @@ const SuggestedProducts = () => {
   }
 
   return (
-    <div className="relative lg:py-16 py-10 overflow-hidden rounded-[2.5rem] border border-emerald-100/50 bg-white">
-      {/* Dynamic Background Layer */}
-      {/* <div className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-100/30 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50/40 rounded-full blur-[80px]" />
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px]" />
-      </div> */}
-
-      <div className="relative z-10 px-4 sm:px-8">
+    <div className="relative lg:py-12 py-8 bg-transparent">
+      <div className="relative z-10 px-2 sm:px-4">
         {/* Header Section with Badge */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-store-600 text-white text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-store/20 mb-4">
-            <span className="flex h-2 w-2 rounded-full bg-store-400 animate-ping" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 text-[#F9D39D] text-[10px] font-bold uppercase tracking-wider mb-4 shadow-[0_0_15px_rgba(212,163,89,0.1)]">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-[#F3C47A] animate-ping" />
             Picked For You
           </div>
           <SectionHeader
@@ -132,12 +125,12 @@ const SuggestedProducts = () => {
         {products.length > visibleCount && !showAll && (
           <div className="flex justify-center mt-12">
             <button
-              className="group relative px-8 py-3 rounded-full bg-store-600 text-white font-bold flex items-center gap-3 transition-all duration-300 hover:bg-store-700 hover:shadow-xl hover:shadow-store/30 active:scale-95"
+              className="group relative px-8 py-3 rounded-full bg-[#FED7AA] text-[#111827] font-bold flex items-center gap-3 transition-all duration-300 hover:bg-[#f6c888] hover:shadow-[0_8px_25px_rgba(212,163,89,0.25)] active:scale-95"
               onClick={() => setShowAll(true)}
             >
-              <span className="relative z-10">View All Suggestions</span>
-              <div className="bg-store-500 rounded-full p-1 group-hover:translate-x-1 transition-transform">
-                <FiChevronRight className="text-xl" />
+              <span className="relative z-10 text-sm">View All Suggestions</span>
+              <div className="bg-[#111827] text-white rounded-full p-1 group-hover:translate-x-1 transition-transform">
+                <FiChevronRight className="text-sm" />
               </div>
             </button>
           </div>

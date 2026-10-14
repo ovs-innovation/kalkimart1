@@ -22,7 +22,7 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
   const router = useRouter();
   const isHome = router.pathname === "/";
   const { storeCustomizationSetting, globalSetting } = useGetSetting();
-  const storeColor = "blue";
+  const storeColor = "gold";
   const palette = getPalette(storeColor);
 
   // Dynamically measure header height so content starts exactly below the fixed header
@@ -127,12 +127,12 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
             left: 0,
             right: 0,
             zIndex: 9999,
-            backgroundColor: isScrolled ? "rgba(26, 26, 26, 0.8)" : (isHome ? "transparent" : "#1A1A1A"),
+            backgroundColor: isScrolled ? "rgba(7, 7, 9, 0.95)" : (isHome ? "#070709" : "#1A1A1A"),
             backdropFilter: isScrolled ? "blur(16px)" : "none",
-            borderBottom: isScrolled ? "1px solid #2A2A2A" : (isHome ? "none" : "1px solid #2A2A2A"),
+            borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.08)" : (isHome ? "none" : "1px solid #2A2A2A"),
           }}
         >
-          <NavBarTop />
+          {!isHome && <NavBarTop />}
           <Navbar />
         </div>
 

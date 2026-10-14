@@ -33,9 +33,13 @@ export default function LowerCategoryNavbar({
   };
 
   const getName = (cat) => {
-    return showingTranslateValue
+    const raw = showingTranslateValue
       ? showingTranslateValue(cat?.name)
       : cat?.name?.en || cat?.name;
+    if (typeof raw === "string" && raw.toLowerCase().includes("kitechen")) {
+      return raw.replace(/kitechen/gi, "Kitchen");
+    }
+    return raw;
   };
 
   const clearCloseTimer = () => {
@@ -145,7 +149,9 @@ export default function LowerCategoryNavbar({
   return (
     <div className={wrapperClass} ref={dropdownRef}>
       <div className={isInline ? "" : "max-w-screen-2xl mx-auto px-4 sm:px-8"}>
-        <nav className="flex items-center justify-center gap-1 md:gap-3 lg:gap-6 py-1 overflow-x-auto no-scrollbar">
+        <nav className={`flex items-center justify-center py-1 overflow-x-auto no-scrollbar ${
+          isInline ? "gap-1 md:gap-2 lg:gap-3 xl:gap-4" : "gap-1 md:gap-3 lg:gap-6"
+        }`}>
           {categories.map((category) => {
             const id = getId(category);
             const isActive = activeCategoryId === id;
@@ -180,15 +186,13 @@ export default function LowerCategoryNavbar({
                       window.location.href = `/search?category=${category.slug || createSlug(getName(category))}&_id=${category._id}`;
                     }
                   }}
-                  className={`flex items-center gap-1.5 font-semibold whitespace-nowrap rounded-full transition-all duration-200
-                    ${isInline ? "px-3 py-1.5 text-sm" : "px-4 py-2 text-sm"}
-                    ${isActive
-                      ? "bg-store-500 text-white shadow-md"
-                      : "text-gray-700 hover:text-store-700 hover:bg-store-50"}`}
+                  className={`category-nav-link-btn flex items-center gap-1 font-medium whitespace-nowrap transition-colors duration-200 !bg-transparent !border-0 !shadow-none
+                    ${isInline ? "px-1.5 sm:px-2 py-1 text-xs sm:text-sm text-neutral-300 hover:text-white" : "px-4 py-2 text-sm text-gray-700 hover:text-store-700 hover:bg-store-50 rounded-lg"}`}
+                  style={{ background: "transparent", backgroundColor: "transparent" }}
                 >
-                  {getName(category)}
+                  <span>{getName(category)}</span>
                   <IoChevronDown
-                    className={`text-xs transition-transform ${isActive ? "rotate-180 text-gray-900" : "text-gray-600"}`}
+                    className={`text-xs transition-transform ${isActive ? "rotate-180" : ""} ${isInline ? "text-neutral-400" : "text-gray-500"}`}
                   />
                 </button>
               </div>

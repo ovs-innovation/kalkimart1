@@ -209,7 +209,7 @@ const FeatureCategory = ({ initialSelectedCategory }) => {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">Explore premium pharmacy collections under this division</p>
+                <p className="text-xs text-slate-400 mt-0.5">Explore premium curated collections under this category</p>
               </div>
             </div>
 
