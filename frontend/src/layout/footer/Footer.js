@@ -120,11 +120,12 @@ const Footer = () => {
               <Image
                 src={kalkimartlogo}
                 alt="logo"
-                width={158}
-                height={190}
+                width={180}
+                height={180}
                 priority
+                quality={95}
                 className="object-contain transition-transform duration-300 group-hover:scale-105"
-                style={{ height: "95px", width: "auto" }}
+                style={{ height: "80px", width: "auto" }}
               />
             </Link>
 

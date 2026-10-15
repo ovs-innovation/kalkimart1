@@ -66,8 +66,8 @@ const Faq = () => {
       answer: "Absolutely. We only source products directly from authorized distributors and reputable manufacturers. All medicines undergo strict quality checks.",
     },
     {
-      question: "Do I need a prescription to buy medicines?",
-      answer: "Yes, for prescription-only medicines (Schedule H & H1), a valid prescription from a registered medical practitioner is mandatory. You can upload it during checkout.",
+      question: "Are bulk orders and wholesale pricing available?",
+      answer: "Yes, registered retailers and business buyers can access exclusive wholesale prices upon verification.",
     },
     {
       question: "How do I return an item?",
@@ -91,7 +91,7 @@ const Faq = () => {
             Frequently Asked Questions
           </h1>
           <p className="text-store-100 text-lg md:text-xl max-w-3xl mx-auto">
-            Find answers to common questions about ordering, delivery, prescriptions, and more. We're here to help you.
+            Find answers to common questions about ordering, delivery, tracking, and more. We're here to help you.
           </p>
         </div>
       </div>

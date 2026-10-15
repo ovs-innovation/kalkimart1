@@ -144,7 +144,7 @@ const PersonalCareProductCard = ({
       )}
       
       {/* Premium organic card design */}
-      <div className="group relative flex flex-col w-full h-full max-w-[360px] xl:max-w-[370px] mx-auto select-none bg-transparent">
+      <div className="group relative flex flex-col w-full h-full max-w-[360px] xl:max-w-[370px] mx-auto select-none bg-neutral-900/30 border border-neutral-800/60 rounded-3xl p-3.5 backdrop-blur-sm transition-all duration-300 hover:border-store-500/40 hover:bg-neutral-900/50 hover:shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
         
         {/* Product Image Container Box */}
         <div
@@ -152,8 +152,7 @@ const PersonalCareProductCard = ({
             router.push(`/product/${product.slug}`);
             handleLogEvent("product", `Mapped to ${showingTranslateValue(product?.title)} product page`);
           }}
-          className="relative w-full h-[180px] sm:h-[220px] rounded-2xl border border-[#EBE8DF]/60 shadow-[0_4px_20px_rgba(0,0,0,0.015)] cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-[0_12px_30px_rgba(180,160,130,0.08)] hover:border-amber-300/40 group/img flex-shrink-0"
-          style={{ backgroundColor: "#ffffff" }}
+          className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden transition-all duration-300 group/img flex-shrink-0 cursor-pointer bg-transparent"
         >
           {/* Natural Discount Badge */}
           {!hideDiscount && !isWholesaler && (() => {
@@ -167,25 +166,25 @@ const PersonalCareProductCard = ({
             const finalDiscount = product?.discount || discountPercentage;
 
             return finalDiscount > 1 ? (
-              <span className="absolute top-3 left-3 z-10 bg-[#FED7AA] text-[#111827] text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm whitespace-nowrap uppercase tracking-wider">
-                -{finalDiscount}% OFF
+              <span className="absolute top-2 left-2 z-10 bg-[#D4A359] text-neutral-950 text-[10px] sm:text-[11px] font-black px-2 py-0.5 rounded-md shadow-sm whitespace-nowrap uppercase tracking-wider">
+                {finalDiscount}% OFF
               </span>
             ) : null;
           })()}
 
           {/* Stock Status Badge */}
           {product.stock < 1 && (
-            <div className="absolute top-3 left-3 z-10">
+            <div className="absolute top-2 left-2 z-10">
               <Stock product={product} stock={product.stock} card />
             </div>
           )}
 
           {/* Wishlist */}
           {!hideWishlistCompare && (
-            <div className="absolute top-3 right-3 z-30 flex flex-col gap-1.5 opacity-0 translate-x-2 group-hover/img:opacity-100 group-hover/img:translate-x-0 transition-all duration-300">
+            <div className="absolute top-2 right-2 z-30 flex flex-col gap-1.5 opacity-0 translate-x-2 group-hover/img:opacity-100 group-hover/img:translate-x-0 transition-all duration-300">
               <button
                 onClick={handleAddToWishlist}
-                className="p-1.5 bg-white/70 hover:bg-rose-50 text-[#6C6753] hover:text-rose-600 rounded-full shadow-sm hover:shadow border border-white/60 hover:scale-110 active:scale-95 transition-all duration-300 backdrop-blur-md"
+                className="p-1.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-red-500 rounded-full shadow-sm hover:shadow border border-neutral-700/60 hover:scale-110 active:scale-95 transition-all duration-300 backdrop-blur-md"
                 aria-label="Add to wishlist"
               >
                 <FiHeart className="w-3.5 h-3.5" />
@@ -194,42 +193,44 @@ const PersonalCareProductCard = ({
           )}
 
           {/* Product Image */}
-          <div className="absolute inset-0 flex items-center justify-center p-6 transition-all duration-500 group-hover/img:scale-108 group-hover/img:-translate-y-1">
-            {product.image[0] ? (
-              <ImageWithFallback
-                src={imageSrc}
-                alt={showingTranslateValue(product?.title)}
-                width={250}
-                height={250}
-                className="max-w-full max-h-full object-contain w-auto h-auto drop-shadow-md"
-                style={{ width: "auto", height: "auto" }}
-              />
-            ) : (
-              <Image
-                src="/placeholder.png"
-                width={250}
-                height={250}
-                style={{
-                  objectFit: "contain",
-                  maxHeight: "130px",
-                  width: "auto",
-                  height: "auto",
-                }}
-                sizes="100%"
-                alt="product"
-                className="max-w-full h-auto drop-shadow-md"
-              />
-            )}
+          <div className="relative w-full h-full p-2 sm:p-2.5 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              {product.image?.[0] ? (
+                <ImageWithFallback
+                  src={imageSrc}
+                  alt={showingTranslateValue(product?.title)}
+                  style={{ objectFit: "contain" }}
+                  className="w-full h-full object-contain drop-shadow-sm rounded-xl"
+                />
+              ) : (
+                <Image
+                  src="/placeholder.png"
+                  alt="product"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  sizes="100%"
+                  className="w-full h-full object-contain drop-shadow-sm rounded-xl"
+                />
+              )}
+            </div>
           </div>
         </div>
 
         {/* Info Content Section */}
         <div className="flex flex-col pt-3 pb-2 text-left bg-transparent flex-grow">
           
-          {/* Sophisticated natural tag */}
-          <div className="text-[10px] font-bold tracking-wider text-[#D4A359] mb-1 uppercase">
-            {product.brandName || "PERSONAL CARE & WELLNESS"}
-          </div>
+          {/* Brand Tag */}
+          {(() => {
+            const brand =
+              (product?.brand?.name ? showingTranslateValue(product.brand.name) : null) ||
+              product?.brandName;
+            const isPharmacyOrPersonalCare = /pharmacy|personal care|wellness/i.test(brand || "");
+            return brand && !isPharmacyOrPersonalCare ? (
+              <div className="text-[10px] font-bold tracking-wider text-[#D4A359] mb-1 uppercase truncate">
+                {brand}
+              </div>
+            ) : null;
+          })()}
 
           {/* Product Title Wrapper with Fixed Height for Vertical Alignment */}
           <div className="h-11 flex items-center mb-1.5">

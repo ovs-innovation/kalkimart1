@@ -71,7 +71,7 @@ const MobileFooter = () => {
     <>
       {/* Drawer lives off-canvas; keep it mounted without forcing page layout/scroll */}
       <CategoryDrawer />
-      <footer className="lg:hidden fixed z-[60] top-0 glass-header flex items-center justify-between w-full h-18 px-4 sm:px-6">
+      <footer className="lg:hidden fixed z-[60] top-0 glass-header flex items-center justify-between w-full h-20 px-4 sm:px-6">
         {/* Left section: Drawer trigger + Logo */}
         <div className="flex items-center gap-3">
           <button
@@ -90,11 +90,12 @@ const MobileFooter = () => {
             <Image
               src={kalkimartlogo}
               alt="logo"
-              width={120}
-              height={150}
+              width={160}
+              height={160}
               priority
+              quality={95}
               className="object-contain ml-2 transition-transform duration-300 group-hover:scale-[1.03]"
-              style={{ height: "80px", width: "auto" }}
+              style={{ height: "56px", width: "auto" }}
             />
           </Link>
         </div>

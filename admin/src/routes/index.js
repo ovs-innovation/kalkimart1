@@ -50,8 +50,6 @@ const RefundSettings = lazy(() => import("@/pages/settings/RefundSettings"));
 const Faqs = lazy(() => import("@/pages/Faqs"));
 const PushNotification = lazy(() => import("@/pages/PushNotification"));
 const Testimonials = lazy(() => import("@/pages/Testimonials"));
-const Prescriptions = lazy(() => import("@/pages/Prescriptions"));
-const PrescriptionDetails = lazy(() => import("@/pages/PrescriptionDetails"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -67,10 +65,6 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard,
-  },
-  {
-    path: "/prescriptions",
-    component: Prescriptions,
   },
   {
     path: "/new-sale",
@@ -120,10 +114,6 @@ const routes = [
   {
     path: "/orders/offline-payments",
     component: OrdersByStatus,
-  },
-  {
-    path: "/prescriptions/:id",
-    component: PrescriptionDetails,
   },
   {
     path: "/products",

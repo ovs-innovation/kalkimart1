@@ -34,11 +34,6 @@ const sidebar = [
     name: "Dashboard", // name that appear in Sidebar
   },
   {
-    path: "/prescriptions",
-    icon: FiFileText,
-    name: "Prescriptions",
-  },
-  {
     type: "title",
     name: "POS SECTION"
   },
@@ -51,9 +46,6 @@ const sidebar = [
   {
     type: "title",
     name: "Order Management",
-  },
-  {
-    heading: "ORDER MANAGEMENT",
   },
   {
     icon: FiCompass,
@@ -261,7 +253,7 @@ const sidebar = [
         name: "Payment",
       },
       {
-        path: "/settings/Retailer",
+        path: "/settings/retailer",
         name: "Retailer",
       },
       {

@@ -14,10 +14,8 @@ body {
 body {
   overflow-x: hidden;
   width: 100%;
-  background-color: #030303;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.12), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167, 139, 250, 0.05), transparent);
+  background-color: #070709 !important;
+  background-image: none !important;
   color: #f3f4f6;
 }
 
@@ -2637,10 +2635,8 @@ textarea:focus {
 
 /* 5. Glassmorphism Header */
 .glass-header {
-  background: rgba(26, 26, 26, 0.8) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid #2A2A2A !important;
+  background: transparent !important;
+  border-bottom: none !important;
 }
 
 /* 6. Section and Card Containers */
@@ -2793,15 +2789,18 @@ img[src*="kalkiBazar"] {
 
 .search-suggestions-container button div,
 .search-suggestions-container button span {
-  color: #f1f5f9 !important; /* Off-white for high contrast and readability */
+  color: #f1f5f9 !important;
+  /* Off-white for high contrast and readability */
 }
 
 .search-suggestions-container button svg {
-  color: #FED7AA !important; /* Warm gold icon accent */
+  color: #FED7AA !important;
+  /* Warm gold icon accent */
 }
 
 .search-suggestions-container button div.text-xs {
-  color: #94a3b8 !important; /* Muted cool grey for metadata labels (type, etc.) */
+  color: #94a3b8 !important;
+  /* Muted cool grey for metadata labels (type, etc.) */
 }
 
 .search-suggestions-container button span.rounded {
@@ -2905,6 +2904,18 @@ img[src*="kalkiBazar"] {
   color: #F3C47A !important;
 }
 
+/* ==========================================
+   NAVBAR GOLD BUTTONS - HIGH CONTRAST & VISIBILITY
+   ========================================== */
+.navbar-gold-btn,
+.navbar-gold-btn span,
+.navbar-gold-btn svg {
+  color: #111827 !important;
+  stroke: #111827 !important;
+}
 
-
-
+/* User Dashboard & Transparent Components */
+.bg-transparent,
+[class*="bg-transparent"] {
+  background-color: transparent !important;
+}

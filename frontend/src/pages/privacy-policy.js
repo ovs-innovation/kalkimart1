@@ -138,13 +138,13 @@ const PrivacyPolicy = () => {
 <h2>2. Information We Collect</h2>
 <ul>
   <li><strong>Personal Details:</strong> Name, contact number, email, and delivery address.</li>
-  <li><strong>Medical Information:</strong> Prescription uploads (used strictly for order verification by licensed pharmacists).</li>
+  <li><strong>Order Information:</strong> Items purchased, shipping preferences, and transaction details.</li>
   <li><strong>Payment Data:</strong> Securely processed via trusted payment gateways (we do not store card details).</li>
 </ul>
 <h2>3. How We Use Your Data</h2>
 <ul>
-  <li>To process and deliver your medicines and groceries.</li>
-  <li>To verify prescriptions in compliance with Indian pharmaceutical laws.</li>
+  <li>To process and deliver your orders and essentials.</li>
+  <li>To ensure smooth fulfillment in compliance with statutory consumer guidelines.</li>
   <li>To send order updates and promotional offers (opt-out available).</li>
 </ul>
 <h2>4. Data Security & Sharing</h2>

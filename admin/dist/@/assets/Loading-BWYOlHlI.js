@@ -1,0 +1,1 @@
+import{j as t}from"./index-CnsX0Piy.js";import{_ as e}from"./ScaleLoader-ChhA_I5b.js";const o=({loading:r})=>t.jsx("div",{className:"text-lg text-center py-6",children:t.jsx(e,{color:"#34D399",loading:r,height:25,width:3,radius:3,margin:4})});export{o as L};

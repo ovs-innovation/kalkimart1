@@ -115,13 +115,13 @@ const RecentOrder = ({ data, loading, error }) => {
 
   return (
     <>
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-50 mt-8">
+      <div className="bg-transparent p-6 rounded-2xl border border-neutral-800/80 mt-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-bold text-gray-800 font-serif flex items-center gap-2">
+          <h3 className="text-lg font-bold text-white font-serif flex items-center gap-2">
             {showingTranslateValue(storeCustomizationSetting?.dashboard?.recent_order) || "Recent Orders"}
           </h3>
-          <Link href="/user/my-orders" className="text-sm text-store-600 hover:underline font-semibold">
+          <Link href="/user/my-orders" className="text-sm text-[#F3C47A] hover:text-[#FED7AA] font-semibold transition-colors">
             View all →
           </Link>
         </div>
@@ -130,11 +130,11 @@ const RecentOrder = ({ data, loading, error }) => {
           <CMSkeletonTwo count={10} width={100} error={error} loading={loading} />
         ) : data?.orders?.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="w-14 h-14 bg-store-50 rounded-full flex items-center justify-center mb-4">
-              <IoBagHandle className="text-store-400 text-2xl" />
+            <div className="w-14 h-14 bg-neutral-800/60 border border-neutral-700/60 rounded-full flex items-center justify-center mb-4">
+              <IoBagHandle className="text-[#F3C47A] text-2xl" />
             </div>
-            <p className="text-sm text-gray-500 mb-4">No orders placed yet!</p>
-            <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-semibold text-store-600 hover:underline">
+            <p className="text-sm text-neutral-300 font-medium mb-4">No orders placed yet!</p>
+            <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F3C47A] hover:text-[#FED7AA] transition-colors">
               <FiShoppingCart size={12} /> Start Shopping
             </Link>
           </div>
@@ -142,51 +142,51 @@ const RecentOrder = ({ data, loading, error }) => {
           <>
             {/* ── Desktop Table ── */}
             <div className="hidden sm:block overflow-x-auto rounded-xl">
-              <table className="min-w-full divide-y divide-gray-100">
+              <table className="min-w-full divide-y divide-neutral-800">
                 <thead>
-                  <tr className="bg-gray-50">
+                  <tr className="bg-neutral-900/60">
                     {["Order ID", "Date", "Items", "Status", "Total", "Actions"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                      <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider whitespace-nowrap">
                         {h}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-100">
+                <tbody className="bg-transparent divide-y divide-neutral-800">
                   {data?.orders?.map((order) => (
-                    <tr key={order._id} className="hover:bg-zinc-800 transition-colors">
+                    <tr key={order._id} className="hover:bg-neutral-800/40 transition-colors">
                       <td className="px-4 py-3.5 whitespace-nowrap">
-                        <span className="font-mono text-xs font-bold text-store-600 bg-store-50 px-2 py-0.5 rounded">
+                        <span className="font-mono text-xs font-bold text-[#F3C47A] bg-[#F3C47A]/10 border border-[#F3C47A]/20 px-2 py-0.5 rounded">
                           #{order?._id?.slice(-6).toUpperCase()}
                         </span>
                       </td>
                       <td className="px-4 py-3.5 whitespace-nowrap">
-                        <div className="text-xs text-gray-600 font-medium">{dayjs(order.createdAt).format("DD MMM YYYY")}</div>
-                        <div className="text-xs text-gray-400">{dayjs(order.createdAt).format("hh:mm A")}</div>
+                        <div className="text-xs text-neutral-200 font-medium">{dayjs(order.createdAt).format("DD MMM YYYY")}</div>
+                        <div className="text-xs text-neutral-400">{dayjs(order.createdAt).format("hh:mm A")}</div>
                       </td>
                       <td className="px-4 py-3.5">
                         <ProductStrip cart={order.cart} />
-                        <span className="text-xs text-gray-400">{order.cart?.length || 0} item{(order.cart?.length || 0) !== 1 ? "s" : ""}</span>
+                        <span className="text-xs text-neutral-400">{order.cart?.length || 0} item{(order.cart?.length || 0) !== 1 ? "s" : ""}</span>
                       </td>
                       <td className="px-4 py-3.5 whitespace-nowrap">
                         <StatusBadge status={order.status} />
                       </td>
                       <td className="px-4 py-3.5 whitespace-nowrap">
-                        <span className="text-sm font-bold text-gray-800">{currency}{parseFloat(order?.total || 0).toFixed(2)}</span>
+                        <span className="text-sm font-bold text-white">{currency}{parseFloat(order?.total || 0).toFixed(2)}</span>
                       </td>
                       <td className="px-4 py-3.5 whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
-                          <Link href={`/order/${order._id}`} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 text-gray-600 hover:bg-store-500 hover:text-white transition-all">
+                          <Link href={`/order/${order._id}`} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-neutral-800 text-neutral-200 hover:bg-[#D4A359] hover:text-neutral-950 transition-all">
                             <FiEye size={10} /> View
                           </Link>
-                          <Link href={`/order/${order._id}`} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-store-50 text-store-600 hover:bg-store-500 hover:text-white transition-all">
+                          <Link href={`/order/${order._id}`} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-[#D4A359]/10 border border-[#D4A359]/20 text-[#F3C47A] hover:bg-[#D4A359] hover:text-neutral-950 transition-all">
                             <FiTruck size={10} /> Track
                           </Link>
                           <button
                             type="button"
                             disabled={reorderingId === order._id}
                             onClick={() => handleReorder(order)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-store-500 text-white hover:bg-store-600 disabled:opacity-60 transition-all"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-[#D4A359] text-neutral-950 hover:bg-[#C59345] disabled:opacity-60 transition-all font-bold"
                           >
                             {reorderingId === order._id
                               ? <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
@@ -196,7 +196,7 @@ const RecentOrder = ({ data, loading, error }) => {
                           </button>
                           {order.status === "Delivered" && order?.cart?.[0]?.slug && (
                             <button type="button" onClick={() => { setSelectedProductForReview(order.cart[0]); setReviewModalOpen(true); }}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white transition-all">
+                              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500 hover:text-neutral-950 transition-all">
                               <FiStar size={10} /> Rate
                             </button>
                           )}
@@ -211,9 +211,9 @@ const RecentOrder = ({ data, loading, error }) => {
             {/* ── Mobile Cards ── */}
             <div className="sm:hidden space-y-3">
               {data?.orders?.map((order) => (
-                <div key={order._id} className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
-                  <div className="flex items-center justify-between px-3 py-2.5 bg-gray-50 border-b border-gray-100">
-                    <span className="font-mono text-xs font-bold text-store-600">
+                <div key={order._id} className="bg-transparent border border-neutral-800/80 rounded-xl shadow-sm overflow-hidden">
+                  <div className="flex items-center justify-between px-3 py-2.5 bg-neutral-900/40 border-b border-neutral-800/80">
+                    <span className="font-mono text-xs font-bold text-[#F3C47A]">
                       #{order?._id?.slice(-6).toUpperCase()}
                     </span>
                     <StatusBadge status={order.status} />
@@ -221,19 +221,19 @@ const RecentOrder = ({ data, loading, error }) => {
                   <div className="px-3 py-2.5">
                     <div className="flex items-center justify-between mb-2">
                       <ProductStrip cart={order.cart} />
-                      <span className="text-sm font-bold text-gray-800">{currency}{parseFloat(order?.total || 0).toFixed(2)}</span>
+                      <span className="text-sm font-bold text-white">{currency}{parseFloat(order?.total || 0).toFixed(2)}</span>
                     </div>
-                    <p className="text-xs text-gray-400 flex items-center gap-1">
+                    <p className="text-xs text-neutral-400 flex items-center gap-1">
                       <IoTimeOutline size={11} />
                       {dayjs(order.createdAt).format("DD MMM YYYY · hh:mm A")}
                     </p>
                   </div>
-                  <div className="px-3 py-2.5 bg-gray-50 border-t border-gray-100 flex gap-2">
-                    <Link href={`/order/${order._id}`} className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 text-xs font-semibold rounded-lg bg-white border border-gray-200 text-gray-600 hover:border-store-400 hover:text-store-600 transition-all">
+                  <div className="px-3 py-2.5 bg-neutral-900/40 border-t border-neutral-800/80 flex gap-2">
+                    <Link href={`/order/${order._id}`} className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 text-xs font-semibold rounded-lg bg-neutral-800 text-neutral-300 hover:text-white transition-all">
                       <FiTruck size={11} /> Track
                     </Link>
                     <button type="button" disabled={reorderingId === order._id} onClick={() => handleReorder(order)}
-                      className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 text-xs font-semibold rounded-lg bg-store-500 text-white hover:bg-store-600 disabled:opacity-60 transition-all">
+                      className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 text-xs font-bold rounded-lg bg-[#D4A359] text-neutral-950 hover:bg-[#C59345] disabled:opacity-60 transition-all">
                       {reorderingId === order._id
                         ? <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
                         : <IoRefreshOutline size={11} />

@@ -114,7 +114,7 @@ const SliderCarousel = () => {
   //   }
   // ];
 
-  const sliderData = backendSliderData.length > 0 ? backendSliderData : defaultSliderData;
+  const sliderData = backendSliderData || [];
 
   if (!sliderData || sliderData.length === 0) {
     return null;
@@ -122,10 +122,10 @@ const SliderCarousel = () => {
 
   // Refactored unified card presentation framework
   const renderSliderContent = (item, index) => (
-    <div className="relative w-full h-[180px] sm:h-[240px] md:h-[280px] lg:h-[340px] rounded-2xl overflow-hidden group border border-slate-100 bg-gradient-to-br from-slate-50 via-teal-50/10 to-white shadow-md hover:shadow-xl transition-all duration-300">
+    <div className="relative w-full h-[180px] sm:h-[240px] md:h-[280px] lg:h-[340px] rounded-2xl overflow-hidden group border border-neutral-800/80 bg-neutral-900 shadow-md hover:shadow-xl transition-all duration-300">
       <Image
         src={item.img || "/placeholder.png"}
-        alt={item.title || `Pharmacy Promotional Offer ${index + 1}`}
+        alt={item.title || `Promotional Offer ${index + 1}`}
         fill
         sizes="(max-width: 768px) 100vw, 50vw"
         className="object-cover cursor-pointer group-hover:scale-[1.03] transition-transform duration-700 ease-out"
@@ -136,7 +136,7 @@ const SliderCarousel = () => {
       {item.title && (
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/40 to-transparent flex flex-col justify-center px-6 sm:px-10 pointer-events-none select-none z-10">
           <div className="max-w-[75%] sm:max-w-[65%] space-y-2">
-            <span className="inline-block bg-teal-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+            <span className="inline-block bg-[#D4A359] text-neutral-900 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
               {item.badge}
             </span>
             <h3 className="text-white text-base sm:text-2xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
@@ -152,7 +152,7 @@ const SliderCarousel = () => {
   );
 
   return (
-    <div className="w-full bg-white py-6 md:py-8">
+    <div className="w-full !bg-transparent py-6 md:py-8" style={{ background: "transparent", backgroundColor: "transparent" }}>
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="relative group/slider">
           <Swiper
@@ -212,13 +212,13 @@ const SliderCarousel = () => {
             <>
               <button
                 ref={prevRef}
-                className="absolute left-2 top-[45%] -translate-y-1/2 z-20 w-10 h-10 bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl rounded-full hidden md:flex items-center justify-center text-slate-700 hover:bg-slate-900 hover:text-white transition-all transform -translate-x-4 opacity-0 group-hover/slider:opacity-100 group-hover/slider:translate-x-0"
+                className="absolute left-2 top-[45%] -translate-y-1/2 z-20 w-10 h-10 bg-[#131417]/95 backdrop-blur-md border border-neutral-800 shadow-xl rounded-full hidden md:flex items-center justify-center text-neutral-300 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform -translate-x-4 opacity-0 group-hover/slider:opacity-100 group-hover/slider:translate-x-0"
               >
                 <IoChevronBack className="text-lg" />
               </button>
               <button
                 ref={nextRef}
-                className="absolute right-2 top-[45%] -translate-y-1/2 z-20 w-10 h-10 bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl rounded-full hidden md:flex items-center justify-center text-slate-700 hover:bg-slate-900 hover:text-white transition-all transform translate-x-4 opacity-0 group-hover/slider:opacity-100 group-hover/slider:translate-x-0"
+                className="absolute right-2 top-[45%] -translate-y-1/2 z-20 w-10 h-10 bg-[#131417]/95 backdrop-blur-md border border-neutral-800 shadow-xl rounded-full hidden md:flex items-center justify-center text-neutral-300 hover:border-[#D4A359]/50 hover:bg-[#1a1c22] hover:text-[#FED7AA] transition-all transform translate-x-4 opacity-0 group-hover/slider:opacity-100 group-hover/slider:translate-x-0"
               >
                 <IoChevronForward className="text-lg" />
               </button>
@@ -230,12 +230,13 @@ const SliderCarousel = () => {
       {/* Global CSS Pagination Enhancements */}
       <style jsx global>{`
         .slider-carousel-swiper .swiper-pagination-bullet-active {
-          background: #0d9488 !important; /* Premium Teal-600 Tone */
+          background: #D4A359 !important;
           width: 22px !important;
           border-radius: 6px !important;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .slider-carousel-swiper .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.4) !important;
           margin: 0 4px !important;
         }
       `}</style>

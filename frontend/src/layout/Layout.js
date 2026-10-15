@@ -7,7 +7,6 @@ import { useRef, useEffect, useState } from "react";
 
 import Navbar from "@layout/navbar/Navbar";
 import Footer from "@layout/footer/Footer";
-import NavBarTop from "./navbar/NavBarTop";
 import FooterTop from "@layout/footer/FooterTop";
 import MobileFooter from "@layout/footer/MobileFooter";
 import MobileBottomNavigation from "@layout/footer/MobileBottomNavigation";
@@ -85,7 +84,7 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
 
   return (
     <>
-      <div className="font-sans min-h-screen">
+      <div className="font-sans min-h-screen bg-[#070709]">
         <Head>
           <style>
             {`
@@ -127,22 +126,22 @@ const Layout = ({ title, description, children, hideMobileHeader }) => {
             left: 0,
             right: 0,
             zIndex: 9999,
+            minHeight: "96px",
             backgroundColor: isScrolled ? "rgba(7, 7, 9, 0.95)" : (isHome ? "#070709" : "#1A1A1A"),
             backdropFilter: isScrolled ? "blur(16px)" : "none",
             borderBottom: isScrolled ? "1px solid rgba(255, 255, 255, 0.08)" : (isHome ? "none" : "1px solid #2A2A2A"),
           }}
         >
-          {!isHome && <NavBarTop />}
           <Navbar />
         </div>
 
         {/* Page content — paddingTop dynamically equals the actual fixed header height on desktop only */}
         <div
-          className={`${hideMobileHeader ? "pt-0" : "pt-16"} pb-16 lg:pb-0`}
+          className={`${hideMobileHeader ? "pt-0" : "pt-20 lg:pt-[96px]"} pb-16 lg:pb-0 bg-[#070709]`}
           style={
             headerHeight > 0 && typeof window !== "undefined" && window.innerWidth >= 1024
               ? { paddingTop: `${headerHeight}px` }
-              : {}
+              : { paddingTop: "96px" }
           }
         >
           {children}

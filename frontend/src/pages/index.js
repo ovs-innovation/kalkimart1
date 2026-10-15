@@ -36,48 +36,7 @@ import TestimonialsSection from "@components/testimonial/TestimonialsSection";
 import DealsYouLove from "@components/carousel/DealsYouLove";
 import Features from "@components/Features/Features";
 
-const fallbackSnacks = [
-  {
-    _id: "snack-1",
-    title: { en: "Lays Potato Chips - Classic Salted", de: "Lays Kartoffelchips - Klassisch Gesalzen" },
-    slug: "lays-classic-salted",
-    image: ["https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&q=80&w=400"],
-    stock: 120,
-    prices: { price: 20, originalPrice: 20, discount: 0 },
-    variants: [],
-    isCombination: false,
-  },
-  {
-    _id: "snack-2",
-    title: { en: "Oreo Vanilla Cream Biscuits", de: "Oreo Vanillecreme Kekse" },
-    slug: "oreo-vanilla-biscuits",
-    image: ["https://images.unsplash.com/photo-1558961317-1f67f1b6d05f?auto=format&fit=crop&q=80&w=400"],
-    stock: 150,
-    prices: { price: 30, originalPrice: 35, discount: 5 },
-    variants: [],
-    isCombination: false,
-  },
-  {
-    _id: "snack-3",
-    title: { en: "Kurkure Masala Munch", de: "Kurkure Masala Munch" },
-    slug: "kurkure-masala-munch",
-    image: ["https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&q=80&w=400"],
-    stock: 80,
-    prices: { price: 10, originalPrice: 10, discount: 0 },
-    variants: [],
-    isCombination: false,
-  },
-  {
-    _id: "snack-4",
-    title: { en: "Coca Cola Soft Drink Can", de: "Coca Cola Dose" },
-    slug: "coca-cola-can",
-    image: ["https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=400"],
-    stock: 200,
-    prices: { price: 40, originalPrice: 40, discount: 0 },
-    variants: [],
-    isCombination: false,
-  }
-];
+
 
 const Home = ({ popularProducts, discountProducts, bestSellingProducts, attributes, brands, personalCareProducts, snacksProducts }) => {
   const router = useRouter();
@@ -114,9 +73,9 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
               <div className="mx-auto max-w-screen-2xl">
                 <div className="flex w-full flex-col">
                   {/* Slider Carousel */}
-                  <div className="md:hidden">
+                  {/* <div className="md:hidden">
                     <SliderCarousel />
-                  </div>
+                  </div> */}
                   <div className="w-full">
                     <OrderOptions />
                   </div>
@@ -153,8 +112,8 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
                   <FeatureCategory attributes={attributes} />
                 </div>
               </div>
-              )}
-            
+            )}
+
 
             {/* best selling products */}
             {bestSellingProducts?.length > 0 && (
@@ -271,10 +230,10 @@ const Home = ({ popularProducts, discountProducts, bestSellingProducts, attribut
             {/* Do not render deals section for wholesalers */}
             {!isWholesaler && discountProducts?.length > 0 && (
               <DealsYouLove products={discountProducts} />
-              )}
-              
-              {/* Category Cards Section */}
-              <CategoryCards />
+            )}
+
+            {/* Category Cards Section */}
+            <CategoryCards />
 
             {/* Personal Care Section */}
             {personalCareProducts && personalCareProducts.length > 0 && (

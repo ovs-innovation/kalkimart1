@@ -78,11 +78,11 @@ const HeroBanner = () => {
       <div className="absolute inset-0 pointer-events-none bg-black/45 lg:hidden" />
 
       {/* Hero Content Container — generous left/right padding and proper max-width */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16 py-14 sm:py-20 lg:py-28 min-h-[560px] lg:min-h-[640px] flex items-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16 pt-14 sm:pt-16 lg:pt-[82px] pb-12 sm:pb-14 lg:pb-16 min-h-[520px] lg:min-h-[560px] flex flex-col justify-start">
         <div className="w-full max-w-xl md:max-w-2xl lg:max-w-[700px] xl:max-w-[740px] flex flex-col items-start text-left">
 
           {/* Top Gold Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 backdrop-blur-sm text-xs sm:text-sm font-medium text-neutral-200 mb-6 sm:mb-8 transition-all hover:border-[#D4A359]/60 shadow-[0_0_20px_rgba(212,163,89,0.15)]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4A359]/40 bg-[#161412]/80 backdrop-blur-sm text-xs sm:text-sm font-medium text-neutral-200 mb-5 sm:mb-6 transition-all hover:border-[#D4A359]/60 shadow-[0_0_20px_rgba(212,163,89,0.15)]">
             <svg className="w-3.5 h-3.5 text-[#F3C47A] shrink-0" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" />
             </svg>
@@ -92,7 +92,7 @@ const HeroBanner = () => {
           </div>
 
           {/* Big Bold Headline — clean 2-line layout without awkward line breaks */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-extrabold tracking-tight leading-[1.14] mb-5 font-sans">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-extrabold tracking-tight leading-[1.14] mb-4 sm:mb-5 font-sans">
             <span className="block text-white">
               {storeCustomizationSetting?.home?.hero_title_1 || "Elevate Your Sourcing."}
             </span>
@@ -102,13 +102,13 @@ const HeroBanner = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-neutral-300 text-sm sm:text-base lg:text-lg font-normal max-w-xl mb-9 leading-relaxed">
+          <p className="text-neutral-300 text-sm sm:text-base lg:text-lg font-normal max-w-xl mb-7 sm:mb-8 leading-relaxed">
             {storeCustomizationSetting?.home?.hero_description ||
               "Premium wholesale essentials for smart, reliable business buying."}
           </p>
 
           {/* Sleek Dark Search Container — Wide, Spacious & Clean */}
-          <div id="hero-search-anchor" className="w-full max-w-xl md:max-w-2xl lg:max-w-[700px] xl:max-w-[740px] scroll-mt-32 mb-9 sm:mb-11">
+          <div id="hero-search-anchor" className="w-full max-w-xl md:max-w-2xl lg:max-w-[700px] xl:max-w-[740px] scroll-mt-32 mb-8 sm:mb-9">
             <form
               onSubmit={handleSubmit}
               className="flex items-center bg-[#131417]/95 backdrop-blur-md border border-neutral-700/80 hover:border-neutral-600 focus-within:border-[#FED7AA]/70 rounded-2xl p-1.5 sm:p-2 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)]"

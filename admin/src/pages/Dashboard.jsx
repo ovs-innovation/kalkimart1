@@ -27,8 +27,6 @@ import ModernStats from "@/components/dashboard/ModernStats";
 import DetailedOrderStatus from "@/components/dashboard/DetailedOrderStatus";
 import GrossSaleChart from "@/components/dashboard/GrossSaleChart";
 import UserStatisticsChart from "@/components/dashboard/UserStatisticsChart";
-import TopPopularSelling from "@/components/dashboard/TopPopularSelling";
-// import BottomPopularSelling from "@/components/dashboard/BottomPopularSelling";
 import ChartCard from "@/components/chart/ChartCard";
 
 import OrderTable from "@/components/order/OrderTable";
@@ -62,13 +60,11 @@ const Dashboard = () => {
   const [timeFilter, setTimeFilter] = useState("year"); // Added for period filtering
 
   const {
-    data: bestSellerProductChart,
-    loading: loadingBestSellerProduct,
+    data: dashboardRecentOrder,
+    loading: loadingRecentOrder,
     error,
-  } = useAsync(OrderServices.getBestSellerProductChart);
-
-  const { data: dashboardRecentOrder, loading: loadingRecentOrder } = useAsync(
-    () => OrderServices.getDashboardRecentOrder({ page: currentPage, limit: 8 })
+  } = useAsync(() =>
+    OrderServices.getDashboardRecentOrder({ page: currentPage, limit: 8 })
   );
 
   const { data: dashboardOrderCount, loading: loadingOrderCount } = useAsync(
@@ -285,14 +281,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Top Selling & Popular Section - New Image UI */}
-            <TopPopularSelling 
-               bestSeller={bestSellerProductChart?.bestSellingProduct} 
-               topBrands={dashboardOrderCount?.topBrands}
-            />
-            {/* <BottomPopularSelling 
-               goldCustomers={dashboardOrderCount?.goldCustomers}
-            /> */}
+
           </section>
         </div>
       </AnimatedContent>

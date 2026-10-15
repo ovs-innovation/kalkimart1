@@ -48,7 +48,7 @@ const ShippingDeliveryPolicy = () => {
 </ul>
 <h2>3. Estimated Delivery Time</h2>
 <ul>
-  <li><strong>Medicines & Prescriptions:</strong> Standard delivery within 24-48 hours. Express delivery within 4-6 hours (subject to availability).</li>
+  <li><strong>Healthcare & Wellness Products:</strong> Standard delivery within 24-48 hours. Express delivery within 4-6 hours (subject to availability).</li>
   <li><strong>Groceries & Daily Needs:</strong> Same-day delivery for orders placed before 4:00 PM.</li>
 </ul>
 <h2>4. Order Tracking</h2>

@@ -99,7 +99,7 @@ const AboutUs = () => {
                         {showingTranslateValue(
                           storeCustomizationSetting?.about_us
                             ?.card_one_description
-                        ) || "We provide a unified online platform where you can buy prescription drugs, over-the-counter medicines, personal care items, and daily groceries."}
+                        ) || "We provide a unified online platform where you can buy healthcare products, wellness essentials, personal care items, and daily groceries."}
                       </p>
                     </>
                   )}

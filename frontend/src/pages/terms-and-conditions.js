@@ -59,8 +59,8 @@ const TermAndConditions = () => {
 <p>By accessing Farmacykart, you agree to these Terms and Conditions. These terms govern your use of our platform for ordering medicines, groceries, and daily essentials.</p>
 <h2>2. User Eligibility</h2>
 <p>You must be at least 18 years old to use our services. By using Farmacykart, you confirm that all information provided is accurate and truthful.</p>
-<h2>3. Prescription Medicines (Schedule H & X)</h2>
-<p>For prescription medicines, a valid prescription from a registered medical practitioner must be uploaded. Our licensed pharmacists will verify the prescription before processing the order. Farmacykart reserves the right to cancel orders with invalid prescriptions.</p>
+<h2>3. Product Authenticity & Quality</h2>
+<p>We source authentic products directly from authorized brands and verified distributors. All orders undergo quality verification before dispatch.</p>
 <h2>4. Pricing & Availability</h2>
 <p>While we strive for accuracy, product prices and availability are subject to change without prior notice. MRP includes all applicable taxes (GST).</p>
 <h2>5. Delivery & Cancellations</h2>

@@ -137,8 +137,7 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             router.push(`/product/${product.slug}`);
             handleLogEvent("product", `Mapped to ${showingTranslateValue(product?.title)} product page`);
           }}
-          className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden transition-all duration-300 group/img flex-shrink-0"
-          style={{ backgroundColor: "#ffffff" }}
+          className="relative w-full h-[180px] sm:h-[200px] rounded-2xl overflow-hidden transition-all duration-300 group/img flex-shrink-0 cursor-pointer bg-transparent"
         >
           {/* Discount Badge */}
           {!hideDiscount && !isWholesaler && (() => {
@@ -151,25 +150,25 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
             const discountPercentage = originalPrice > basePrice ? Math.round(((originalPrice - basePrice) / originalPrice) * 100) : 0;
             const finalDiscount = product?.discount || discountPercentage;
             return finalDiscount > 1 ? (
-              <span className="absolute top-3 left-3 z-10 bg-[#FED7AA] text-[#111827] text-[9px] sm:text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm whitespace-nowrap uppercase tracking-wider">
-                -{finalDiscount}% OFF
+              <span className="absolute top-2 left-2 z-10 bg-[#D4A359] text-neutral-950 text-[10px] sm:text-[11px] font-black px-2 py-0.5 rounded-md shadow-sm whitespace-nowrap uppercase tracking-wider">
+                {finalDiscount}% OFF
               </span>
             ) : null;
           })()}
 
           {/* Stock Badge */}
           {product.stock < 1 && (
-            <div className="absolute top-3 left-3 z-10">
+            <div className="absolute top-2 left-2 z-10">
               <Stock product={product} stock={product.stock} card />
             </div>
           )}
 
           {/* Wishlist - Top Right */}
           {!hideWishlistCompare && (
-            <div className="absolute top-3 right-3 z-30 flex flex-col gap-1.5 opacity-0 translate-x-2 group-hover/img:opacity-100 group-hover/img:translate-x-0 transition-all duration-300">
+            <div className="absolute top-2 right-2 z-30 flex flex-col gap-1.5 opacity-0 translate-x-2 group-hover/img:opacity-100 group-hover/img:translate-x-0 transition-all duration-300">
               <button
                 onClick={handleAddToWishlist}
-                className="p-1.5 bg-white text-slate-600 hover:text-red-500 rounded-full shadow-sm hover:shadow border border-slate-100 hover:scale-110 active:scale-95 transition-all duration-300"
+                className="p-1.5 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-red-500 rounded-full shadow-sm hover:shadow border border-neutral-700/60 hover:scale-110 active:scale-95 transition-all duration-300 backdrop-blur-md"
                 aria-label="Add to wishlist"
               >
                 <FiHeart className="w-3.5 h-3.5" />
@@ -178,32 +177,26 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
           )}
 
           {/* Product Image */}
-          <div className="absolute inset-0 flex items-center justify-center p-6 transition-all duration-500 group-hover/img:scale-108 group-hover/img:-translate-y-1">
-            {product.image[0] ? (
-              <ImageWithFallback
-                src={imageSrc}
-                alt={showingTranslateValue(product?.title)}
-                width={250}
-                height={250}
-                className="max-w-full max-h-full object-contain w-auto h-auto drop-shadow-sm"
-                style={{ width: "auto", height: "auto" }}
-              />
-            ) : (
-              <Image
-                src="/placeholder.png"
-                width={250}
-                height={250}
-                style={{
-                  objectFit: "contain",
-                  maxHeight: "130px",
-                  width: 'auto',
-                  height: 'auto'
-                }}
-                sizes="100%"
-                alt="product"
-                className="max-w-full h-auto drop-shadow-sm"
-              />
-            )}
+          <div className="relative w-full h-full p-2 sm:p-2.5 flex items-center justify-center">
+            <div className="relative w-full h-full">
+              {product.image?.[0] ? (
+                <ImageWithFallback
+                  src={imageSrc}
+                  alt={showingTranslateValue(product?.title)}
+                  style={{ objectFit: "contain" }}
+                  className="w-full h-full object-contain drop-shadow-sm rounded-xl"
+                />
+              ) : (
+                <Image
+                  src="/placeholder.png"
+                  alt="product"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  sizes="100%"
+                  className="w-full h-full object-contain drop-shadow-sm rounded-xl"
+                />
+              )}
+            </div>
           </div>
         </div>
 
@@ -216,7 +209,8 @@ const ProductCard = ({ product, attributes, hidePriceAndAdd = false, hideDiscoun
               (product?.brand?.name ? showingTranslateValue(product.brand.name) : null) ||
               product?.brandName ||
               (product?.category?.name ? showingTranslateValue(product.category.name) : "");
-            return brandOrCategory ? (
+            const isPharmacyOrPersonalCare = /pharmacy|personal care|wellness/i.test(brandOrCategory || "");
+            return brandOrCategory && !isPharmacyOrPersonalCare ? (
               <div className="text-[10px] font-bold uppercase tracking-wider text-[#D4A359] mb-1 truncate">
                 {brandOrCategory}
               </div>
